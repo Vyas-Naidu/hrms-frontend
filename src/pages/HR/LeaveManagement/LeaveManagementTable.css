@@ -1,0 +1,390 @@
+/* ==========================
+   LEAVE REQUESTS CONTAINER
+========================== */
+
+.leave-requests-container {
+  width: 100%;
+  margin-top: 16px;
+
+  background: #ffffff;
+  border: 1px solid #eee5dc;
+  border-radius: 9px;
+
+  box-sizing: border-box;
+  overflow: hidden;
+
+  box-shadow: 0 2px 8px rgba(80, 45, 20, 0.04);
+}
+
+
+/* ==========================
+   HEADER
+========================== */
+
+.leave-requests-header {
+  height: 58px;
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+}
+
+.leave-requests-header h3 {
+  margin: 0;
+  color: #222222;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.view-all-btn {
+  height: 32px;
+  padding: 0 16px;
+
+  border: 1px solid #c99b76;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #8a4b24;
+
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.view-all-btn:hover {
+  background: #faf1e9;
+}
+
+
+/* ==========================
+   TABS
+========================== */
+
+.leave-request-tabs {
+  height: 38px;
+  padding: 0 18px;
+
+  display: flex;
+  align-items: flex-end;
+  gap: 25px;
+
+  border-bottom: 1px solid #eee5dc;
+}
+
+.leave-request-tabs button {
+  position: relative;
+
+  height: 38px;
+  padding: 0 2px;
+
+  border: none;
+  background: transparent;
+
+  color: #555555;
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.leave-request-tabs button.active {
+  color: #a85c20;
+  font-weight: 600;
+}
+
+.leave-request-tabs button.active::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+
+  height: 2px;
+  background: #a85c20;
+}
+
+
+/* ==========================
+   TABLE WRAPPER
+========================== */
+
+.leave-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* ==========================
+   TABLE
+========================== */
+
+.leave-requests-table {
+  width: 100%;
+  min-width: 1050px;
+
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.leave-requests-table th {
+  height: 38px;
+  padding: 0 10px;
+
+  background: #fcf8f3;
+
+  color: #654a39;
+  font-size: 10px;
+  font-weight: 700;
+
+  text-align: left;
+  white-space: nowrap;
+}
+
+.leave-requests-table td {
+  height: 56px;
+  padding: 0 10px;
+
+  border-top: 1px solid #eee8e1;
+
+  color: #333333;
+  font-size: 10px;
+
+  white-space: nowrap;
+}
+
+.leave-requests-table tbody tr:hover {
+  background: #fffaf5;
+}
+
+
+/* ==========================
+   EMPLOYEE
+========================== */
+
+.employee-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.employee-avatar {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f1e1d4;
+  color: #8a4b24;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.employee-cell strong {
+  display: block;
+
+  color: #333333;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.employee-cell small {
+  display: block;
+  margin-top: 2px;
+
+  color: #888888;
+  font-size: 8px;
+}
+
+
+/* ==========================
+   LEAVE TYPE
+========================== */
+
+.leave-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 22px;
+  padding: 0 8px;
+
+  border-radius: 5px;
+
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.leave-type.casual-leave {
+  background: #e4f3e1;
+  color: #2d7b31;
+}
+
+.leave-type.sick-leave {
+  background: #e1effd;
+  color: #2874bb;
+}
+
+.leave-type.earned-leave {
+  background: #eee1fa;
+  color: #7142a2;
+}
+
+
+/* ==========================
+   STATUS
+========================== */
+
+.request-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 54px;
+  height: 22px;
+  padding: 0 7px;
+
+  border-radius: 5px;
+
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.request-status.pending {
+  background: #fff0d0;
+  color: #d98500;
+}
+
+.request-status.approved {
+  background: #e2f3df;
+  color: #28752c;
+}
+
+.request-status.rejected {
+  background: #fbe0dd;
+  color: #d53b2e;
+}
+
+.request-status.cancelled {
+  background: #e2edf9;
+  color: #3475b5;
+}
+
+
+/* ==========================
+   ACTION
+========================== */
+
+.request-action-btn {
+  width: 28px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: transparent;
+
+  color: #555555;
+  cursor: pointer;
+}
+
+.request-action-btn:hover {
+  color: #a85c20;
+}
+
+
+/* ==========================
+   COLUMN SIZING
+========================== */
+
+.leave-requests-table th:nth-child(1),
+.leave-requests-table td:nth-child(1) {
+  width: 75px;
+}
+
+.leave-requests-table th:nth-child(2),
+.leave-requests-table td:nth-child(2) {
+  width: 145px;
+}
+
+.leave-requests-table th:nth-child(3),
+.leave-requests-table td:nth-child(3) {
+  width: 110px;
+}
+
+.leave-requests-table th:nth-child(4),
+.leave-requests-table td:nth-child(4) {
+  width: 90px;
+}
+
+.leave-requests-table th:nth-child(5),
+.leave-requests-table td:nth-child(5) {
+  width: 90px;
+}
+
+.leave-requests-table th:nth-child(6),
+.leave-requests-table td:nth-child(6) {
+  width: 45px;
+  text-align: center;
+}
+
+.leave-requests-table th:nth-child(7),
+.leave-requests-table td:nth-child(7) {
+  width: 110px;
+}
+
+.leave-requests-table th:nth-child(8),
+.leave-requests-table td:nth-child(8) {
+  width: 80px;
+}
+
+.leave-requests-table th:nth-child(9),
+.leave-requests-table td:nth-child(9) {
+  width: 95px;
+}
+
+.leave-requests-table th:nth-child(10),
+.leave-requests-table td:nth-child(10) {
+  width: 45px;
+  text-align: center;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 900px) {
+  .leave-requests-header {
+    padding: 0 14px;
+  }
+
+  .leave-request-tabs {
+    padding: 0 14px;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .leave-requests-header {
+    height: 55px;
+  }
+
+  .leave-request-tabs {
+    overflow-x: auto;
+    gap: 20px;
+  }
+
+  .leave-request-tabs button {
+    flex-shrink: 0;
+  }
+}

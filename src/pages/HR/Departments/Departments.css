@@ -1,0 +1,83 @@
+/* ==========================
+   DEPARTMENTS CONTENT
+========================== */
+
+.departments-content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  background: #ffffff;
+  min-height: 100%;
+}
+
+
+/* ==========================
+   HEADER
+========================== */
+
+.department-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.department-header h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.department-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+
+/* ==========================
+   ADD DEPARTMENT BUTTON
+========================== */
+
+.add-department-btn {
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 7px;
+  background: #f2b353;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.add-department-btn:hover {
+  background: #871d1d;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 768px) {
+  .departments-content {
+    padding: 18px;
+  }
+
+  .department-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .add-department-btn {
+    width: 100%;
+  }
+}

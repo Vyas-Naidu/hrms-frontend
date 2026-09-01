@@ -1,0 +1,169 @@
+.performance-overview {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 20px;
+}
+
+.rating-overview,
+.kpi-overview {
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-sizing: border-box;
+}
+
+.overview-title {
+  margin-bottom: 15px;
+}
+
+.overview-title h2 {
+  margin: 0 0 6px;
+  color: #622b14;
+  font-size: 21px;
+}
+
+.overview-title span {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Chart */
+
+.rating-chart {
+  height: 225px;
+  display: flex;
+}
+
+.y-axis {
+  width: 30px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #222;
+  font-size: 13px;
+  padding-bottom: 25px;
+  box-sizing: border-box;
+}
+
+.chart-area {
+  position: relative;
+  flex: 1;
+  height: 205px;
+}
+
+.chart-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chart-grid span {
+  width: 100%;
+  border-top: 1px dashed #ddd;
+}
+
+.bars {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 205px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.bar-column {
+  height: 205px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 65px;
+}
+
+.rating-bar {
+  width: 45px;
+  max-height: 180px;
+  background:  #995F2F;
+  border-radius: 5px 5px 0 0;
+}
+
+.bar-label {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #222;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* KPI */
+
+.kpi-list {
+  margin-top: 20px;
+}
+
+.kpi-row {
+  display: grid;
+  grid-template-columns: 135px 1fr 55px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.kpi-name {
+  font-size: 15px;
+  color: #222;
+}
+
+.kpi-progress {
+  height: 12px;
+  background: #e4e4e4;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.kpi-progress-fill {
+  height: 100%;
+  background: #978f66;
+  border-radius: 10px;
+}
+
+.kpi-score {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+}
+
+@media (max-width: 900px) {
+  .performance-overview {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .kpi-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .kpi-score {
+    text-align: left;
+  }
+
+  .bar-label {
+    font-size: 11px;
+    white-space: normal;
+  }
+}

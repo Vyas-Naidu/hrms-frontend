@@ -1,0 +1,179 @@
+/* ==========================
+   LEAVE MANAGEMENT CARDS
+========================== */
+
+.leave-management-cards {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+
+  box-sizing: border-box;
+}
+
+
+/* ==========================
+   CARD
+========================== */
+
+.leave-card {
+  min-height: 100px;
+  height: 100px;
+
+  background: #ffffff;
+
+  border: 1px solid #e4d6a9;
+  border-radius: 12px;
+
+  padding: 20px 24px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  box-sizing: border-box;
+
+  box-shadow: 0 2px 8px rgba(98, 43, 20, 0.03);
+
+  transition: 0.2s ease;
+}
+
+.leave-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 15px rgba(98, 43, 20, 0.08);
+}
+
+
+/* ==========================
+   ICON
+========================== */
+
+.leave-card-icon {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* TOTAL */
+
+.total-leave-icon {
+  background: #f9dfd0;
+  color: #a95720;
+}
+
+
+/* APPROVED */
+
+.approved-leave-icon {
+  background: #e1efdc;
+  color: #4d9b45;
+}
+
+
+/* PENDING */
+
+.pending-leave-icon {
+  background: #fff0c7;
+  color: #c27408;
+}
+
+
+/* REJECTED */
+
+.rejected-leave-icon {
+  background: #ffe0dc;
+  color: #ef4b35;
+}
+
+
+/* ==========================
+   CARD CONTENT
+========================== */
+
+.leave-card-info {
+  min-width: 0;
+}
+
+.leave-card-info p {
+  margin: 0;
+
+  color: #4d4038;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+.leave-card-info h2 {
+  margin: 6px 0 5px;
+
+  color: #622b14;
+
+  font-size: 26px;
+
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+.leave-card-info span {
+  display: block;
+
+  color: #4d8c3b;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1200px) {
+
+  .leave-management-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .leave-management-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .leave-card {
+    height: 110px;
+
+    padding: 16px;
+  }
+
+  .leave-card-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .leave-card-info h2 {
+    font-size: 23px;
+  }
+
+}

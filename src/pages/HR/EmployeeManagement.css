@@ -1,0 +1,600 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #F7F3EC;
+  color: #622B14;
+}
+
+/* ================= PAGE ================= */
+
+.employee-page {
+
+  position: relative;
+  top: -40px;
+  width: 100%;
+  padding: 30px 30px 25px 15px;
+}
+
+.employee-page h1 {
+  margin: 0 0 24px;
+  color: #622B14;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* ================= FILTERS ================= */
+.filter-card {
+   display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: nowrap;
+  width: 100%;
+  
+
+  
+}
+
+/* Search */
+.filter-card .search-box {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+  padding: 0 14px;
+
+  background: #ffffff;
+  border: 1px solid #E4D6A9;
+  border-radius: 10px;
+
+  box-sizing: border-box;
+}
+
+.filter-card .search-box svg {
+  width: 22px;
+  height: 22px;
+
+  flex-shrink: 0;
+
+  color: #978F66;
+}
+
+.filter-card .search-box input {
+  width: 80%;
+  height: 40px;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #622B14;
+
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.filter-card .search-box input::placeholder {
+  color: #978F66;
+
+}
+/* ================= SELECT ================= */
+.filter-card .select-box {
+  width: 150px;
+  min-width: 100px;
+  height: 40px;
+
+  position: relative;
+}
+
+.filter-card .select-box select {
+  width: 100%;
+  height: 100%;
+
+  padding: 0 38px 0 14px;
+
+  border: 1px solid #E4D6A9;
+  border-radius: 10px;
+
+  outline: none;
+  appearance: none;
+
+  background: #ffffff;
+  color: #622B14;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.filter-card .select-box svg {
+  position: absolute;
+
+  top: 50%;
+  right: 13px;
+
+  width: 20px;
+  height: 20px;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+
+  color: #978F66;
+}
+
+/*============= BUTTONS ================= */
+
+.filter-card .export-button {
+  width: 100px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #F5EADB;
+  color: #622B14;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.filter-card .export-button:hover {
+  background: #E4D6A9;
+}
+
+
+
+/* ================= EMPLOYEE CARD ================= */
+
+.filter-card .add-button {
+  width: 155px;
+  min-width: 155px;
+  max-width: 155px;
+
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #f2b353;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  box-shadow: 0 5px 14px rgba(153, 95, 47, 0.18);
+}
+
+.filter-card .add-button:hover {
+  background: #871d1d;
+}
+
+.filter-card .add-button span {
+  font-size: 20px;
+  line-height: 1;
+}
+/* ================= TABLE ================= */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.employee-card table {
+  width: 100%;
+  min-width: 1100px;
+
+  border-collapse: collapse;
+}
+
+.employee-card th {
+  padding: 14px 14px;
+
+  background: #FFFAF0;
+  color: #978F66;
+
+  text-align: left;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+
+  white-space: nowrap;
+}
+
+.employee-card td {
+  padding: 16px 14px;
+
+  border-top: 1px solid #F0E7D8;
+
+  color: #622B14;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+.employee-card tbody tr {
+  height: 70px;
+}
+
+.employee-card tbody tr:hover {
+  background: #FFFAF0;
+}
+
+
+/* ================= AVATAR ================= */
+
+.employee-avatar {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #E4D6A9;
+  color: #995F2F;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ================= DEPARTMENT ================= */
+
+.department-text {
+  color: #995F2F;
+  font-weight: 600;
+}
+
+
+/* ================= STATUS ================= */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status.present {
+  background: #D8EFDF;
+  color: #3D7650;
+}
+
+.status.on-leave {
+  background: #E4D6A9;
+  color: #622B14;
+}
+
+.status.absent {
+  background: #F3DEDA;
+  color: #8A3F32;
+}
+
+
+/* ================= ACTIONS ================= */
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.view-button {
+  min-width: 62px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid #E4D6A9;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #995F2F;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.view-button:hover {
+  background: #995F2F;
+  color: #ffffff;
+  border-color: #995F2F;
+}
+
+/* ================= NO DATA ================= */
+
+.no-data {
+  padding: 30px;
+
+  color: #978F66 ;
+  text-align: center;
+  font-style: italic;
+}
+
+
+/* ================= PAGINATION ================= */
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 18px 20px;
+
+  border-top: 1px solid #F0E7D8;
+}
+
+.pagination-arrow,
+.page-number,
+.previous-button,
+.next-button {
+  height: 34px;
+
+  border: 1px solid #E4D6A9;
+  border-radius: 7px;
+
+  background: #ffffff;
+  color: #978F66;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.pagination-arrow {
+  width: 34px;
+}
+
+.page-number {
+  width: 34px;
+}
+
+.page-number.selected {
+  border-color: #995F2F;
+  background: #995F2F;
+  color: #ffffff;
+}
+
+.pagination-arrow:hover,
+.page-number:hover {
+  border-color: #995F2F;
+  color: #995F2F;
+}
+
+.page-number.selected:hover {
+  color: #ffffff;
+}
+
+.pagination-spacer {
+  flex: 1;
+}
+
+.previous-button,
+.next-button {
+  padding: 0 14px;
+}
+
+.next-button {
+  border-color: #995F2F;
+  background: #995F2F;
+  color: #ffffff;
+}
+
+
+/* ================= FOOTER ================= */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 22px 4px 5px;
+
+  color: #978F66;
+  font-size: 11px;
+}
+
+.footer div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.footer b {
+  color: #978F66;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1200px) {
+
+  .employee-page {
+    padding: 25px 20px;
+  }
+
+  .filter-card {
+    grid-template-columns:
+      minmax(220px, 1fr)
+      180px
+      180px
+      110px
+      160px;
+
+    gap: 10px;
+  }
+
+  .filter-card .select-box {
+    width: 180px;
+    min-width: 180px;
+  }
+
+  .filter-card .export-button {
+    width: 110px;
+    min-width: 110px;
+    max-width: 110px;
+  }
+
+  .filter-card .add-button {
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+  }
+}
+
+
+@media (max-width: 800px) {
+
+  .employee-page {
+    padding: 20px 15px;
+  }
+
+  .filter-card {
+    grid-template-columns: 1fr;
+  }
+
+  .search-box,
+  .select-box,
+  .export-button,
+  .add-button {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+
+/* ================= EMPLOYEE MODAL ================= */
+
+.employee-modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 5000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.employee-modal {
+  position: relative;
+
+  width: min(700px, 70vw);
+  max-height: 92vh;
+
+  background: #ffffff;
+
+  border-radius: 12px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.employee-modal-close {
+  position: absolute;
+
+  top: 15px;
+  right: 18px;
+
+  z-index: 20;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #F3E5D4;
+  color: #622B14;
+
+  font-size: 25px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.employee-modal-close:hover {
+  background: #995F2F;
+  color: #ffffff;
+}
+
+.employee-modal .employee-onboarding {
+  min-height: auto;
+  height: auto;
+
+  padding: 18px;
+
+  background: transparent;
+}
+
+.employee-modal .wizard-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+.employee-card{background:#fff;border:1px solid #E8DED4;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,.06);overflow:hidden}.employee-card table{min-width:980px}.employee-card tbody tr{transition:background .18s ease}.filter-card{margin-bottom:18px}.filter-card .search-box{flex:1}.employee-page{top:0;padding:24px 8px 28px}
+@media(max-width:1024px){.employee-page{padding:20px 4px}.filter-card{flex-wrap:wrap}.filter-card .search-box{flex:1 1 280px}.filter-card .select-box{flex:1 1 180px}.filter-card .export-button,.filter-card .add-button{flex:0 1 auto}}
+@media(max-width:600px){.employee-page{padding:16px 0}.employee-page h1{font-size:24px;margin-bottom:18px}.filter-card{gap:10px}.filter-card .search-box,.filter-card .select-box,.filter-card .export-button,.filter-card .add-button{width:100%;max-width:none;min-width:0;flex-basis:100%}.table-wrapper{border:1px solid #E8DED4;border-radius:12px}.employee-card table{min-width:900px}}
+@media(max-width:360px){.employee-page h1{font-size:21px}}
