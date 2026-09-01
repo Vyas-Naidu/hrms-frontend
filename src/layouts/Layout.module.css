@@ -1,0 +1,20 @@
+.app-layout{width:100%;min-height:100vh}.main-area{margin-left:230px;width:calc(100% - 230px);min-height:100vh}.page-content{padding:24px;min-height:calc(100vh - 70px);background:#fff}
+@media(max-width:1024px){.main-area{margin-left:0;width:100%}.page-content{padding:20px}}
+@media(max-width:600px){.page-content{padding:16px 12px}}
+
+
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    border: 0;
+    background: rgba(45, 28, 18, 0.28);
+    z-index: 900;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,210 @@
+/* ==========================
+   DASHBOARD CHART
+========================== */
+
+.dashboard-chart {
+  width: 100%;
+  display: grid;
+
+  /* 5 cards side by side */
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  gap: 14px;
+  margin-bottom: 20px;
+
+  box-sizing: border-box;
+}
+
+
+/* ==========================
+   CARD
+========================== */
+
+.chart-card {
+  width: 100%;
+  min-width: 0;
+  height: 100px;
+
+  background: #ffffff;
+
+  border: 1px solid #eadfcf;
+  border-radius: 12px;
+
+  padding: 16px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  box-sizing: border-box;
+
+  box-shadow: 0 2px 8px rgba(98, 43, 20, 0.03);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* ==========================
+   ICON
+========================== */
+
+.chart-icon {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+  margin-right: 10px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Employees */
+
+.chart-icon.employees {
+  background: #f9dfd0;
+  color: #a84f17;
+}
+
+
+/* Departments */
+
+.chart-icon.departments {
+  background: #fff0c7;
+  color: #a65b18;
+}
+
+
+/* Present */
+
+.chart-icon.present {
+  background: #dcefd9;
+  color: #4d9b45;
+}
+
+
+/* Leave */
+
+.chart-icon.leave {
+  background: #f9dfd0;
+  color: #a84f17;
+}
+
+
+/* Absent */
+
+.chart-icon.absent {
+  background: #e1f0fb;
+  color: #2387c4;
+}
+
+
+/* ==========================
+   TEXT
+========================== */
+
+.chart-info {
+  min-width: 0;
+}
+
+.chart-info p {
+  margin: 0;
+
+  color: #4d4038;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.chart-info h2 {
+  margin: 5px 0 4px;
+
+  color: #622b14;
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+
+/* ==========================
+   STATUS
+========================== */
+
+.chart-success {
+  color: #4d9b45;
+  font-size: 11px;
+}
+
+.chart-warning {
+  color: #e87520;
+  font-size: 11px;
+}
+
+.chart-danger {
+  color: #ef4b35;
+  font-size: 11px;
+}
+
+
+/* ==========================
+   HOVER
+========================== */
+
+.chart-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 5px 15px rgba(98, 43, 20, 0.08);
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+/* Keep 5 cards on desktop */
+
+@media (min-width: 1201px) {
+  .dashboard-chart {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+
+/* 3 cards */
+
+@media (max-width: 1200px) {
+  .dashboard-chart {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+
+/* 2 cards */
+
+@media (max-width: 800px) {
+  .dashboard-chart {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* 1 card */
+
+@media (max-width: 550px) {
+  .dashboard-chart {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    height: 100px;
+  }
+}

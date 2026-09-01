@@ -1,0 +1,25 @@
+.performance-review {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 28px 36px;
+  background: #ffffff;
+  min-height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.performance-header {
+  margin-bottom: 22px;
+}
+
+.performance-header h1 {
+  margin: 0;
+  color: #622b14;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.performance-header p {
+  margin: 8px 0 0;
+  color: #555;
+  font-size: 16px;
+}

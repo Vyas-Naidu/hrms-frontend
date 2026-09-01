@@ -1,0 +1,147 @@
+/* ===========================
+   QUICK ACTION CARD
+=========================== */
+
+.quick-action-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    cursor:pointer;
+
+    transition:.35s ease;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.quick-action-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:5px;
+
+    height:100%;
+
+    background:#9C5A2E;
+
+}
+
+.quick-action-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 35px rgba(0,0,0,.12);
+
+}
+
+.quick-action-icon{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#fff;
+
+    font-size:28px;
+
+    transition:.35s;
+
+    flex-shrink:0;
+
+}
+
+.quick-action-card:hover .quick-action-icon{
+
+    transform:rotate(-8deg) scale(1.1);
+
+}
+
+.quick-action-content{
+
+    flex:1;
+
+}
+
+.quick-action-content h3{
+
+    font-size:18px;
+
+    color:#2D1C12;
+
+    margin-bottom:6px;
+
+}
+
+.quick-action-content p{
+
+    font-size:14px;
+
+    color:#777;
+
+    line-height:1.5;
+
+}
+
+.quick-arrow{
+
+    font-size:18px;
+
+    color:#9C5A2E;
+
+    transition:.35s;
+
+}
+
+.quick-action-card:hover .quick-arrow{
+
+    transform:translateX(8px);
+
+}
+
+@media(max-width:768px){
+
+    .quick-action-card{
+
+        padding:18px;
+
+    }
+
+    .quick-action-icon{
+
+        width:55px;
+
+        height:55px;
+
+        font-size:24px;
+
+    }
+
+}

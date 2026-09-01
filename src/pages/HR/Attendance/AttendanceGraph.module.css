@@ -1,0 +1,188 @@
+.attendance-graphs {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.attendance-overview,
+.attendance-trend {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.attendance-overview h3,
+.attendance-trend h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #222;
+}
+
+.overview-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  padding: 25px 0;
+}
+
+.donut-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.donut {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      #995f2f 0deg 318.6deg,
+      #E4D6A9 318.6deg 343.4deg,
+      #978F66 343.4deg 360deg
+    );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut::before {
+  content: "";
+  position: absolute;
+}
+
+.donut-center {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut-center strong {
+  font-size: 28px;
+}
+
+.donut-center span {
+  font-size: 13px;
+}
+
+.attendance-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.legend-item {
+  display: grid;
+  grid-template-columns: 12px 80px auto;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-dot.green {
+  background: #995f2f;
+}
+
+.legend-dot.red {
+  background: #E4D6A9;
+}
+
+.legend-dot.orange {
+  background: #978F66;
+}
+
+.attendance-message {
+  background: #eaf6ee;
+  color: #995f2f;
+  border-radius: 7px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.trend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trend-header select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.chart {
+  display: flex;
+  height: 240px;
+  margin-top: 20px;
+}
+
+.chart-lines {
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px 0 25px;
+  font-size: 12px;
+}
+
+.chart-area {
+  flex: 1;
+  position: relative;
+}
+
+.chart-area svg {
+  width: 100%;
+  height: 210px;
+  overflow: visible;
+}
+
+.chart-days {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding-top: 8px;
+}
+
+.trend-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.trend-summary div {
+  text-align: center;
+  padding: 10px;
+  border-radius: 7px;
+  background: #edf7ef;
+  font-size: 12px;
+}
+
+.trend-summary div:nth-child(2) {
+  background: #fdeaea;
+  color: #222;
+}
+
+.trend-summary div:nth-child(3) {
+  background: #edf3fb;
+  color: #222;
+}

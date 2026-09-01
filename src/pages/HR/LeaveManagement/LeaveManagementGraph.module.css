@@ -1,0 +1,465 @@
+/* ==========================
+   GRAPH / CHART SECTION
+========================== */
+
+.leave-management-graphs {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.1fr 1.5fr 1fr;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+
+/* ==========================
+   COMMON CHART CARD
+========================== */
+
+.leave-chart-card {
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #eee5dc;
+  border-radius: 9px;
+  box-sizing: border-box;
+  padding: 16px 18px;
+  box-shadow: 0 2px 8px rgba(80, 45, 20, 0.04);
+}
+
+.leave-chart-card h3 {
+  margin: 0 0 16px;
+  color: #222222;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* ==========================
+   USAGE OVERVIEW
+========================== */
+
+.usage-card {
+  height: 255px;
+}
+
+.usage-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 15px;
+}
+
+
+/* DONUT */
+
+.usage-donut {
+  width: 170px;
+  height: 170px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #622B14 0deg 160deg,
+      #995F2F 160deg 260deg,
+      #978F66 260deg 360deg
+    );
+}
+
+.usage-donut::before {
+  content: "";
+  position: absolute;
+}
+
+.usage-donut-center {
+  width: 105px;
+  height: 105px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.usage-donut-center strong {
+  color: #171717;
+  font-size: 25px;
+}
+
+.usage-donut-center span {
+  margin-top: 3px;
+  color: #333333;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.usage-donut-center small {
+  margin-top: 4px;
+  color: #777777;
+  font-size: 10px;
+}
+
+
+/* LEGEND */
+
+.usage-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.usage-legend > div {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  column-gap: 8px;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  margin-top: 4px;
+  border-radius: 50%;
+}
+
+.legend-dot.green {
+  background: #622B14;
+}
+
+.legend-dot.blue {
+  background: #995F2F;
+}
+
+.legend-dot.purple {
+  background: #978F66;
+}
+
+.usage-legend p {
+  margin: 0;
+  font-size: 12px;
+  color: #333333;
+}
+
+.usage-legend b {
+  grid-column: 2;
+  font-size: 12px;
+  font-weight: 400;
+  color: #555555;
+}
+
+
+/* ==========================
+   TREND CARD
+========================== */
+
+.trend-card {
+  height: 255px;
+}
+
+.chart-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.chart-title-row h3 {
+  margin-bottom: 10px;
+}
+
+.chart-title-row h3 span {
+  font-weight: 400;
+}
+
+
+/* TREND LEGEND */
+
+.trend-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.trend-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: #444444;
+}
+
+.trend-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.trend-legend i.green {
+  background: #622B14;
+}
+
+.trend-legend i.blue {
+  background: #995F2F;
+}
+
+.trend-legend i.purple {
+  background: #978F66;
+}
+
+
+/* TREND CHART */
+
+.trend-chart {
+  display: flex;
+  width: 100%;
+  height: 190px;
+}
+
+.y-axis {
+  width: 22px;
+  height: 155px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  color: #777777;
+  font-size: 10px;
+}
+
+.chart-area {
+  position: relative;
+  flex: 1;
+  height: 180px;
+  border-left: 1px solid #eeeeee;
+}
+
+.grid-line {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  margin-bottom: 28px;
+  background: #eeeeee;
+}
+
+.trend-svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 155px;
+  overflow: visible;
+}
+
+.x-axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: space-between;
+
+  color: #666666;
+  font-size: 9px;
+}
+
+
+/* ==========================
+   STATUS CARD
+========================== */
+
+.status-card {
+  height: 255px;
+}
+
+.status-content {
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  gap: 20px;
+}
+
+
+/* STATUS DONUT */
+
+.status-donut {
+  width: 170px;
+  height: 170px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #E4D6A9 0deg 180deg,
+      #995F2F 180deg 240deg,
+      #978F66 240deg 290deg,
+      #622B14 290deg 360deg
+    );
+}
+
+.status-donut-center {
+  width: 105px;
+  height: 105px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.status-donut-center strong {
+  font-size: 25px;
+  color: #171717;
+}
+
+.status-donut-center span {
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-donut-center small {
+  margin-top: 3px;
+  color: #555555;
+  font-size: 10px;
+}
+
+
+/* STATUS LEGEND */
+.status-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;          /* controls vertical spacing */
+  width: 130px;       /* controls legend width */
+}
+
+.status-legend div {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  align-items: center;
+  column-gap: 8px;
+  font-size: 11px;
+  min-width: 0;
+}
+.status-legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+
+.status-legend i.orange {
+  background: #E4D6A9;
+}
+
+.status-legend i.green {
+  background: #995F2F;
+}
+
+.status-legend i.red {
+  background: #978F66;
+}
+
+.status-legend i.blue {
+  background: #622B14;
+}
+
+.status-legend span {
+  color: #333333;
+   white-space: nowrap;
+}
+
+.status-legend b {
+    display: none;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1200px) {
+  .leave-management-graphs {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .calendar-card,
+  .summary-card {
+    grid-column: auto;
+  }
+
+  .usage-card,
+  .trend-card,
+  .status-card {
+    height: 260px;
+  }
+}
+
+
+@media (max-width: 800px) {
+  .leave-management-graphs {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-card,
+  .summary-card {
+    grid-column: auto;
+  }
+
+  .usage-card,
+  .trend-card,
+  .status-card,
+  .calendar-card,
+  .summary-card {
+    height: auto;
+    min-height: 220px;
+  }
+
+  .chart-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .usage-content,
+  .status-content {
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 500px) {
+  .usage-content,
+  .status-content {
+    flex-direction: column;
+  }
+
+  .usage-donut,
+  .status-donut {
+    width: 145px;
+    height: 145px;
+  }
+
+  .usage-donut-center,
+  .status-donut-center {
+    width: 90px;
+    height: 90px;
+  }
+}

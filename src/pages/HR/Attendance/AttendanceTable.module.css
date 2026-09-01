@@ -1,0 +1,161 @@
+.attendance-table-section {
+  background: #fff;
+  border-radius: 12px;
+}
+
+.attendance-filters {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr 200px;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.filter-box {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.filter-box label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.filter-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #444;
+}
+
+.filter-input span:nth-child(2) {
+  flex: 1;
+}
+
+.export-btn {
+  border: none;
+  border-radius: 9px;
+  background: #ad4e16;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.export-btn:hover {
+  background: #978f66;
+}
+
+.attendance-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+}
+
+.attendance-table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+}
+
+.attendance-table th {
+  background: #fafafa;
+  padding: 12px 10px;
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.attendance-table td {
+  padding: 11px 10px;
+  border-top: 1px solid #f0f0f0;
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.attendance-table th:nth-child(1),
+.attendance-table td:nth-child(1),
+.attendance-table th:nth-child(2),
+.attendance-table td:nth-child(2),
+.attendance-table th:nth-child(3),
+.attendance-table td:nth-child(3) {
+  text-align: left;
+}
+
+.employee-name {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.employee-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #555;
+}
+
+.day-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 24px;
+
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.day-status.p {
+  background: #e8f5ed;
+  color: #16875b;
+}
+
+.day-status.a {
+  background: #fde5e5;
+  color: #d92727;
+}
+
+.day-status.l {
+  background: #fff1da;
+  color: #df8d0b;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-badge.present {
+  background: #16875b;
+}
+
+.status-badge.absent {
+  background: #e28a12;
+}
+
+.status-badge.on-leave {
+  background: #2671c7;
+}

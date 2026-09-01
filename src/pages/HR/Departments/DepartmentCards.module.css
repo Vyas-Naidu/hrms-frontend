@@ -1,0 +1,176 @@
+/* ==========================
+   DEPARTMENT CARDS
+========================== */
+
+.department-cards {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+
+  box-sizing: border-box;
+}
+
+
+/* ==========================
+   CARD
+========================== */
+
+.department-card {
+  min-width:128px;
+  height: 100px;
+
+  background: #ffffff;
+
+  border: 1px solid #e4d6a9;
+  border-radius: 12px;
+
+  padding: 10px 15px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  box-sizing: border-box;
+
+  transition: 0.2s ease;
+
+  box-shadow: 0 2px 8px rgba(98, 43, 20, 0.03);
+}
+
+.department-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 5px 15px rgba(98, 43, 20, 0.08);
+}
+
+
+/* ==========================
+   ICON
+========================== */
+
+.department-card-icon {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Total Departments */
+
+.departments-icon {
+  background: #f9dfd0;
+  color: #a95720;
+}
+
+
+/* Total Employees */
+
+.employees-icon {
+  background: #e1efdc;
+  color: #4d9b45;
+}
+
+
+/* This Month */
+
+.month-icon {
+  background: #dff0fa;
+  color: #2387c4;
+}
+
+
+/* Most Employees */
+
+.most-icon {
+  background: #fff0c7;
+  color: #c27408;
+}
+
+
+/* ==========================
+   CARD TEXT
+========================== */
+
+.department-card-info {
+  min-width: 0;
+}
+
+.department-card-info p {
+  margin: 0;
+
+  color: #4d4038;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+.department-card-info h2 {
+  margin: 6px 0 5px;
+
+  color: #622b14;
+
+  font-size: 26px;
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+.department-card-info span {
+  display: block;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.card-success {
+  color: #4d8c3b;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1200px) {
+
+  .department-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .department-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .department-card {
+    height: 110px;
+
+    padding: 16px;
+  }
+
+  .department-card-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+}

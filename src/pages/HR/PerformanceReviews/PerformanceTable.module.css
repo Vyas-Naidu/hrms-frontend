@@ -1,0 +1,151 @@
+.performance-table-container {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 14px;
+  padding: 20px 12px 8px;
+  box-sizing: border-box;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px 16px;
+}
+
+.table-header h2 {
+  margin: 0 0 5px;
+  color: #622b14;
+  font-size: 21px;
+}
+
+.table-header span {
+  color: #666;
+  font-size: 14px;
+}
+
+.review-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #222;
+}
+
+.review-status strong {
+  font-size: 14px;
+}
+
+.status-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #b68743;
+  display: inline-block;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.performance-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 13px;
+}
+
+.performance-table th {
+  background: #eee4d0;
+  color: #222;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.performance-table th:first-child {
+  border-radius: 12px 0 0 0;
+}
+
+.performance-table th:last-child {
+  border-radius: 0 12px 0 0;
+}
+
+.performance-table td {
+  padding: 10px 18px;
+  border-top: 1px solid #e2e2e2;
+  color: #222;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.employee-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+.employee-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.avatar-0 {
+  background: #f7dfc3;
+}
+
+.avatar-1 {
+  background: #dfcef5;
+}
+
+.rating-score {
+  color:  #995F2F;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.review-action {
+  min-width: 150px;
+  padding: 10px 18px;
+  border-radius: 9px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.review-action.view {
+  background: #fff;
+  color: #8a6333;
+  border: 1px solid #b99b70;
+}
+
+.review-action.feedback {
+  background:  #995F2F;
+  color: #fff;
+  border: 1px solid #995F2F;
+}
+
+.review-action:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 700px) {
+  .table-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+}
