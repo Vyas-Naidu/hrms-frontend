@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import {
   FaHome,
@@ -31,8 +31,16 @@ const navigationGroups = [
   {
     items: [
       { label: "Attendance", path: "/hr/attendance", icon: FaCalendarCheck },
-      { label: "Leave Management", path: "/hr/leave-management", icon: FaCalendarAlt },
-      { label: "Performance Reviews", path: "/hr/performance-reviews", icon: FaStar },
+      {
+        label: "Leave Management",
+        path: "/hr/leave-management",
+        icon: FaCalendarAlt,
+      },
+      {
+        label: "Performance Reviews",
+        path: "/hr/performance-reviews",
+        icon: FaStar,
+      },
       { label: "Reports", path: "/hr/reports", icon: FaFileAlt },
     ],
   },
@@ -44,6 +52,12 @@ function Sidebar({
   mobileOpen = false,
   onMobileClose,
 }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/", { replace: true });
+  };
+
   return (
     <aside
       className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""} ${
@@ -51,30 +65,24 @@ function Sidebar({
       }`}
       aria-label="Main navigation"
     >
-      <div className={styles.logoArea}>
+      {/* Logo */}
+      <button
+        type="button"
+        className={styles.logoArea}
+        onClick={onToggle}
+        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+      >
         <img
           src="/hrms-logo.png"
           alt="HRMS"
           className={`${styles.logo} ${styles.logoFull}`}
         />
 
-        {/* Put the collapsed/icon version at public/hrms-logo-icon.png */}
         <img
           src="/hrms-logo-icon.png"
           alt="HRMS"
           className={`${styles.logo} ${styles.logoCollapsed}`}
         />
-      </div>
-
-      {/* Desktop collapse button */}
-      <button
-        type="button"
-        className={styles.toggleButton}
-        onClick={onToggle}
-        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-      >
-        ☰
       </button>
 
       {/* Mobile close button */}
@@ -87,6 +95,7 @@ function Sidebar({
         ×
       </button>
 
+      {/* Navigation */}
       <nav className={styles.navigation}>
         {navigationGroups.map((group, groupIndex) => (
           <div className={styles.group} key={groupIndex}>
@@ -97,8 +106,8 @@ function Sidebar({
                 <NavLink
                   key={item.path}
                   to={item.path}
-                  title={collapsed ? item.label : undefined}
                   onClick={onMobileClose}
+                  data-tooltip={collapsed ? item.label : ""}
                   className={({ isActive }) =>
                     `${styles.navItem} ${isActive ? styles.active : ""}`
                   }
@@ -115,16 +124,23 @@ function Sidebar({
         ))}
       </nav>
 
+      {/* Bottom section */}
       <div className={styles.bottom}>
-        <button type="button" className={styles.logout}>
+        {/* Logout */}
+        <button
+          type="button"
+          className={styles.logout}
+          onClick={handleLogout}
+        >
           <FaSignOutAlt />
           <span>Logout</span>
         </button>
 
+        {/* Profile */}
         <button
           type="button"
           className={styles.profile}
-          title={collapsed ? "Dominic Toretto" : undefined}
+          data-tooltip={collapsed ? "Dominic Toretto" : ""}
         >
           <span className={styles.avatar}>
             <FaUser />
