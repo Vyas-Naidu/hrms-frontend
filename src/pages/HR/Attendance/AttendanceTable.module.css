@@ -39,7 +39,7 @@
 .export-btn {
   border: none;
   border-radius: 9px;
-  background: #ad4e16;
+  background: #f2b353;
   color: #fff;
   font-size: 14px;
   font-weight: 600;
@@ -52,7 +52,8 @@
 }
 
 .export-btn:hover {
-  background: #978f66;
+  background: #59595e;
+  color: #f2b353;
 }
 
 .attendance-table-wrapper {

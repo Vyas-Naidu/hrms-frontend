@@ -1,9 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import DesignationCards from "./DesignationCards";
 import DesignationTable from "./DesignationTable";
 import styles from "./Designations.module.css";
-
 const Designations = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles["designations-content"]}>
 
@@ -16,9 +17,12 @@ const Designations = () => {
           </p>
         </div>
 
-        <button className={styles["add-designation-btn"]}>
-          + Add Designation
-        </button>
+      <button
+  className={styles["add-designation-btn"]}
+  onClick={() => navigate("/hr/designations/add")}
+>
+  + Add Designation
+</button>
       </div>
 
       {/* Cards */}

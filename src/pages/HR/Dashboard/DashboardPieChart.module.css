@@ -65,9 +65,9 @@
   flex-shrink: 0;
 
   background: conic-gradient(
-    #6d2e13 0deg 313deg,
-    #a7662d 313deg 349deg,
-    #9c966f 349deg 360deg
+    rgb(66, 221, 66)  0deg 240deg,
+    rgb(227, 67, 67)  240deg 340deg,
+    orange 340deg 360deg
   );
 
   display: flex;
@@ -95,13 +95,13 @@
 
 .attendance-inner strong {
   font-size: 32px;
-  color: #6d2e13;
+  color: #121212;
 }
 
 .attendance-inner span {
   margin-top: 5px;
   font-size: 14px;
-  color: #a7662d;
+  color: #121212;
 }
 
 
@@ -122,7 +122,7 @@
   align-items: center;
   gap: 10px;
 
-  color: #6d2e13;
+  color: #121212;
   font-size: 15px;
 }
 
@@ -142,15 +142,15 @@
 }
 
 .attendance-dot.present {
-  background: #6d2e13;
+  background: rgb(54, 199, 54);
 }
 
 .attendance-dot.leave {
-  background: #a7662d;
+  background: rgb(199, 25, 25);;
 }
 
 .attendance-dot.absent {
-  background: #9c966f;
+  background: orange;
 }
 
 
@@ -168,7 +168,7 @@
   border-radius: 10px;
 
   background: #fff7ed;
-  color: #6d2e13;
+  color: #121212;
 
   display: flex;
   align-items: center;
@@ -255,7 +255,7 @@
 
 .announcement-info span {
   font-size: 14px;
-  color: #6d2e13;
+  color: #121212;
 }
 
 
@@ -270,7 +270,7 @@
   border: none;
   background: transparent;
 
-  color: #871d1d;
+  color: #121212;
 
   display: flex;
   align-items: center;

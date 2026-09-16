@@ -16,6 +16,9 @@ export const employeeApi = {
 
   getDocuments: (employeeId) =>
     apiClient.get(`/employees/${employeeId}/documents`),
+  
+  uploadDocuments: (employeeId, formData) =>
+  apiClient.post(`/employees/${employeeId}/documents`, formData),
 
   downloadDocument: (documentId) =>
     apiClient.get(`/documents/${documentId}`, {

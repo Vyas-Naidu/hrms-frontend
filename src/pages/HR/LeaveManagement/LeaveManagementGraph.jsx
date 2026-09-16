@@ -126,7 +126,7 @@ const LeaveManagementGraph = () => {
                   660,145
                 "
                 fill="none"
-                stroke="#622B14"
+                stroke="#e33116"
                 strokeWidth="3"
               />
 
@@ -148,7 +148,7 @@ const LeaveManagementGraph = () => {
                   660,175
                 "
                 fill="none"
-                stroke="#978F66"
+                stroke="#2eea2e"
                 strokeWidth="3"
               />
 
@@ -170,7 +170,7 @@ const LeaveManagementGraph = () => {
                   660,180
                 "
                 fill="none"
-                stroke="#E4D6A9"
+                stroke="#ee9510"
                 strokeWidth="3"
               />
 

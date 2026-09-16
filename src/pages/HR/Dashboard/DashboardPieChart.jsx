@@ -33,13 +33,13 @@ const DashboardPieChart = () => {
             <div className={styles["attendance-item"]}>
               <span className={[styles["attendance-dot"], styles["present"]].join(" ")}></span>
               <span>Present</span>
-              <b>108 (87%)</b>
+              <b>80 (77%)</b>
             </div>
 
             <div className={styles["attendance-item"]}>
               <span className={[styles["attendance-dot"], styles["leave"]].join(" ")}></span>
               <span>On Leave</span>
-              <b>12 (10%)</b>
+              <b>16 (20%)</b>
             </div>
 
             <div className={styles["attendance-item"]}>

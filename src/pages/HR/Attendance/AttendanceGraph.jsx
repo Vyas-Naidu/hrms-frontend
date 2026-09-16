@@ -8,9 +8,9 @@ import styles from "./AttendanceGraph.module.css";
 
 const AttendanceGraph = () => {
   const attendanceData = [
-    { name: "Present", value: 154, percent: "88.51%", color: "green" },
-    { name: "Absent", value: 12, percent: "6.90%", color: "red" },
-    { name: "On Leave", value: 8, percent: "4.59%", color: "orange" },
+    { name: "Present", value: 50, percent: "88.51%", color: "green" },
+    { name: "Absent", value: 45, percent: "6.90%", color: "red" },
+    { name: "On Leave", value: 5, percent: "4.59%", color: "orange" },
   ];
 
   const trend = [
@@ -93,7 +93,7 @@ const AttendanceGraph = () => {
               <polyline
                 points="20,190 125,100 230,125 335,80 440,72 545,30 650,65"
                 fill="none"
-                stroke="#9b4817"
+                stroke="#ed2929"
                 strokeWidth="3"
               />
 
@@ -115,7 +115,7 @@ const AttendanceGraph = () => {
                       cy={points[index][1]}
                       r="5"
                       fill="#fff"
-                      stroke="#995F2F"
+                      stroke="#ed2929"
                       strokeWidth="3"
                     />
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { employeeApi } from "../../services/api/employee.api";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -15,7 +15,6 @@ import styles from "./EmployeeManagement.module.css";
 import { departmentApi } from "../../services/api/department.api";
 import { designationApi } from "../../services/api/designation.api";
 
-import { fetchEmployees } from "../../store/slices/employeeSlice";
 
 function EmployeeManagement() {
   const navigate = useNavigate();
@@ -24,28 +23,61 @@ function EmployeeManagement() {
   const [department, setDepartment] = useState("All Departments");
   const [designation, setDesignation] = useState("All Designations");
   const [page, setPage] = useState(1);
-  
+
   const [departments, setDepartments] = useState([]);
   const [designations, setDesignations] = useState([]);
-
+  const [employees, setEmployees] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
   const [isLoadingFilters, setIsLoadingFilters] = useState(true);
   const [filterError, setFilterError] = useState("");
 
-  const dispatch = useDispatch();
-
-  const {
-    data: employees,
-    isLoading,
-    error,
-  } = useSelector((state) => state.employees);
-
-  // =====================================================
-  // LOAD EMPLOYEES
-  // =====================================================
+  const handleView = (id) => {
+    navigate(`/hr/employees/${id}`);
+  };
 
   useEffect(() => {
-    dispatch(fetchEmployees());
-  }, [dispatch]);
+    const loadEmployees = async () => {
+      try {
+        setIsLoading(true);
+        setError("");
+
+        const response = await employeeApi.getAll();
+
+        console.log("Employees API response:", response.data);
+
+        const employeeList =
+          Array.isArray(response.data)
+            ? response.data
+            : Array.isArray(response.data?.data)
+              ? response.data.data
+              : Array.isArray(response.data?.data?.employees)
+                ? response.data.data.employees
+                : Array.isArray(response.data?.employees)
+                  ? response.data.employees
+                  : Array.isArray(response.data?.value)
+                    ? response.data.value
+                    : [];
+
+        console.log("Final employee list:", employeeList);
+
+        setEmployees(employeeList);
+      } catch (err) {
+        console.error("Failed to load employees:", err);
+
+        setError(
+          err?.response?.data?.message ||
+          "Failed to load employees."
+        );
+
+        setEmployees([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadEmployees();
+  }, []);
 
   // =====================================================
   // LOAD DEPARTMENTS + DESIGNATIONS
@@ -81,7 +113,7 @@ function EmployeeManagement() {
 
         setFilterError(
           error?.response?.data?.message ||
-            "Failed to load departments and designations.",
+          "Failed to load departments and designations.",
         );
       } finally {
         setIsLoadingFilters(false);
@@ -129,13 +161,6 @@ function EmployeeManagement() {
     return searchMatch && departmentMatch && designationMatch;
   });
 
-  // =====================================================
-  // ACTIONS
-  // =====================================================
-
-  const handleView = (id) => {
-    navigate(`/hr/employees/${id}`);
-  };
 
   // =====================================================
   // UI
@@ -226,13 +251,18 @@ function EmployeeManagement() {
           Add Employee
         </button>
       </div>
+           {/* Employee Table */}
+      <div className={styles["employee-cards"]}>
+        <h2>Employee List</h2>
+        </div>
+
 
       {/* Filter error */}
       {filterError && <div className={styles["no-data"]}>{filterError}</div>}
 
       {/* Employee Table */}
       <div className={styles["employee-card"]}>
-        <h2>Employee List</h2>
+        {/* <h2>Employee List</h2> */}
 
         <div className={styles["table-wrapper"]}>
           <table>
@@ -274,9 +304,8 @@ function EmployeeManagement() {
 
                     <td>
                       <div className={styles["employee-avatar"]}>
-                        {`${employee.first_name?.[0] || ""}${
-                          employee.last_name?.[0] || ""
-                        }`}
+                        {`${employee.first_name?.[0] || ""}${employee.last_name?.[0] || ""
+                          }`}
                       </div>
                     </td>
 

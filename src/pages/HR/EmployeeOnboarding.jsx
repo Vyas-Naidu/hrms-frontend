@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./EmployeeOnboarding.module.css";
 
 import {
@@ -9,25 +9,40 @@ import {
   FileText,
   GraduationCap,
   Briefcase,
-  File,
+  File as FileIcon,
+  Pencil,
+  Download,
 } from "lucide-react";
 
 import { departmentApi } from "../../services/api/department.api";
 import { designationApi } from "../../services/api/designation.api";
 import { employeeApi } from "../../services/api/employee.api";
 
+const formatInputDate = (value) => {
+  if (!value) return "";
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return String(value).split("T")[0];
+  }
+
+  return date.toISOString().split("T")[0];
+};
 const EmployeeOnboarding = () => {
   const navigate = useNavigate();
-
+  const { id } = useParams();
+  const isEditMode = Boolean(id)
   const [currentStep, setCurrentStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
-
+  const [errors, setErrors] = useState({});
   // ==========================================
   // BACKEND OPTIONS
   // ==========================================
 
   const [departments, setDepartments] = useState([]);
   const [designations, setDesignations] = useState([]);
+  const [managers, setManagers] = useState([])
 
   const [isLoadingOptions, setIsLoadingOptions] = useState(true);
   const [optionsError, setOptionsError] = useState("");
@@ -39,6 +54,8 @@ const EmployeeOnboarding = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [createdEmployeeCode, setCreatedEmployeeCode] = useState("");
   // ==========================================
   // FORM DATA
   // ==========================================
@@ -107,6 +124,270 @@ const EmployeeOnboarding = () => {
   });
 
   // ==========================================
+  // LOAD EMPLOYEE FOR EDIT
+  // ==========================================
+  useEffect(() => {
+    if (!id) return;
+
+    const loadEmployeeForEdit = async () => {
+      try {
+        setSubmitError("");
+
+        console.log("Loading employee for edit:", id);
+
+        const response = await employeeApi.getById(id);
+
+        console.log(
+          "EMPLOYEE EDIT DATA:",
+          JSON.stringify(response.data, null, 2)
+        );
+
+        const employee =
+          response.data?.employee ||
+          response.data?.data ||
+          response.data;
+
+        const personalInfo =
+          employee?.personal_info ||
+          employee?.personalInfo ||
+          {};
+
+        const addresses = employee?.addresses || [];
+
+        const permanentAddress =
+          addresses.find(
+            (address) =>
+              String(address?.address_type || "").toLowerCase() ===
+              "permanent"
+          ) ||
+          employee?.permanent_address ||
+          employee?.permanentAddress ||
+          {};
+
+        const currentAddress =
+          addresses.find(
+            (address) =>
+              String(address?.address_type || "").toLowerCase() ===
+              "current"
+          ) ||
+          employee?.current_address ||
+          employee?.currentAddress ||
+          {};
+
+        setFormData((prev) => ({
+          ...prev,
+
+          // Employee
+          firstName:
+            employee?.first_name ??
+            employee?.firstName ??
+            "",
+
+          lastName:
+            employee?.last_name ??
+            employee?.lastName ??
+            "",
+
+          email:
+            employee?.email ??
+            "",
+
+          mobileNumber:
+            employee?.phone ??
+            employee?.mobile_number ??
+            employee?.mobileNumber ??
+            "",
+
+          gender:
+            employee?.gender ??
+            "",
+
+          dateOfBirth: formatInputDate(
+            employee?.dob ??
+            employee?.date_of_birth ??
+            employee?.dateOfBirth
+          ),
+
+          joiningDate: formatInputDate(
+            employee?.joining_date ??
+            employee?.joiningDate
+          ),
+
+          // IMPORTANT: select fields need IDs
+          department: String(
+            employee?.department_id ??
+            employee?.departmentId ??
+            employee?.department?.id ??
+            ""
+          ),
+
+          designation: String(
+            employee?.designation_id ??
+            employee?.designationId ??
+            employee?.designation?.id ??
+            ""
+          ),
+
+          reportingManager: String(
+            employee?.manager_id ??
+            employee?.managerId ??
+            employee?.reporting_manager_id ??
+            employee?.reportingManagerId ??
+            ""
+          ),
+
+          employmentType:
+            employee?.employment_type ??
+            employee?.employmentType ??
+            "",
+
+          workLocation:
+            employee?.work_location ??
+            employee?.workLocation ??
+            "",
+
+          employeeStatus:
+            employee?.status ??
+            employee?.employee_status ??
+            "Active",
+
+          // Personal Information
+          fatherName:
+            personalInfo?.father_name ??
+            personalInfo?.fatherName ??
+            "",
+
+          fatherAadharNumber:
+            personalInfo?.father_aadhaar_number ??
+            personalInfo?.fatherAadhaarNumber ??
+            personalInfo?.father_aadhar_number ??
+            "",
+
+          motherName:
+            personalInfo?.mother_name ??
+            personalInfo?.motherName ??
+            "",
+
+          MotherAadharNumber:
+            personalInfo?.mother_aadhaar_number ??
+            personalInfo?.motherAadhaarNumber ??
+            personalInfo?.mother_aadhar_number ??
+            "",
+
+          maritalStatus:
+            personalInfo?.marital_status ??
+            personalInfo?.maritalStatus ??
+            "",
+
+          nationality:
+            personalInfo?.nationality ??
+            "",
+
+          bloodGroup:
+            personalInfo?.blood_group ??
+            personalInfo?.bloodGroup ??
+            "",
+
+          emergencyName:
+            personalInfo?.emergency_contact_name ??
+            personalInfo?.emergencyContactName ??
+            "",
+
+          emergencyMobile:
+            personalInfo?.emergency_contact_number ??
+            personalInfo?.emergencyContactNumber ??
+            "",
+
+          emergencyRelation:
+            personalInfo?.emergency_contact_relation ??
+            personalInfo?.emergencyContactRelation ??
+            "",
+
+          // Permanent Address
+          permanentHouseNo:
+            permanentAddress?.house_no ??
+            permanentAddress?.houseNo ??
+            "",
+
+          permanentStreet:
+            permanentAddress?.street ??
+            "",
+
+          permanentCity:
+            permanentAddress?.city ??
+            "",
+
+          permanentState:
+            permanentAddress?.state ??
+            "",
+
+          permanentPincode:
+            permanentAddress?.pincode ??
+            permanentAddress?.pin_code ??
+            "",
+
+          permanentCountry:
+            permanentAddress?.country ??
+            "",
+
+          permanentAddress:
+            permanentAddress?.address ??
+            permanentAddress?.full_address ??
+            "",
+
+          // Current Address
+          currentHouseNo:
+            currentAddress?.house_no ??
+            currentAddress?.houseNo ??
+            "",
+
+          currentStreet:
+            currentAddress?.street ??
+            "",
+
+          currentCity:
+            currentAddress?.city ??
+            "",
+
+          currentState:
+            currentAddress?.state ??
+            "",
+
+          currentPincode:
+            currentAddress?.pincode ??
+            currentAddress?.pin_code ??
+            "",
+
+          currentCountry:
+            currentAddress?.country ??
+            "",
+
+          currentAddress:
+            currentAddress?.address ??
+            currentAddress?.full_address ??
+            "",
+
+          sameAsPermanent:
+            Boolean(
+              employee?.same_as_permanent ??
+              employee?.sameAsPermanent ??
+              false
+            ),
+        }));
+      } catch (error) {
+        console.error("Failed to load employee for edit:", error);
+
+        setSubmitError(
+          error?.response?.data?.message ||
+          error?.message ||
+          "Failed to load employee information."
+        );
+      }
+    };
+
+    loadEmployeeForEdit();
+  }, [id]);
+  // ==========================================
   // LOAD DEPARTMENTS + DESIGNATIONS
   // ==========================================
 
@@ -116,18 +397,52 @@ const EmployeeOnboarding = () => {
         setIsLoadingOptions(true);
         setOptionsError("");
 
-        const [departmentResponse, designationResponse] = await Promise.all([
+        const [
+          departmentResponse,
+          designationResponse,
+          employeeResponse,
+        ] = await Promise.all([
           departmentApi.getAll(),
           designationApi.getAll(),
+          employeeApi.getAll(),
         ]);
 
-        setDepartments(departmentResponse.data);
-        setDesignations(designationResponse.data);
+        setDepartments(
+          Array.isArray(departmentResponse.data)
+            ? departmentResponse.data
+            : departmentResponse.data?.data || []
+        );
+
+        const designationList = Array.isArray(designationResponse.data)
+          ? designationResponse.data
+          : designationResponse.data?.data || [];
+
+        const uniqueDesignations = designationList.filter(
+          (designation, index, self) =>
+            index ===
+            self.findIndex(
+              (item) =>
+                String(item.designation_name || "")
+                  .trim()
+                  .toLowerCase() ===
+                String(designation.designation_name || "")
+                  .trim()
+                  .toLowerCase()
+            )
+        );
+
+        setDesignations(uniqueDesignations);
+
+        setManagers(
+          Array.isArray(employeeResponse.data)
+            ? employeeResponse.data
+            : employeeResponse.data?.data || []
+        );
       } catch (error) {
         console.error("Failed to load departments/designations:", error);
 
         setOptionsError(
-          "Unable to load departments and designations. Please refresh and try again.",
+          "Unable to load departments, designations and reporting managers. Please refresh and try again."
         );
       } finally {
         setIsLoadingOptions(false);
@@ -145,9 +460,12 @@ const EmployeeOnboarding = () => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
+
+      ...(field === "department" || field === "designation"
+        ? { reportingManager: "" }
+        : {}),
     }));
   };
-
   // ==========================================
   // BUILD BACKEND PAYLOAD
   // ==========================================
@@ -191,10 +509,10 @@ const EmployeeOnboarding = () => {
       emergencyContactRelation: formData.emergencyRelation,
     };
   };
-
   const buildAddresses = () => {
     return {
-      sameAsCurrentAddress: formData.sameAsPermanent,
+      sameAsPermanent: formData.sameAsPermanent,
+
       permanentAddress: {
         houseNo: formData.permanentHouseNo,
         street: formData.permanentStreet,
@@ -214,175 +532,574 @@ const EmployeeOnboarding = () => {
       },
     };
   };
- const buildDocumentsMetadata = () => {
-  return formData.documents.map((document) => ({
-    documentKey: document.documentKey,
-    fileName: document.file.name,
-  }));
-};
+
+  const buildDocumentsMetadata = () => {
+    return formData.documents
+      .filter((document) => document.file instanceof globalThis.File)
+      .map((document) => ({
+        documentKey: document.documentKey,
+        fileName: document.file.name,
+      }));
+  };
   const appendDocumentFiles = (formDataToSend) => {
-  formData.documents.forEach((document) => {
-    switch (document.documentKey) {
-      case "PROFILE_PHOTO":
-        formDataToSend.append("profilePhoto", document.file);
-        break;
+    formData.documents
+      .filter((document) => document.file instanceof globalThis.File)
+      .forEach((document) => {
+        switch (document.documentKey) {
+          case "PROFILE_PHOTO":
+            formDataToSend.append("profilePhoto", document.file);
+            break;
 
-      case "AADHAAR":
-        formDataToSend.append("aadhaar", document.file);
-        break;
+          case "AADHAAR":
+            formDataToSend.append("aadhaar", document.file);
+            break;
 
-      case "PAN":
-        formDataToSend.append("pan", document.file);
-        break;
+          case "PAN":
+            formDataToSend.append("pan", document.file);
+            break;
 
-      case "DRIVING_LICENSE":
-        formDataToSend.append("drivingLicense", document.file);
-        break;
+          case "DRIVING_LICENSE":
+            formDataToSend.append("drivingLicense", document.file);
+            break;
 
-      case "TENTH":
-      case "INTERMEDIATE":
-      case "DIPLOMA":
-      case "DEGREE":
-      case "PG":
-        formDataToSend.append("education", document.file);
-        break;
+          case "TENTH":
+          case "INTERMEDIATE":
+          case "DIPLOMA":
+          case "DEGREE":
+          case "PG":
+            formDataToSend.append("education", document.file);
+            break;
 
-      case "EXPERIENCE":
-        formDataToSend.append("experience", document.file);
-        break;
+          case "EXPERIENCE":
+            formDataToSend.append("experience", document.file);
+            break;
 
-      case "RESUME":
-        formDataToSend.append("resume", document.file);
-        break;
+          case "RESUME":
+            formDataToSend.append("resume", document.file);
+            break;
 
-      default:
-        console.warn(
-          `Unsupported document key: ${document.documentKey}`,
-        );
-    }
-  });
-};
+          default:
+            console.warn(
+              `Unsupported document key: ${document.documentKey}`,
+            );
+        }
+      });
+  };
   // ==========================================
   // EMPLOYEE SUBMISSION
   // ==========================================
 
- const submitEmployee = async () => {
-  try {
-    setIsSubmitting(true);
-    setSubmitError("");
+  const submitEmployee = async () => {
+    try {
+      setIsSubmitting(true);
+      setSubmitError("");
 
-    const employeeData = buildEmployeeData();
-    const personalInfo = buildPersonalInfo();
-    const addresses = buildAddresses();
-    const documentsMetadata = buildDocumentsMetadata();
+      const employeeData = buildEmployeeData();
+      const personalInfo = buildPersonalInfo();
+      const addresses = buildAddresses();
+      const documentsMetadata = buildDocumentsMetadata();
 
-    const formDataToSend = new FormData();
+      const formDataToSend = new FormData();
 
-    formDataToSend.append(
-      "employeeData",
-      JSON.stringify(employeeData),
-    );
-
-    formDataToSend.append(
-      "personalInfo",
-      JSON.stringify(personalInfo),
-    );
-
-    formDataToSend.append(
-      "addresses",
-      JSON.stringify(addresses),
-    );
-
-    formDataToSend.append(
-      "documentsMetadata",
-      JSON.stringify(documentsMetadata),
-    );
-
-    appendDocumentFiles(formDataToSend);
-
-    console.log("Submitting employee registration...");
-    console.log("employeeData:", employeeData);
-    console.log("personalInfo:", personalInfo);
-    console.log("addresses:", addresses);
-    console.log("documentsMetadata:", documentsMetadata);
-
-    // Validate required documents before sending the request.
-    const uploadedDocumentKeys = formData.documents.map(
-      (document) => document.documentKey,
-    );
-
-    const requiredDocumentKeys = [
-      "PROFILE_PHOTO",
-      "AADHAAR",
-      "PAN",
-      "TENTH",
-      "DEGREE",
-      "RESUME",
-    ];
-
-    const missingDocument = requiredDocumentKeys.find(
-      (key) => !uploadedDocumentKeys.includes(key),
-    );
-
-    if (missingDocument) {
-      throw new Error(`${missingDocument} document is required`);
-    }
-
-    const hasIntermediate = uploadedDocumentKeys.includes("INTERMEDIATE");
-    const hasDiploma = uploadedDocumentKeys.includes("DIPLOMA");
-
-    if (!hasIntermediate && !hasDiploma) {
-      throw new Error(
-        "Either Intermediate or Diploma certificate is required",
+      formDataToSend.append(
+        "employeeData",
+        JSON.stringify(employeeData),
       );
-    }
 
-    if (hasIntermediate && hasDiploma) {
-      throw new Error(
-        "Upload either Intermediate or Diploma certificate, not both",
+      formDataToSend.append(
+        "personalInfo",
+        JSON.stringify(personalInfo),
       );
-    }
 
-    const response = await employeeApi.create(formDataToSend);
+      formDataToSend.append(
+        "addresses",
+        JSON.stringify(addresses),
+      );
 
-    console.log(
-      "Employee registration successful:",
-      response.data,
-    );
+      formDataToSend.append(
+        "documentsMetadata",
+        JSON.stringify(documentsMetadata),
+      );
 
-    const employeeCode =
-      response.data?.employeeCode ||
-      response.data?.employee?.employee_code;
+      appendDocumentFiles(formDataToSend);
 
-    alert(
-      employeeCode
-        ? `Employee Registration Completed Successfully!\n\nEmployee Code: ${employeeCode}`
-        : "Employee Registration Completed Successfully!",
-    );
+      console.log("Submitting employee registration...");
+      console.log("employeeData:", employeeData);
+      console.log("personalInfo:", personalInfo);
+      console.log("addresses:", addresses);
+      console.log("documentsMetadata:", documentsMetadata);
 
-    navigate("/hr/employeemanagement");
-  } catch (error) {
-    console.error("Employee registration failed:", error);
-    console.error("Status:", error.response?.status);
-    console.error("Backend response:", error.response?.data);
-    console.error("Backend message:", error.response?.data?.message);
+      // Validate required documents before sending the request.
+      const uploadedDocumentKeys = formData.documents.map(
+        (document) => document.documentKey,
+      );
 
-    setSubmitError(
-      error.response?.data?.message ||
+      if (!isEditMode) {
+        const requiredDocumentKeys = [
+          "PROFILE_PHOTO",
+          "AADHAAR",
+          "PAN",
+          "TENTH",
+          "DEGREE",
+          "RESUME",
+        ];
+
+        const missingDocument = requiredDocumentKeys.find(
+          (key) => !uploadedDocumentKeys.includes(key),
+        );
+
+        if (missingDocument) {
+          throw new Error(`${missingDocument} document is required`);
+        }
+
+        const hasIntermediate = uploadedDocumentKeys.includes("INTERMEDIATE");
+        const hasDiploma = uploadedDocumentKeys.includes("DIPLOMA");
+
+        if (!hasIntermediate && !hasDiploma) {
+          throw new Error(
+            "Either Intermediate or Diploma certificate is required",
+          );
+        }
+
+        if (hasIntermediate && hasDiploma) {
+          throw new Error(
+            "Upload either Intermediate or Diploma certificate, not both",
+          );
+        }
+      }
+      let response;
+
+      if (isEditMode) {
+        console.log("UPDATE EMPLOYEE ID:", id);
+
+        response = await employeeApi.update(id, formDataToSend);
+      } else {
+        console.log("CREATE NEW EMPLOYEE");
+
+        response = await employeeApi.create(formDataToSend);
+      }
+
+      console.log("Employee save successful:", response.data);
+
+      console.log(
+        "Employee save successful:",
+        response.data
+      );
+
+      const employeeCode =
+        response.data?.employeeCode ||
+        response.data?.employee?.employee_code ||
+        response.data?.employee?.employeeCode ||
+        "";
+
+      if (isEditMode) {
+        navigate(`/hr/employees/${id}`);
+        return;
+      }
+
+      setCreatedEmployeeCode(employeeCode);
+      setRegistrationSuccess(true);
+
+    } catch (error) {
+      console.error("Employee registration failed:", error);
+      console.error("Status:", error.response?.status);
+      console.error("Backend response:", error.response?.data);
+      console.error("Backend message:", error.response?.data?.message);
+
+      setSubmitError(
+        error.response?.data?.message ||
         error.message ||
         "Employee registration failed. Please try again.",
-    );
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
 
+  };
+  // ==========================================
+  // VALIDATION
+  // ==========================================
+
+  const validateStep = (step) => {
+    const newErrors = {};
+
+    // Names/text fields:
+    // Must START with a letter.
+    // Letters, spaces, # and _ are allowed.
+    // Numbers and other special characters are NOT allowed.
+    const nameRegex = /^[A-Za-z][A-Za-z $_]*$/;
+
+    // Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Mobile: exactly 10 digits and starts with 6-9
+    const mobileRegex = /^[6-9][0-9]{9}$/;
+
+    // Aadhaar: exactly 12 digits
+    const aadhaarRegex = /^[0-9]{12}$/;
+
+    // Pincode: exactly 6 digits
+    const pincodeRegex = /^[0-9]{6}$/;
+    //dateOfBirth
+
+    // ==========================================
+    // STEP 1 - EMPLOYEE
+    // ==========================================
+
+    if (step === 1) {
+      if (!formData.firstName.trim()) {
+        newErrors.firstName = "First Name is required";
+      } else if (!nameRegex.test(formData.firstName.trim())) {
+        newErrors.firstName =
+          "First Name must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+
+      if (!formData.lastName.trim()) {
+        newErrors.lastName = "Last Name is required";
+      } else if (!nameRegex.test(formData.lastName.trim())) {
+        newErrors.lastName =
+          "Last Name must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+
+      if (!formData.email.trim()) {
+        newErrors.email = "Email is required";
+      } else if (!emailRegex.test(formData.email.trim())) {
+        newErrors.email = "Please enter a valid email address";
+      }
+
+      if (!formData.mobileNumber.trim()) {
+        newErrors.mobileNumber = "Mobile Number is required";
+      } else if (!mobileRegex.test(formData.mobileNumber.trim())) {
+        newErrors.mobileNumber =
+          "Mobile Number must be exactly 10 digits and start with 6, 7, 8 or 9";
+      }
+      if (!formData.dateOfBirth) {
+        newErrors.dateOfBirth = "Date of Birth is required";
+      } else {
+        const dob = new Date(formData.dateOfBirth);
+        const today = new Date();
+
+        if (dob > today) {
+          newErrors.dateOfBirth =
+            "Date of Birth cannot be in the future";
+        } else {
+          let age = today.getFullYear() - dob.getFullYear();
+          const monthDifference = today.getMonth() - dob.getMonth();
+
+          if (
+            monthDifference < 0 ||
+            (monthDifference === 0 &&
+              today.getDate() < dob.getDate())
+          ) {
+            age--;
+          }
+
+          if (age < 18) {
+            newErrors.dateOfBirth =
+              `Your age is ${age} years. Employee must be at least 18 years old.`;
+          }
+        }
+      }
+
+      if (!formData.joiningDate) {
+        newErrors.joiningDate = "Joining Date is required";
+      }
+
+      if (!formData.department) {
+        newErrors.department = "Department is required";
+      }
+
+      if (!formData.designation) {
+        newErrors.designation = "Designation is required";
+      }
+
+      if (!formData.reportingManager?.trim()) {
+        newErrors.reportingManager =
+          "Reporting Manager is required";
+      }
+
+      if (!formData.employmentType) {
+        newErrors.employmentType =
+          "Employment Type is required";
+      }
+
+      if (!formData.workLocation?.trim()) {
+        newErrors.workLocation =
+          "Work Location is required";
+      }
+
+      if (!formData.employeeStatus) {
+        newErrors.employeeStatus =
+          "Employee Status is required";
+      }
+    }
+    // ==========================================
+    // STEP 2 - PERSONAL INFORMATION
+    // ==========================================
+
+    if (step === 2) {
+      if (!formData.fatherName.trim()) {
+        newErrors.fatherName = "Father Name is required";
+      } else if (!nameRegex.test(formData.fatherName.trim())) {
+        newErrors.fatherName =
+          "Father Name must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+
+      if (!formData.fatherAadharNumber.trim()) {
+        newErrors.fatherAadharNumber =
+          "Father Aadhar Number is required";
+      } else if (!aadhaarRegex.test(formData.fatherAadharNumber.trim())) {
+        newErrors.fatherAadharNumber =
+          "Father Aadhar Number must be exactly 12 digits";
+      }
+
+      if (!formData.motherName.trim()) {
+        newErrors.motherName = "Mother Name is required";
+      } else if (!nameRegex.test(formData.motherName.trim())) {
+        newErrors.motherName =
+          "Mother Name must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+
+      if (!formData.MotherAadharNumber.trim()) {
+        newErrors.MotherAadharNumber =
+          "Mother Aadhar Number is required";
+      } else if (!aadhaarRegex.test(formData.MotherAadharNumber.trim())) {
+        newErrors.MotherAadharNumber =
+          "Mother Aadhar Number must be exactly 12 digits";
+      }
+
+      if (!formData.maritalStatus) {
+        newErrors.maritalStatus = "Marital Status is required";
+      }
+
+      if (!formData.nationality.trim()) {
+        newErrors.nationality = "Nationality is required";
+      } else if (!nameRegex.test(formData.nationality.trim())) {
+        newErrors.nationality =
+          "Nationality must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+
+      if (!formData.bloodGroup) {
+        newErrors.bloodGroup = "Blood Group is required";
+      }
+
+      if (!formData.emergencyName.trim()) {
+        newErrors.emergencyName =
+          "Emergency Contact Name is required";
+      } else if (!nameRegex.test(formData.emergencyName.trim())) {
+        newErrors.emergencyName =
+          "Emergency Contact Name must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+
+      if (!formData.emergencyMobile.trim()) {
+        newErrors.emergencyMobile =
+          "Emergency Mobile Number is required";
+      } else if (!mobileRegex.test(formData.emergencyMobile.trim())) {
+        newErrors.emergencyMobile =
+          "Emergency Mobile Number must be exactly 10 digits and start with 6, 7, 8 or 9";
+      }
+
+      if (!formData.emergencyRelation.trim()) {
+        newErrors.emergencyRelation =
+          "Emergency Relation is required";
+      } else if (!nameRegex.test(formData.emergencyRelation.trim())) {
+        newErrors.emergencyRelation =
+          "Emergency Relation must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+    }
+
+    // ==========================================
+    // STEP 3 - ADDRESS
+    // ==========================================
+
+    if (step === 3) {
+      // Permanent Address
+
+      if (!formData.permanentHouseNo.trim()) {
+        newErrors.permanentHouseNo = "House No is required";
+      }
+
+      if (!formData.permanentStreet.trim()) {
+        newErrors.permanentStreet = "Street is required";
+      } else if (!nameRegex.test(formData.permanentStreet.trim())) {
+        newErrors.permanentStreet =
+          "Street must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+
+      if (!formData.permanentCity.trim()) {
+        newErrors.permanentCity = "City is required";
+      } else if (!nameRegex.test(formData.permanentCity.trim())) {
+        newErrors.permanentCity =
+          "City must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+
+      if (!formData.permanentState.trim()) {
+        newErrors.permanentState = "State is required";
+      } else if (!nameRegex.test(formData.permanentState.trim())) {
+        newErrors.permanentState =
+          "State must start with a letter. Only letters, spaces, # and _ are allowed";
+      }
+
+      if (!formData.permanentPincode.trim()) {
+        newErrors.permanentPincode = "Pincode is required";
+      } else if (!pincodeRegex.test(formData.permanentPincode.trim())) {
+        newErrors.permanentPincode =
+          "Pincode must be exactly 6 digits";
+      }
+
+      if (!formData.permanentCountry.trim()) {
+        newErrors.permanentCountry = "Country is required";
+      }
+
+      if (!formData.permanentAddress.trim()) {
+        newErrors.permanentAddress =
+          "Permanent Address is required";
+      }
+
+      // Current Address
+      // If Same as Permanent is checked, copied values are accepted.
+
+      if (!formData.sameAsPermanent) {
+        if (!formData.currentHouseNo.trim()) {
+          newErrors.currentHouseNo = "House No is required";
+        }
+
+        if (!formData.currentStreet.trim()) {
+          newErrors.currentStreet = "Street is required";
+        } else if (!nameRegex.test(formData.currentStreet.trim())) {
+          newErrors.currentStreet =
+            "Street must start with a letter. Only letters, spaces, # and _ are allowed";
+        }
+
+        if (!formData.currentCity.trim()) {
+          newErrors.currentCity = "City is required";
+        } else if (!nameRegex.test(formData.currentCity.trim())) {
+          newErrors.currentCity =
+            "City must start with a letter. Only letters, spaces, # and _ are allowed";
+        }
+
+        if (!formData.currentState.trim()) {
+          newErrors.currentState = "State is required";
+        } else if (!nameRegex.test(formData.currentState.trim())) {
+          newErrors.currentState =
+            "State must start with a letter. Only letters, spaces, # and _ are allowed";
+        }
+
+        if (!formData.currentPincode.trim()) {
+          newErrors.currentPincode = "Pincode is required";
+        } else if (!pincodeRegex.test(formData.currentPincode.trim())) {
+          newErrors.currentPincode =
+            "Pincode must be exactly 6 digits";
+        }
+
+        if (!formData.currentCountry.trim()) {
+          newErrors.currentCountry = "Country is required";
+        }
+
+        if (!formData.currentAddress.trim()) {
+          newErrors.currentAddress =
+            "Current Address is required";
+        }
+      }
+    }
+
+    // ==========================================
+    // STEP 4 - DOCUMENT VALIDATION
+    // ==========================================
+
+    if (step === 4) {
+      const documents = formData.documents || [];
+      if (isEditMode) {
+        return true;
+      }
+      const uploadedKeys = new Set(
+        documents.map((document) => document.documentKey)
+      );
+
+      // Required documents
+      const requiredDocuments = [
+        ["PROFILE_PHOTO", "Passport Size Photo"],
+        ["AADHAAR", "Aadhaar"],
+        ["PAN", "PAN"],
+        ["TENTH", "10th Certificate"],
+        ["DEGREE", "Degree Certificate"],
+        ["RESUME", "Resume"],
+      ];
+
+      requiredDocuments.forEach(([key, label]) => {
+        if (!uploadedKeys.has(key)) {
+          newErrors[key] = `${label} is required`;
+        }
+      });
+
+      // Intermediate OR Diploma
+      const hasIntermediate = uploadedKeys.has("INTERMEDIATE");
+      const hasDiploma = uploadedKeys.has("DIPLOMA");
+
+      if (!hasIntermediate && !hasDiploma) {
+        newErrors.INTERMEDIATE =
+          "Either Intermediate or Diploma Certificate is required";
+
+        newErrors.DIPLOMA =
+          "Either Intermediate or Diploma Certificate is required";
+      }
+
+      // Cannot upload both
+      if (hasIntermediate && hasDiploma) {
+        newErrors.INTERMEDIATE =
+          "Upload either Intermediate or Diploma Certificate, not both";
+
+        newErrors.DIPLOMA =
+          "Upload either Intermediate or Diploma Certificate, not both";
+      }
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+
+  };
   // ==========================================
   // STEP NAVIGATION
   // ==========================================
-
   const nextStep = async () => {
+    console.log("BUTTON CLICKED");
+    console.log("Current Step:", currentStep);
+
     setSubmitError("");
+
+    // STEP 4 - FINISH
+    if (currentStep === 4) {
+      console.log("STEP 4 - FINISH CLICKED");
+      console.log("Documents:", formData.documents);
+
+      const isValid = validateStep(4);
+
+      console.log("Document validation result:", isValid);
+
+      if (!isValid) {
+        console.log("Document validation failed");
+        return;
+      }
+
+      try {
+        await submitEmployee();
+      } catch (error) {
+        console.error("Finish failed:", error);
+      }
+
+      return;
+    }
+
+    // STEP 1, 2, 3 validation
+    const isValid = validateStep(currentStep);
+
+    console.log("Validation result:", isValid);
+
+    if (!isValid) {
+      console.log("Validation failed");
+      return;
+    }
 
     setCompletedSteps((prev) => {
       if (!prev.includes(currentStep)) {
@@ -392,14 +1109,8 @@ const EmployeeOnboarding = () => {
       return prev;
     });
 
-    if (currentStep < 4) {
-      setCurrentStep((prev) => prev + 1);
-      return;
-    }
-
-    await submitEmployee();
+    setCurrentStep((prev) => prev + 1);
   };
-
   const previousStep = () => {
     if (isSubmitting) {
       return;
@@ -411,15 +1122,55 @@ const EmployeeOnboarding = () => {
       navigate("/hr/employeemanagement");
     }
   };
-
   const steps = ["Employee", "Personal", "Address", "Documents"];
 
+
+  // ==========================================
+  // SUCCESS SCREEN
+  // ==========================================
+
+  if (registrationSuccess) {
+    return (
+      <div className={styles["employee-success-page"]}>
+        <div className={styles["success-card"]}>
+
+          <div className={styles["success-icon"]}>
+            <Check size={40} strokeWidth={3} />
+          </div>
+
+          <h1>Registration Completed Successfully!</h1>
+
+          <p>
+            Employee registration has been completed successfully.
+          </p>
+
+          {createdEmployeeCode && (
+            <p className={styles["employee-code"]}>
+              Employee Code: <strong>{createdEmployeeCode}</strong>
+            </p>
+          )}
+
+          <button
+            type="button"
+            className={styles["success-btn"]}
+            onClick={() => navigate("/hr/employeemanagement")}
+          >
+            Go to Employee Management
+          </button>
+
+        </div>
+      </div>
+    );
+  }
+
+
   return (
+
     <div className={styles["employee-onboarding-page"]}>
       <div className={styles["wizard-card"]}>
         {/* Header */}
         <div className={styles["wizard-header"]}>
-          <h1>Create Employee</h1>
+          <h1>{isEditMode ? "Edit Employee" : "Create Employee"}</h1>
         </div>
 
         {/* Progress Steps */}
@@ -451,10 +1202,10 @@ const EmployeeOnboarding = () => {
 
                   <span
                     className={[styles["step-label"], (isCompleted
-                        ? styles["completed-label"]
-                        : isCurrent
-                          ? styles["current-label"]
-                          : "")].filter(Boolean).join(" ")}
+                      ? styles["completed-label"]
+                      : isCurrent
+                        ? styles["current-label"]
+                        : "")].filter(Boolean).join(" ")}
                   >
                     {step}
                   </span>
@@ -463,49 +1214,75 @@ const EmployeeOnboarding = () => {
                 {index < steps.length - 1 && (
                   <div
                     className={[styles["step-line"], (completedSteps.includes(stepNumber)
-                        ? styles["completed-line"]
-                        : "")].filter(Boolean).join(" ")}
+                      ? styles["completed-line"]
+                      : "")].filter(Boolean).join(" ")}
                   />
                 )}
               </React.Fragment>
             );
           })}
         </div>
-
         {/* Form Content */}
         <div className={styles["wizard-content"]}>
-          {optionsError && <div className={"form-error"}>{optionsError}</div>}
 
-          {submitError && <div className={"form-error"}>{submitError}</div>}
+          {optionsError && (
+            <div className="form-error">
+              {optionsError}
+            </div>
+          )}
 
+          {submitError && (
+            <div className="form-error">
+              {submitError}
+            </div>
+          )}
+
+          {/* STEP 1 - Employee Registration */}
           {currentStep === 1 && (
             <EmployeeRegistration
               formData={formData}
               updateField={updateField}
               departments={departments}
               designations={designations}
+              managers={managers}
+              id={id}
               isLoadingOptions={isLoadingOptions}
+              errors={errors}
             />
           )}
 
+          {/* STEP 2 - Personal Information */}
           {currentStep === 2 && (
             <PersonalInformation
               formData={formData}
               updateField={updateField}
+              errors={errors}
             />
           )}
 
+          {/* STEP 3 - Address Management */}
           {currentStep === 3 && (
-            <AddressManagement formData={formData} updateField={updateField} />
+            <AddressManagement
+              formData={formData}
+              updateField={updateField}
+              errors={errors}
+            />
           )}
 
+          {/* STEP 4 - Document Management */}
           {currentStep === 4 && (
-            <DocumentManagement formData={formData} setFormData={setFormData} />
+            <DocumentManagement
+              formData={formData}
+              setFormData={setFormData}
+              errors={errors}
+            />
           )}
-        </div>
 
-        {/* Buttons */}
+        </div>
+        {/*BUttons*/}
         <div className={styles["wizard-buttons"]}>
+
+          {/* Back - LEFT */}
           <button
             type="button"
             className={styles["back-btn"]}
@@ -516,6 +1293,7 @@ const EmployeeOnboarding = () => {
             Back
           </button>
 
+          {/* Save & Continue / Finish - RIGHT */}
           <button
             type="button"
             className={styles["next-btn"]}
@@ -523,11 +1301,7 @@ const EmployeeOnboarding = () => {
             disabled={isSubmitting}
           >
             {currentStep === 4 ? (
-              isSubmitting ? (
-                "Submitting..."
-              ) : (
-                "Finish"
-              )
+              isSubmitting ? "Submitting..." : "Finish"
             ) : (
               <>
                 Save & Continue
@@ -535,6 +1309,7 @@ const EmployeeOnboarding = () => {
               </>
             )}
           </button>
+
         </div>
       </div>
     </div>
@@ -544,17 +1319,19 @@ const EmployeeOnboarding = () => {
 /* =====================================================
    STEP 1 - EMPLOYEE REGISTRATION
 ===================================================== */
-
 const EmployeeRegistration = ({
   formData,
   updateField,
   departments,
   designations,
+  managers,
+  id,
   isLoadingOptions,
+  errors,
 }) => {
   return (
     <div className={styles["step-form"]}>
-      <h2>Employee Registration</h2>
+      <h2>Employee Overview</h2>
 
       <p>Enter basic employee information</p>
 
@@ -563,12 +1340,14 @@ const EmployeeRegistration = ({
           label="First Name"
           value={formData.firstName}
           onChange={(e) => updateField("firstName", e.target.value)}
+          error={errors.firstName}
         />
 
         <Input
           label="Last Name"
           value={formData.lastName}
           onChange={(e) => updateField("lastName", e.target.value)}
+          error={errors.lastName}
         />
 
         <Input
@@ -576,26 +1355,28 @@ const EmployeeRegistration = ({
           type="email"
           value={formData.email}
           onChange={(e) => updateField("email", e.target.value)}
+          error={errors.email}
         />
 
         <Input
           label="Mobile Number"
           value={formData.mobileNumber}
           onChange={(e) => updateField("mobileNumber", e.target.value)}
+          error={errors.mobileNumber}
         />
-
         <Select
           label="Gender"
           value={formData.gender}
           onChange={(e) => updateField("gender", e.target.value)}
           options={["Male", "Female", "Other"]}
+          error={errors.gender}
         />
-
         <Input
           label="Date of Birth"
           type="date"
           value={formData.dateOfBirth}
           onChange={(e) => updateField("dateOfBirth", e.target.value)}
+          error={errors.dateOfBirth}
         />
 
         <Input
@@ -603,6 +1384,7 @@ const EmployeeRegistration = ({
           type="date"
           value={formData.joiningDate}
           onChange={(e) => updateField("joiningDate", e.target.value)}
+          error={errors.joiningDate}
         />
 
         <Select
@@ -614,8 +1396,8 @@ const EmployeeRegistration = ({
             value: String(department.id),
             label: department.department_name,
           }))}
+          error={errors.department}
         />
-
         <Select
           label="Designation"
           value={formData.designation}
@@ -625,25 +1407,53 @@ const EmployeeRegistration = ({
             value: String(designation.id),
             label: designation.designation_name,
           }))}
+          error={errors.designation}
         />
-
-        <Input
+        <Select
           label="Reporting Manager"
           value={formData.reportingManager}
-          onChange={(e) => updateField("reportingManager", e.target.value)}
+          onChange={(e) =>
+            updateField("reportingManager", e.target.value)
+          }
+          disabled={
+            isLoadingOptions ||
+            !formData.department ||
+            !formData.designation
+          }
+          options={(managers || [])
+            .filter(
+              (manager) =>
+                String(manager.department_id) === String(formData.department) &&
+                String(manager.designation_id) === String(formData.designation) &&
+                String(manager.id) !== String(id)
+            )
+            .map((manager) => ({
+              value: String(manager.id),
+              label: `${manager.first_name ?? manager.firstName ?? ""} ${manager.last_name ?? manager.lastName ?? ""
+                }`.trim(),
+            }))}
+          error={errors.reportingManager}
         />
 
         <Select
           label="Employment Type"
           value={formData.employmentType}
           onChange={(e) => updateField("employmentType", e.target.value)}
-          options={["Full Time", "Part Time", "Contract", "Intern", "Training"]}
+          options={[
+            "Full Time",
+            "Part Time",
+            "Contract",
+            "Intern",
+            "Training",
+          ]}
+          error={errors.employmentType}
         />
 
         <Input
           label="Work Location"
           value={formData.workLocation}
           onChange={(e) => updateField("workLocation", e.target.value)}
+          error={errors.workLocation}
         />
 
         <Select
@@ -651,6 +1461,7 @@ const EmployeeRegistration = ({
           value={formData.employeeStatus}
           onChange={(e) => updateField("employeeStatus", e.target.value)}
           options={["Active", "Inactive", "Resigned"]}
+          error={errors.employeeStatus}
         />
       </div>
     </div>
@@ -661,62 +1472,97 @@ const EmployeeRegistration = ({
    STEP 2 - PERSONAL INFORMATION
 ===================================================== */
 
-const PersonalInformation = ({ formData, updateField }) => {
+const PersonalInformation = ({ formData, updateField, errors }) => {
   return (
     <div className={styles["step-form"]}>
-      <h2>Personal Information</h2>
+      <h2>Personal Details</h2>
 
-      <p>Enter employee personal details</p>
+      <p>Enter family and emergency contact details</p>
 
       <div className={styles["form-grid"]}>
         <Input
           label="Father Name"
           value={formData.fatherName}
           onChange={(e) => updateField("fatherName", e.target.value)}
+          error={errors.fatherName}
         />
 
         <Input
           label="Father AadharNumber"
           value={formData.fatherAadharNumber}
-          onChange={(e) => updateField("fatherAadharNumber", e.target.value)}
+          onChange={(e) =>
+            updateField("fatherAadharNumber", e.target.value)
+          }
+          error={errors.fatherAadharNumber}
         />
 
         <Input
           label="Mother Name"
           value={formData.motherName}
           onChange={(e) => updateField("motherName", e.target.value)}
+          error={errors.motherName}
         />
 
         <Input
           label="Mother AadharNumber"
           value={formData.MotherAadharNumber}
-          onChange={(e) => updateField("MotherAadharNumber", e.target.value)}
+          onChange={(e) =>
+            updateField("MotherAadharNumber", e.target.value)
+          }
+          error={errors.MotherAadharNumber}
         />
 
         <Select
           label="Marital Status"
           value={formData.maritalStatus}
-          onChange={(e) => updateField("maritalStatus", e.target.value)}
+          onChange={(e) =>
+            updateField("maritalStatus", e.target.value)
+          }
           options={["Single", "Married", "Divorced", "Widowed"]}
+          error={errors.maritalStatus}
         />
 
         <Input
           label="Nationality"
           value={formData.nationality}
           onChange={(e) => updateField("nationality", e.target.value)}
+          error={errors.nationality}
         />
 
         <Select
           label="Blood Group"
           value={formData.bloodGroup}
-          onChange={(e) => updateField("bloodGroup", e.target.value)}
+          onChange={(e) =>
+            updateField("bloodGroup", e.target.value)
+          }
           options={["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]}
+          error={errors.bloodGroup}
+        />
+        <Input
+          label="Emergency Contact Name"
+          value={formData.emergencyName}
+          onChange={(e) =>
+            updateField("emergencyName", e.target.value)
+          }
+
         />
 
         <Input
           label="Emergency Contact Number"
           value={formData.emergencyMobile}
-          onChange={(e) => updateField("emergencyMobile", e.target.value)}
+          onChange={(e) =>
+            updateField("emergencyMobile", e.target.value)
+          }
+          error={errors.emergencyMobile}
+        />
+
+        <Input
+          label="Emergency Contact Relation"
+          value={formData.emergencyRelation}
+          onChange={(e) =>
+            updateField("emergencyRelation", e.target.value)
+          }
+
         />
       </div>
     </div>
@@ -727,24 +1573,26 @@ const PersonalInformation = ({ formData, updateField }) => {
    STEP 3 - ADDRESS
 ===================================================== */
 
-const AddressManagement = ({ formData, updateField }) => {
+const AddressManagement = ({ formData, updateField, errors }) => {
   const copyPermanentToCurrent = (checked) => {
     updateField("sameAsPermanent", checked);
 
     if (checked) {
       updateField("currentHouseNo", formData.permanentHouseNo);
-
       updateField("currentStreet", formData.permanentStreet);
-
       updateField("currentCity", formData.permanentCity);
-
       updateField("currentState", formData.permanentState);
-
       updateField("currentPincode", formData.permanentPincode);
-
       updateField("currentCountry", formData.permanentCountry);
-
       updateField("currentAddress", formData.permanentAddress);
+    } else {
+      updateField("currentHouseNo", "");
+      updateField("currentStreet", "");
+      updateField("currentCity", "");
+      updateField("currentState", "");
+      updateField("currentPincode", "");
+      updateField("currentCountry", "");
+      updateField("currentAddress", "");
     }
   };
 
@@ -754,106 +1602,161 @@ const AddressManagement = ({ formData, updateField }) => {
 
       <p>Enter employee permanent and current address details</p>
 
-      <h3 className={"address-section-title"}>Permanent Address</h3>
+      {/* ================= PERMANENT ADDRESS ================= */}
+
+      <h3 className="address-section-title">
+        Permanent Address
+      </h3>
 
       <div className={styles["form-grid"]}>
         <Input
           label="House No"
           value={formData.permanentHouseNo}
-          onChange={(e) => updateField("permanentHouseNo", e.target.value)}
+          onChange={(e) =>
+            updateField("permanentHouseNo", e.target.value)
+          }
+          error={errors?.permanentHouseNo}
         />
 
         <Input
           label="Street"
           value={formData.permanentStreet}
-          onChange={(e) => updateField("permanentStreet", e.target.value)}
+          onChange={(e) =>
+            updateField("permanentStreet", e.target.value)
+          }
+          error={errors?.permanentStreet}
         />
 
         <Input
           label="City"
           value={formData.permanentCity}
-          onChange={(e) => updateField("permanentCity", e.target.value)}
+          onChange={(e) =>
+            updateField("permanentCity", e.target.value)
+          }
+          error={errors?.permanentCity}
         />
 
         <Input
           label="State"
           value={formData.permanentState}
-          onChange={(e) => updateField("permanentState", e.target.value)}
+          onChange={(e) =>
+            updateField("permanentState", e.target.value)
+          }
+          error={errors?.permanentState}
         />
 
         <Input
           label="Pincode"
           value={formData.permanentPincode}
-          onChange={(e) => updateField("permanentPincode", e.target.value)}
+          onChange={(e) =>
+            updateField("permanentPincode", e.target.value)
+          }
+          error={errors?.permanentPincode}
         />
 
         <Input
           label="Country"
           value={formData.permanentCountry}
-          onChange={(e) => updateField("permanentCountry", e.target.value)}
+          onChange={(e) =>
+            updateField("permanentCountry", e.target.value)
+          }
+          error={errors?.permanentCountry}
         />
 
         <Input
           label="Permanent Address"
           value={formData.permanentAddress}
-          onChange={(e) => updateField("permanentAddress", e.target.value)}
+          onChange={(e) =>
+            updateField("permanentAddress", e.target.value)
+          }
+          error={errors?.permanentAddress}
         />
       </div>
+
+      {/* ================= SAME ADDRESS ================= */}
 
       <div className={styles["address-copy-option"]}>
         <label>
           <input
             type="checkbox"
             checked={formData.sameAsPermanent}
-            onChange={(e) => copyPermanentToCurrent(e.target.checked)}
+            onChange={(e) =>
+              copyPermanentToCurrent(e.target.checked)
+            }
           />
-          Same as Permanent Address
+
+          <span>Same as Permanent Address</span>
         </label>
       </div>
 
-      <h3 className={"address-section-title"}>Current Address</h3>
+      {/* ================= CURRENT ADDRESS ================= */}
+
+      <h3 className="address-section-title">
+        Current Address
+      </h3>
 
       <div className={styles["form-grid"]}>
         <Input
           label="House No"
           value={formData.currentHouseNo}
-          onChange={(e) => updateField("currentHouseNo", e.target.value)}
+          onChange={(e) =>
+            updateField("currentHouseNo", e.target.value)
+          }
+          error={errors?.currentHouseNo}
         />
 
         <Input
           label="Street"
           value={formData.currentStreet}
-          onChange={(e) => updateField("currentStreet", e.target.value)}
+          onChange={(e) =>
+            updateField("currentStreet", e.target.value)
+          }
+          error={errors?.currentStreet}
         />
 
         <Input
           label="City"
           value={formData.currentCity}
-          onChange={(e) => updateField("currentCity", e.target.value)}
+          onChange={(e) =>
+            updateField("currentCity", e.target.value)
+          }
+          error={errors?.currentCity}
         />
 
         <Input
           label="State"
           value={formData.currentState}
-          onChange={(e) => updateField("currentState", e.target.value)}
+          onChange={(e) =>
+            updateField("currentState", e.target.value)
+          }
+          error={errors?.currentState}
         />
 
         <Input
           label="Pincode"
           value={formData.currentPincode}
-          onChange={(e) => updateField("currentPincode", e.target.value)}
+          onChange={(e) =>
+            updateField("currentPincode", e.target.value)
+          }
+          error={errors?.currentPincode}
         />
 
         <Input
           label="Country"
           value={formData.currentCountry}
-          onChange={(e) => updateField("currentCountry", e.target.value)}
+          onChange={(e) =>
+            updateField("currentCountry", e.target.value)
+          }
+          error={errors?.currentCountry}
         />
 
         <Input
           label="Current Address"
           value={formData.currentAddress}
-          onChange={(e) => updateField("currentAddress", e.target.value)}
+          onChange={(e) =>
+            updateField("currentAddress", e.target.value)
+          }
+          error={errors?.currentAddress}
         />
       </div>
     </div>
@@ -864,27 +1767,27 @@ const AddressManagement = ({ formData, updateField }) => {
    STEP 4 - DOCUMENT MANAGEMENT
 ===================================================== */
 
-const DocumentManagement = ({ formData, setFormData }) => {
+const DocumentManagement = ({ formData, setFormData, errors }) => {
   const documentOptions = [
-    {
-      key: "AADHAAR",
-      label: "Aadhaar",
-      type: "document",
-    },
-    {
-      key: "PAN",
-      label: "PAN",
-      type: "document",
-    },
     {
       key: "PROFILE_PHOTO",
       label: "Passport Size Photo",
       type: "photo",
     },
     {
+      key: "AADHAAR",
+      label: "Aadhaar",
+      type: "identity",
+    },
+    {
+      key: "PAN",
+      label: "PAN",
+      type: "identity",
+    },
+    {
       key: "DRIVING_LICENSE",
       label: "Driving License",
-      type: "document",
+      type: "identity",
     },
     {
       key: "TENTH",
@@ -908,13 +1811,13 @@ const DocumentManagement = ({ formData, setFormData }) => {
     },
     {
       key: "EXPERIENCE",
-      label: "Experience Letter",
+      label: "Experience Certificate",
       type: "experience",
     },
     {
       key: "RESUME",
       label: "Resume",
-      type: "resume",
+      type: "career",
     },
   ];
 
@@ -926,12 +1829,64 @@ const DocumentManagement = ({ formData, setFormData }) => {
     }
 
     const documentDefinition = documentOptions.find(
-      (document) => document.key === documentKey,
+      (document) => document.key === documentKey
     );
 
     if (!documentDefinition) {
       return;
     }
+
+    // ==========================================
+    // DOCUMENT VALIDATION
+    // ==========================================
+
+    const fileName = file.name.toLowerCase();
+    const fileType = file.type;
+    const fileSizeMB = file.size / (1024 * 1024);
+
+    // PROFILE PHOTO
+    if (documentKey === "PROFILE_PHOTO") {
+      const allowedTypes = ["image/jpeg", "image/png"];
+      const allowedExtensions = [".jpg", ".jpeg", ".png"];
+
+      const hasValidExtension = allowedExtensions.some((ext) =>
+        fileName.endsWith(ext)
+      );
+
+      if (!allowedTypes.includes(fileType) || !hasValidExtension) {
+        alert("Profile photo must be JPG, JPEG, or PNG");
+        e.target.value = "";
+        return;
+      }
+
+      if (fileSizeMB > 5) {
+        alert("Profile photo must not exceed 5 MB");
+        e.target.value = "";
+        return;
+      }
+    }
+
+    // ALL OTHER DOCUMENTS
+    else {
+      const allowedTypes = ["application/pdf"];
+      const hasPdfExtension = fileName.endsWith(".pdf");
+
+      if (!hasPdfExtension || !allowedTypes.includes(fileType)) {
+        alert(`${documentDefinition.label} must be a PDF file`);
+        e.target.value = "";
+        return;
+      }
+
+      if (fileSizeMB > 10) {
+        alert(`${documentDefinition.label} must not exceed 10 MB`);
+        e.target.value = "";
+        return;
+      }
+    }
+
+    // ==========================================
+    // SAVE VALID DOCUMENT
+    // ==========================================
 
     const newDocument = {
       documentKey,
@@ -946,7 +1901,7 @@ const DocumentManagement = ({ formData, setFormData }) => {
       ...prev,
       documents: [
         ...prev.documents.filter(
-          (document) => document.documentKey !== documentKey,
+          (document) => document.documentKey !== documentKey
         ),
         newDocument,
       ],
@@ -954,7 +1909,6 @@ const DocumentManagement = ({ formData, setFormData }) => {
 
     e.target.value = "";
   };
-
   const removeDocument = (documentKey) => {
     setFormData((prev) => {
       const documentToRemove = prev.documents.find(
@@ -998,7 +1952,7 @@ const DocumentManagement = ({ formData, setFormData }) => {
                 ) : document.type === "experience" ? (
                   <Briefcase size={24} />
                 ) : document.type === "photo" ? (
-                  <File size={24} />
+                  <FileIcon size={24} />
                 ) : (
                   <FileText size={24} />
                 )}
@@ -1010,6 +1964,11 @@ const DocumentManagement = ({ formData, setFormData }) => {
                 type="file"
                 onChange={(e) => addDocument(document.key, e)}
               />
+              {errors?.[document.key] && (
+                <span className={styles["field-error"]}>
+                  {errors[document.key]}
+                </span>
+              )}
 
               {uploadedDocument && (
                 <small>✓ {uploadedDocument.documentName}</small>
@@ -1048,8 +2007,13 @@ const DocumentManagement = ({ formData, setFormData }) => {
 /* =====================================================
    REUSABLE INPUT
 ===================================================== */
-
-const Input = ({ label, type = "text", value, onChange }) => {
+const Input = ({
+  label,
+  type = "text",
+  value,
+  onChange,
+  error,
+}) => {
   return (
     <div className={styles["form-group"]}>
       <label>{label}</label>
@@ -1060,20 +2024,35 @@ const Input = ({ label, type = "text", value, onChange }) => {
         onChange={onChange}
         placeholder={`Enter ${label}`}
       />
+
+      {error && (
+        <span className={styles["field-error"]}>
+          {error}
+        </span>
+      )}
     </div>
   );
 };
-
 /* =====================================================
    REUSABLE SELECT
 ===================================================== */
-
-const Select = ({ label, value, onChange, options, disabled = false }) => {
+const Select = ({
+  label,
+  value,
+  onChange,
+  options,
+  disabled = false,
+  error,
+}) => {
   return (
     <div className={styles["form-group"]}>
       <label>{label}</label>
 
-      <select value={value} onChange={onChange} disabled={disabled}>
+      <select
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+      >
         <option value="">
           {disabled ? `Loading ${label}...` : `Select ${label}`}
         </option>
@@ -1092,8 +2071,15 @@ const Select = ({ label, value, onChange, options, disabled = false }) => {
           );
         })}
       </select>
+
+      {error && (
+        <span className={styles["field-error"]}>
+          {error}
+        </span>
+      )}
     </div>
   );
 };
+
 
 export default EmployeeOnboarding;

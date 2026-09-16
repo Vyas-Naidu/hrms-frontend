@@ -263,6 +263,7 @@
 // export default DepartmentTable;
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   Download,
@@ -278,8 +279,10 @@ import { departmentApi } from "../../../services/api/department.api";
 import styles from "./DepartmentTable.module.css";
 
 const DepartmentTable = () => {
+
   const [departments, setDepartments] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -301,10 +304,38 @@ const DepartmentTable = () => {
 
       setError(
         error.response?.data?.message ||
-          "Failed to load departments."
+        "Failed to load departments."
       );
     } finally {
       setLoading(false);
+    }
+  };
+
+
+  // ADD THIS HERE
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this department?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await departmentApi.remove(id);
+
+      setDepartments((prev) =>
+        prev.filter((department) => department.id !== id)
+      );
+
+      alert("Department deleted successfully!");
+    } catch (error) {
+      console.error("Failed to delete department:", error);
+
+      const message =
+        error.response?.data?.message ||
+        "Cannot delete this department because it is being used.";
+
+      alert(message);
     }
   };
 
@@ -343,7 +374,6 @@ const DepartmentTable = () => {
         </div>
 
         <div className={styles["department-table-actions"]}>
-
           <button className={styles["export-btn"]}>
             <Download size={17} />
             <span>Export</span>
@@ -426,15 +456,24 @@ const DepartmentTable = () => {
                     <td>
                       <div className={styles["department-actions"]}>
 
-                        <button title="View">
+                        <button
+                          title="View"
+                          onClick={() => navigate(`/hr/view-department/${department.id}`)}
+                        >
                           <Eye size={16} />
                         </button>
 
-                        <button title="Edit">
+                        <button
+                          title="Edit"
+                          onClick={() => navigate(`/hr/edit-department/${department.id}`)}
+                        >
                           <Pencil size={16} />
                         </button>
 
-                        <button title="Delete">
+                        <button
+                          title="Delete"
+                          onClick={() => handleDelete(department.id)}
+                        >
                           <Trash2 size={16} />
                         </button>
 

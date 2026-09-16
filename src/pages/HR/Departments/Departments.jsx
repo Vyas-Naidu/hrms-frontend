@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import DepartmentCards from "./DepartmentCards";
 import DepartmentTable from "./DepartmentTable";
@@ -6,6 +7,8 @@ import DepartmentTable from "./DepartmentTable";
 import styles from "./Departments.module.css";
 
 const Departments = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles["departments-content"]}>
 
@@ -17,7 +20,11 @@ const Departments = () => {
           </p>
         </div>
 
-        <button className={styles["add-department-btn"]}>
+        <button
+          type="button"
+          className={styles["add-department-btn"]}
+          onClick={() => navigate("/hr/departments/add")}
+        >
           + Add Department
         </button>
       </div>

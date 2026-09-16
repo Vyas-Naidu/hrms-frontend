@@ -64,9 +64,9 @@
 
   background:
     conic-gradient(
-      #622B14 0deg 160deg,
-      #995F2F 160deg 260deg,
-      #978F66 260deg 360deg
+      rgb(43, 239, 43)  0deg 160deg,
+      rgb(201, 25, 25)   160deg 260deg,
+      orange 260deg 360deg
     );
 }
 
@@ -129,15 +129,15 @@
 }
 
 .legend-dot.green {
-  background: #622B14;
+  background: rgb(43, 239, 43) ;
 }
 
 .legend-dot.blue {
-  background: #995F2F;
+  background: rgb(201, 25, 25)  ;
 }
 
 .legend-dot.purple {
-  background: #978F66;
+  background: orange;
 }
 
 .usage-legend p {
@@ -202,15 +202,15 @@
 }
 
 .trend-legend i.green {
-  background: #622B14;
+  background: rgb(43, 239, 43) ;
 }
 
 .trend-legend i.blue {
-  background: #995F2F;
+  background: rgb(201, 25, 25) ;
 }
 
 .trend-legend i.purple {
-  background: #978F66;
+  background: orange;
 }
 
 
@@ -304,10 +304,10 @@
 
   background:
     conic-gradient(
-      #E4D6A9 0deg 180deg,
-      #995F2F 180deg 240deg,
-      #978F66 240deg 290deg,
-      #622B14 290deg 360deg
+      rgb(38, 243, 38) 0deg 180deg,
+      rgb(240, 40, 40) 180deg 240deg,
+      orange 240deg 290deg,
+      skyblue 290deg 360deg
     );
 }
 
@@ -367,19 +367,19 @@
 
 
 .status-legend i.orange {
-  background: #E4D6A9;
+  background: orange;
 }
 
 .status-legend i.green {
-  background: #995F2F;
+  background: rgb(38, 243, 38);
 }
 
 .status-legend i.red {
-  background: #978F66;
+  background:  rgb(222, 46, 46);
 }
 
 .status-legend i.blue {
-  background: #622B14;
+  background: skyblue;
 }
 
 .status-legend span {

@@ -6,36 +6,42 @@
   overflow: hidden;
 }
 
-/* Filters */
+/* =========================================================
+   FILTERS
+========================================================= */
+
 .reports-filters {
   display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  padding: 20px;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 18px;
   border-bottom: 1px solid #e5e7eb;
+  box-sizing: border-box;
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .filter-group label {
-  font-size: 13px;
+  font-size: 12px;
   color: #475467;
+  line-height: 1;
 }
 
 .filter-group select,
 .filter-group input {
   width: 200px;
-  height: 39px;
+  height: 38px;
   border: 1px solid #d5d9e0;
   border-radius: 6px;
   padding: 0 12px;
   background: #ffffff;
   color: #202733;
-  font-size: 14px;
+  font-size: 13px;
   box-sizing: border-box;
 }
 
@@ -43,26 +49,45 @@
   width: 200px;
 }
 
-.apply-btn {
-  height: 60px;
-  padding: 0 22px;
-  border: none;
+/* =========================================================
+   FILTER BUTTONS
+========================================================= */
+
+.apply-btn,
+.reset-btn {
+  height: 38px;
+  box-sizing: border-box;
   border-radius: 6px;
-  background: #c44f08;
-  color: white;
+  padding: 0 18px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.apply-btn {
+  min-width: 116px;
+  border: 1px solid #c44f08;
+  background: #c44f08;
+  color: #ffffff;
+}
+
+.apply-btn:hover {
+  background: #a94206;
+  border-color: #a94206;
 }
 
 .reset-btn {
-  height: 60px;
-  padding: 0 22px;
+  min-width: 84px;
   border: 1px solid #d5d9e0;
-  border-radius: 6px;
-  background: white;
+  background: #ffffff;
   color: #344054;
-  font-weight: 600;
-  cursor: pointer;
+}
+
+.reset-btn:hover {
+  background: #f8f9fa;
+  border-color: #c5cad3;
 }
 
 /* Table */
@@ -253,34 +278,39 @@
   border-color: #c44f08;
 }
 
+/* =========================================================
+   RESPONSIVE FILTERS
+========================================================= */
+
 @media (max-width: 1100px) {
+
   .reports-filters {
     flex-wrap: wrap;
+    align-items: flex-end;
   }
 }
 
 @media (max-width: 700px) {
-  .reports-page {
-    padding: 15px;
-  }
-
-  .reports-header {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .custom-report-btn {
-    width: 100%;
-  }
 
   .reports-filters {
     flex-direction: column;
     align-items: stretch;
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .filter-group {
+    width: 100%;
   }
 
   .filter-group select,
   .filter-group input,
   .date-filter input {
+    width: 100%;
+  }
+
+  .apply-btn,
+  .reset-btn {
     width: 100%;
   }
 }

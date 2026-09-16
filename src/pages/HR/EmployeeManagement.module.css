@@ -21,7 +21,7 @@ body {
 
 .employee-page h1 {
   margin: 0 0 24px;
-  color: #622B14;
+  color: #121212;
   font-size: 30px;
   font-weight: 700;
 }
@@ -75,14 +75,14 @@ body {
 
   background: transparent;
 
-  color: #622B14;
+  color: #121212;
 
   font-family: inherit;
   font-size: 14px;
 }
 
 .filter-card .search-box input::placeholder {
-  color: #978F66;
+  color: #121212;
 
 }
 /* ================= SELECT ================= */
@@ -107,7 +107,7 @@ body {
   appearance: none;
 
   background: #ffffff;
-  color: #622B14;
+  color: #121212;
 
   font-family: inherit;
   font-size: 14px;
@@ -128,7 +128,7 @@ body {
 
   pointer-events: none;
 
-  color: #978F66;
+  color: #121212;
 }
 
 /*============= BUTTONS ================= */
@@ -149,7 +149,7 @@ body {
   border-radius: 10px;
 
   background: #F5EADB;
-  color: #622B14;
+  color: #121212;
 
   font-family: inherit;
   font-size: 14px;
@@ -161,7 +161,7 @@ body {
 }
 
 .filter-card .export-button:hover {
-  background: #E4D6A9;
+  background: #9e9d9d;
 }
 
 
@@ -187,7 +187,7 @@ body {
   border-radius: 10px;
 
   background: #f2b353;
-  color: #ffffff;
+  color: #121212;
 
   font-family: inherit;
   font-size: 14px;
@@ -201,7 +201,8 @@ body {
 }
 
 .filter-card .add-button:hover {
-  background: #871d1d;
+  background: #121212;
+  color:#f2b353;
 }
 
 .filter-card .add-button span {
@@ -209,6 +210,7 @@ body {
   line-height: 1;
 }
 /* ================= TABLE ================= */
+
 
 .table-wrapper {
   width: 100%;
@@ -244,7 +246,7 @@ body {
 
   border-top: 1px solid #F0E7D8;
 
-  color: #622B14;
+  color: #121212;
 
   font-size: 13px;
 
@@ -283,7 +285,7 @@ body {
 /* ================= DEPARTMENT ================= */
 
 .department-text {
-  color: #995F2F;
+  color: #121212;
   font-weight: 600;
 }
 

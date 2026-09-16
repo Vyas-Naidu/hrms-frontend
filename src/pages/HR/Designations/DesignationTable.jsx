@@ -1,4 +1,6 @@
+
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   SlidersHorizontal,
@@ -16,6 +18,7 @@ import { designationApi } from "../../../services/api/designation.api";
 import styles from "./DesignationTable.module.css";
 
 const DesignationTable = () => {
+  const navigate = useNavigate();
   const [designations, setDesignations] = useState([]);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All Status");
@@ -23,25 +26,49 @@ const DesignationTable = () => {
   const [error, setError] = useState("");
 
   // Fetch designations from backend
-useEffect(() => {
-  const loadDesignations = async () => {
+  useEffect(() => {
+    const loadDesignations = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await designationApi.getAll();
+
+        setDesignations(response.data);
+      } catch (error) {
+        console.error("Failed to load designations:", error);
+        setError("Failed to load designations.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDesignations();
+  }, []);
+
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this designation?"
+    );
+
+    if (!confirmed) return;
+
     try {
-      setLoading(true);
-      setError("");
+      await designationApi.remove(id);
 
-      const response = await designationApi.getAll();
+      setDesignations((prev) =>
+        prev.filter((designation) => designation.id !== id)
+      );
 
-      setDesignations(response.data);
+      alert("Designation deleted successfully!");
     } catch (error) {
-      console.error("Failed to load designations:", error);
-      setError("Failed to load designations.");
-    } finally {
-      setLoading(false);
+      const message =
+        error?.response?.data?.message ||
+        "Failed to delete designation";
+
+      alert(message);
     }
   };
-
-  loadDesignations();
-}, []);
 
   // Search
   const filteredData = designations.filter((designation) => {
@@ -160,10 +187,9 @@ useEffect(() => {
 
                   {/* Not currently provided by backend */}
                   <td>—</td>
-
-                  {/* Not currently provided by backend */}
-                  <td>—</td>
-
+                  <td>
+                    {designation.department_name || "—"}
+                  </td>
                   {/* Not currently provided by backend */}
                   <td>—</td>
 
@@ -172,82 +198,94 @@ useEffect(() => {
 
                   <td>
                     <div className={styles["designation-actions"]}>
-
-                      <button title="View" type="button">
+                      <button
+                        title="View"
+                        onClick={() => navigate(`/hr/designations/view/${designation.id}`)}
+                      >
                         <Eye size={16} />
                       </button>
+                  
+                    <button
+                      title="Edit"
+                      type="button"
+                      onClick={() =>
+                        navigate(`/hr/designations/edit/${designation.id}`)
+                      }
+                    >
+                      <Pencil size={16} />
+                    </button>
 
-                      <button title="Edit" type="button">
-                        <Pencil size={16} />
-                      </button>
+                    <button
+                      title="Delete"
+                      type="button"
+                      onClick={() => handleDelete(designation.id)}
+                    >
+                      <Trash2 size={16} />
+                    </button>
 
-                      <button title="Delete" type="button">
-                        <Trash2 size={16} />
-                      </button>
-
-                    </div>
-                  </td>
+                  </div>
+                </td>
 
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan="7"
-                  className={styles["no-designations"]}
-                >
-                  No designations found
-                </td>
-              </tr>
+          ))
+          ) : (
+          <tr>
+            <td
+              colSpan="7"
+              className={styles["no-designations"]}
+            >
+              No designations found
+            </td>
+          </tr>
             )}
 
-          </tbody>
+        </tbody>
 
-        </table>
+      </table>
 
-      </div>
+    </div>
 
       {/* ==========================
           FOOTER
       ========================== */}
 
-      <div className={styles["designation-table-footer"]}>
+  <div className={styles["designation-table-footer"]}>
 
-        <span>
-          Showing 1 to {filteredData.length} of{" "}
-          {designations.length} designations
-        </span>
+    <span>
+      Showing 1 to {filteredData.length} of{" "}
+      {designations.length} designations
+    </span>
 
-        <div className={styles["pagination"]}>
+    <div className={styles["pagination"]}>
 
-          <button
-            title="Previous"
-            type="button"
-            disabled
-          >
-            <ChevronLeft size={17} />
-          </button>
+      <button
+        title="Previous"
+        type="button"
+        disabled
+      >
+        <ChevronLeft size={17} />
+      </button>
 
-          <button
-            className={styles["active-page"]}
-            type="button"
-          >
-            1
-          </button>
+      <button
+        className={styles["active-page"]}
+        type="button"
+      >
+        1
+      </button>
 
-          <button
-            title="Next"
-            type="button"
-            disabled
-          >
-            <ChevronRight size={17} />
-          </button>
-
-        </div>
-
-      </div>
+      <button
+        title="Next"
+        type="button"
+        disabled
+      >
+        <ChevronRight size={17} />
+      </button>
 
     </div>
+
+  </div>
+
+    </div >
   );
 };
 

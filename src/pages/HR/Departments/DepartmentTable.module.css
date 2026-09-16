@@ -61,7 +61,7 @@
 }
 
 .department-search:focus-within {
-  border-color: #995f2f;
+  border-color: #121212;
 
   box-shadow:
     0 0 0 3px rgba(153, 95, 47, 0.08);
@@ -75,13 +75,13 @@
 
   background: transparent;
 
-  color: #622b14;
+  color: #121212;
 
   font-size: 13px;
 }
 
 .department-search input::placeholder {
-  color: #978f66;
+  color: #121212;
 }
 
 
@@ -95,6 +95,7 @@
 
   gap: 10px;
 }
+
 
 
 /* ==========================
@@ -121,7 +122,7 @@
 
   background: #ffffff;
 
-  color: #622b14;
+  color: #121212;
 
   font-size: 13px;
 
@@ -138,7 +139,7 @@
 
   transform: translateY(-50%);
 
-  color: #622b14;
+  color: #121212;
 
   pointer-events: none;
 }
@@ -174,12 +175,12 @@
 }
 
 .export-btn:hover {
-  background-color: #871d1d !important;
-  color: #ffffff !important;
+  background-color: #59595e !important;
+  color: #F2B353 !important;
 }
 
 .export-btn:hover svg {
-  color: #ffffff !important;
+  color: #F2B353 !important;
 }
 
 /* ==========================
@@ -263,7 +264,7 @@
 ========================== */
 
 .department-name {
-  color: #622b14 !important;
+  color: #121212 !important;
 
   font-weight: 500;
 }
@@ -416,7 +417,7 @@
 
 .pagination .active-page {
   background: #F2B353;
-  color: #871D1D;
+  color: #59595e;
 }
 
 /* ==========================

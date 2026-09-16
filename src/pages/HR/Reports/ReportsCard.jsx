@@ -47,7 +47,7 @@ const ReportsCard = () => {
         return (
           <div className={styles["report-card"]} key={index}>
             <div className={[styles["report-card-icon"], styles[card.className]].filter(Boolean).join(" ")}>
-              <Icon size={28} strokeWidth={2} />
+              <Icon size={20} strokeWidth={2} />
             </div>
 
             <div className={styles["report-card-content"]}>

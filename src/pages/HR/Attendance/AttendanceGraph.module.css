@@ -40,9 +40,9 @@
   border-radius: 50%;
   background:
     conic-gradient(
-      #995f2f 0deg 318.6deg,
-      #E4D6A9 318.6deg 343.4deg,
-      #978F66 343.4deg 360deg
+      rgb(215, 67, 67) 0deg 180deg,
+      rgb(87, 231, 87) 180deg 343.4deg,
+      orange 343.4deg 360deg
     );
 
   display: flex;
@@ -95,20 +95,19 @@
 }
 
 .legend-dot.green {
-  background: #995f2f;
+  background: rgb(74, 240, 74);
 }
 
 .legend-dot.red {
-  background: #E4D6A9;
+  background: rgb(231, 80, 80);
 }
-
 .legend-dot.orange {
-  background: #978F66;
+  background: orange;
 }
 
 .attendance-message {
   background: #eaf6ee;
-  color: #995f2f;
+  color: #121212;
   border-radius: 7px;
   padding: 10px;
   display: flex;

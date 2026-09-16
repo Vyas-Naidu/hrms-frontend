@@ -1,7 +1,10 @@
 .page {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 28px 32px 48px;
+  /* Match the full-width content behavior used by Employee Management. */
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 24px 8px 28px;
+  box-sizing: border-box;
 }
 
 .header {
@@ -17,7 +20,7 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 8px;
-  color: #9c5a2e;
+  color: #121212;
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
@@ -26,7 +29,7 @@
 
 .header h1 {
   margin: 0;
-  color: #2d1c12;
+  color: #121212;
   font-size: clamp(28px, 4vw, 38px);
   line-height: 1.15;
 }
@@ -151,9 +154,25 @@
   font-size: 12px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .page {
-    padding: 24px 20px 40px;
+    padding: 20px 4px 28px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header {
+    gap: 18px;
+  }
+
+  .list {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+ .page {
+    padding: 20px 4px 28px;
   }
 
   .header {
@@ -166,8 +185,8 @@
 }
 
 @media (max-width: 520px) {
-  .page {
-    padding: 20px 14px 32px;
+ .page {
+    padding: 16px 0 24px;
   }
 
   .header {
