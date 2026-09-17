@@ -39,8 +39,6 @@ const Add_Designation = () => {
 
         const data = await response.json();
 
-        console.log("Departments:", data);
-
         setDepartments(data);
       } catch (error) {
         console.error("Error fetching departments:", error);
@@ -73,8 +71,6 @@ const Add_Designation = () => {
         designationName: designation,
         department_id: Number(departmentId),
       });
-
-      console.log("Designation created:", response.data);
 
       alert("Designation added successfully!");
 

@@ -27,7 +27,6 @@ const Add_Department = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Department from backend:", data);
 
         setFormData({
           departmentName: data.department_name,
@@ -134,8 +133,6 @@ const Add_Department = () => {
         designations: formData.designations,
       });
     }
-
-    console.log("Backend response:", response.data);
 
     alert(
       id

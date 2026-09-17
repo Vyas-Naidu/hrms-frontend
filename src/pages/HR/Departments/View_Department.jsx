@@ -21,8 +21,6 @@ const View_Department = () => {
 
         const response = await departmentApi.getById(id);
 
-        console.log("Department details:", response.data);
-
         setDepartment(response.data);
       } catch (error) {
         console.error("Failed to load department:", error);

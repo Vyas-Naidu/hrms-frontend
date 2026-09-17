@@ -35,8 +35,6 @@ const Edit_Designation = () => {
 
         const response = await designationApi.getById(id);
 
-        console.log("Designation:", response.data);
-
         setDesignation(response.data.designation_name || "");
         setDepartmentId(
           response.data.department_id
@@ -81,8 +79,6 @@ const Edit_Designation = () => {
 
         const data = await response.json();
 
-        console.log("Departments:", data);
-
         setDepartments(data);
       } catch (error) {
         console.error("Error fetching departments:", error);
@@ -115,8 +111,6 @@ const Edit_Designation = () => {
       const response = await designationApi.update(id, {
         designationName: designation,
       });
-
-      console.log("Designation updated:", response.data);
 
       alert("Designation updated successfully!");
 

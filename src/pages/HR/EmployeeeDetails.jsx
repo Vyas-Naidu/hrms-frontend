@@ -175,11 +175,6 @@ const EmployeeDetails = () => {
 
         setDocuments(documentList);
 
-        console.log(
-          "EMPLOYEE DOCUMENTS FULL DATA:",
-          JSON.stringify(documentList, null, 2)
-        );
-
         // Find the uploaded Passport Size Photo.
         // The GET /documents response shown in the console uses:
         // documentName: "Profile Photo"
@@ -211,13 +206,7 @@ const EmployeeDetails = () => {
           );
         });
 
-        console.log("PROFILE PHOTO DOCUMENT:", photoDocument);
-
         if (!photoDocument?.id) {
-          console.log(
-            "No Passport Size Photo found in employee documents:",
-            documentList
-          );
           setProfilePhoto(null);
           return;
         }
@@ -885,17 +874,6 @@ const EmployeeDetails = () => {
           >
             <Trash2 size={17} />
           </button>
-
-          {/* <button
-            type="button"
-            className={
-              styles["back-button"]
-            }
-            onClick={handleBack}
-          >
-            <ArrowLeft size={16} />
-            Back
-          </button> */}
 
         </div>
 

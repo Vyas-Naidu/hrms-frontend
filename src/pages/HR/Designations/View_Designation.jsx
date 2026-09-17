@@ -21,8 +21,6 @@ const View_Designation = () => {
 
         const response = await designationApi.getById(id);
 
-        console.log("Designation details:", response.data);
-
         setDesignation(response.data);
       } catch (error) {
         console.error("Failed to load designation:", error);

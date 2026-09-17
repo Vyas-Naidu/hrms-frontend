@@ -132,16 +132,7 @@ const EmployeeOnboarding = () => {
     const loadEmployeeForEdit = async () => {
       try {
         setSubmitError("");
-
-        console.log("Loading employee for edit:", id);
-
         const response = await employeeApi.getById(id);
-
-        console.log(
-          "EMPLOYEE EDIT DATA:",
-          JSON.stringify(response.data, null, 2)
-        );
-
         const employee =
           response.data?.employee ||
           response.data?.data ||
@@ -623,12 +614,6 @@ const EmployeeOnboarding = () => {
 
       appendDocumentFiles(formDataToSend);
 
-      console.log("Submitting employee registration...");
-      console.log("employeeData:", employeeData);
-      console.log("personalInfo:", personalInfo);
-      console.log("addresses:", addresses);
-      console.log("documentsMetadata:", documentsMetadata);
-
       // Validate required documents before sending the request.
       const uploadedDocumentKeys = formData.documents.map(
         (document) => document.documentKey,
@@ -670,21 +655,12 @@ const EmployeeOnboarding = () => {
       let response;
 
       if (isEditMode) {
-        console.log("UPDATE EMPLOYEE ID:", id);
 
         response = await employeeApi.update(id, formDataToSend);
       } else {
-        console.log("CREATE NEW EMPLOYEE");
 
         response = await employeeApi.create(formDataToSend);
       }
-
-      console.log("Employee save successful:", response.data);
-
-      console.log(
-        "Employee save successful:",
-        response.data
-      );
 
       const employeeCode =
         response.data?.employeeCode ||
@@ -1063,23 +1039,16 @@ const EmployeeOnboarding = () => {
   // STEP NAVIGATION
   // ==========================================
   const nextStep = async () => {
-    console.log("BUTTON CLICKED");
-    console.log("Current Step:", currentStep);
 
     setSubmitError("");
 
     // STEP 4 - FINISH
     if (currentStep === 4) {
-      console.log("STEP 4 - FINISH CLICKED");
-      console.log("Documents:", formData.documents);
 
       const isValid = validateStep(4);
 
-      console.log("Document validation result:", isValid);
-
       if (!isValid) {
-        console.log("Document validation failed");
-        return;
+                return;
       }
 
       try {
@@ -1094,11 +1063,8 @@ const EmployeeOnboarding = () => {
     // STEP 1, 2, 3 validation
     const isValid = validateStep(currentStep);
 
-    console.log("Validation result:", isValid);
-
     if (!isValid) {
-      console.log("Validation failed");
-      return;
+            return;
     }
 
     setCompletedSteps((prev) => {

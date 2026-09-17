@@ -44,8 +44,6 @@ function EmployeeManagement() {
 
         const response = await employeeApi.getAll();
 
-        console.log("Employees API response:", response.data);
-
         const employeeList =
           Array.isArray(response.data)
             ? response.data
@@ -58,8 +56,6 @@ function EmployeeManagement() {
                   : Array.isArray(response.data?.value)
                     ? response.data.value
                     : [];
-
-        console.log("Final employee list:", employeeList);
 
         setEmployees(employeeList);
       } catch (err) {
@@ -93,10 +89,6 @@ function EmployeeManagement() {
           departmentApi.getAll(),
           designationApi.getAll(),
         ]);
-
-        console.log("Departments API response:", departmentResponse.data);
-
-        console.log("Designations API response:", designationResponse.data);
 
         const departmentList = Array.isArray(departmentResponse.data)
           ? departmentResponse.data
