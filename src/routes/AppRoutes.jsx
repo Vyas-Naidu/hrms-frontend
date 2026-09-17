@@ -14,12 +14,9 @@ import View_Department from "../pages/HR/Departments/View_Department";
 import Designations from "../pages/HR/Designations/Designations";
 import Add_Designation from "../pages/HR/Designations/Add_Designation";
 import View_Designation from "../pages/HR/Designations/View_Designation";
-import AssociateSoftwareDeveloper from "../pages/HR/Designations/Designationinside/AssociateSoftwareDeveloper";
-import SoftwareEngineer from "../pages/HR/Designations/Designationinside/SoftwareEngineer";
-import SeniorDeveloper from "../pages/HR/Designations/Designationinside/SeniorDeveloper";
-import TeamLead from "../pages/HR/Designations/Designationinside/TeamLead";
+
 import Edit_Designation from "../pages/HR/Designations/Edit_Designation";
-import ProjectManager from "../pages/HR/Designations/Designationinside/ProjectManager";
+
 import Attendance from "../pages/HR/Attendance/Attendance";
 import HREmployeeManagement from "../pages/HR/EmployeeManagement";
 import EmployeeDetails from "../pages/HR/EmployeeeDetails";
@@ -97,11 +94,6 @@ function AppRoutes() {
         <Route path="/hr/designations/view/:id" element={<HRPage Component={View_Designation} title="Designation Details" />} />
         <Route path="/hr/designations/edit/:id" element={<HRPage Component={Edit_Designation} title="Edit Designation" />} />
 
-        <Route path="/hr/designation/software-engineer" element={<HRPage Component={SoftwareEngineer} title="Software Engineer" />} />
-        <Route path="/hr/designation/associate-software-developer" element={<HRPage Component={AssociateSoftwareDeveloper} title="Associate Software Developer" />} />
-        <Route path="/hr/designation/senior-developer" element={<HRPage Component={SeniorDeveloper} title="Senior Developer" />} />
-        <Route path="/hr/designation/team-lead" element={<HRPage Component={TeamLead} title="Team Lead" />} />
-        <Route path="/hr/designation/project-manager" element={<HRPage Component={ProjectManager} title="Project Manager" />} />
 
         <Route path="/hr/attendance" element={<HRPage Component={Attendance} title="Attendance" />} />
         <Route path="/hr/employeemanagement" element={<HRPage Component={HREmployeeManagement} title="Employee Management" />} />
