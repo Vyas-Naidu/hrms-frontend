@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Sidebar from "../components/Sidebar/Sidebar";
-import Navbar from "../components/Navbar/Navbar";
+import Sidebar from "../shared/components/Sidebar/Sidebar";
+import Navbar from "../shared/components/Navbar/Navbar";
 import EmployeeOnboarding from "../pages/HR/EmployeeOnboarding";
 import Login from "../pages/Login/Login";
 import AdminDashboard from "../pages/Admin/Dashboard";
