@@ -26,13 +26,17 @@ import LeaveManagement from "../pages/HR/LeaveManagement/LeaveManagement";
 import PerformanceReviews from "../pages/HR/PerformanceReviews/PerformanceReviews";
 import Reports from "../pages/HR/Reports/Reports";
 import styles from "../layouts/Layout.module.css";
+import JobOpenings from "../modules/recruitment/pages/JobOpenings";
+import JobOpeningForm from "../modules/recruitment/pages/JobOpeningForm";
 
 function HRPage({ Component, title }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className={`${styles.appLayout} ${collapsed ? styles.sidebarCollapsed : ""}`}>
+    <div
+      className={`${styles.appLayout} ${collapsed ? styles.sidebarCollapsed : ""}`}
+    >
       <Sidebar
         collapsed={collapsed}
         onToggle={() => setCollapsed((value) => !value)}
@@ -79,30 +83,135 @@ function AppRoutes() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
 
-        <Route path="/hr/dashboard" element={<HRPage Component={Dashboard} title="Dashboard" />} />
+        <Route
+          path="/hr/dashboard"
+          element={<HRPage Component={Dashboard} title="Dashboard" />}
+        />
 
-        <Route path="/hr/employee-registration" element={<HRPage Component={EmployeeOnboarding} title="Employee Registration" />} />
-        <Route path="/hr/employee-registration/:id" element={<HRPage Component={EmployeeOnboarding} title="Edit Employee" />} />
+        <Route
+          path="/hr/employee-registration"
+          element={
+            <HRPage
+              Component={EmployeeOnboarding}
+              title="Employee Registration"
+            />
+          }
+        />
+        <Route
+          path="/hr/employee-registration/:id"
+          element={
+            <HRPage Component={EmployeeOnboarding} title="Edit Employee" />
+          }
+        />
 
-        <Route path="/hr/departments" element={<HRPage Component={Departments} title="Departments" />} />
-        <Route path="/hr/departments/add" element={<HRPage Component={Add_Department} title="Department Management" />} />
-        <Route path="/hr/view-department/:id" element={<HRPage Component={View_Department} title="Department Details" />} />
-        <Route path="/hr/edit-department/:id" element={<HRPage Component={Add_Department} title="Edit Department" />} />
+        <Route
+          path="/hr/departments"
+          element={<HRPage Component={Departments} title="Departments" />}
+        />
+        <Route
+          path="/hr/departments/add"
+          element={
+            <HRPage Component={Add_Department} title="Department Management" />
+          }
+        />
+        <Route
+          path="/hr/view-department/:id"
+          element={
+            <HRPage Component={View_Department} title="Department Details" />
+          }
+        />
+        <Route
+          path="/hr/edit-department/:id"
+          element={
+            <HRPage Component={Add_Department} title="Edit Department" />
+          }
+        />
 
-        <Route path="/hr/designations" element={<HRPage Component={Designations} title="Designations" />} />
-        <Route path="/hr/designations/add" element={<HRPage Component={Add_Designation} title="Add Designation" />} />
-        <Route path="/hr/designations/view/:id" element={<HRPage Component={View_Designation} title="Designation Details" />} />
-        <Route path="/hr/designations/edit/:id" element={<HRPage Component={Edit_Designation} title="Edit Designation" />} />
+        <Route
+          path="/hr/designations"
+          element={<HRPage Component={Designations} title="Designations" />}
+        />
+        <Route
+          path="/hr/designations/add"
+          element={
+            <HRPage Component={Add_Designation} title="Add Designation" />
+          }
+        />
+        <Route
+          path="/hr/designations/view/:id"
+          element={
+            <HRPage Component={View_Designation} title="Designation Details" />
+          }
+        />
+        <Route
+          path="/hr/designations/edit/:id"
+          element={
+            <HRPage Component={Edit_Designation} title="Edit Designation" />
+          }
+        />
 
-
-        <Route path="/hr/attendance" element={<HRPage Component={Attendance} title="Attendance" />} />
-        <Route path="/hr/employeemanagement" element={<HRPage Component={HREmployeeManagement} title="Employee Management" />} />
-        <Route path="/hr/employees/:id" element={<HRPage Component={EmployeeDetails} title="Employee Details" />} />
-        <Route path="/hr/notifications" element={<HRPage Component={Notifications} title="Notifications" />} />
-        <Route path="/hr/email" element={<HRPage Component={Email} title="Email" />} />
-        <Route path="/hr/leave-management" element={<HRPage Component={LeaveManagement} title="Leave Management" />} />
-        <Route path="/hr/performance-reviews" element={<HRPage Component={PerformanceReviews} title="Performance Reviews" />} />
-        <Route path="/hr/reports" element={<HRPage Component={Reports} title="Reports" />} />
+        <Route
+          path="/hr/attendance"
+          element={<HRPage Component={Attendance} title="Attendance" />}
+        />
+        <Route
+          path="/hr/employeemanagement"
+          element={
+            <HRPage
+              Component={HREmployeeManagement}
+              title="Employee Management"
+            />
+          }
+        />
+        <Route
+          path="/hr/employees/:id"
+          element={
+            <HRPage Component={EmployeeDetails} title="Employee Details" />
+          }
+        />
+        <Route
+          path="/hr/notifications"
+          element={<HRPage Component={Notifications} title="Notifications" />}
+        />
+        <Route
+          path="/hr/email"
+          element={<HRPage Component={Email} title="Email" />}
+        />
+        <Route
+          path="/hr/leave-management"
+          element={
+            <HRPage Component={LeaveManagement} title="Leave Management" />
+          }
+        />
+        <Route
+          path="/hr/performance-reviews"
+          element={
+            <HRPage
+              Component={PerformanceReviews}
+              title="Performance Reviews"
+            />
+          }
+        />
+        <Route
+          path="/hr/reports"
+          element={<HRPage Component={Reports} title="Reports" />}
+        />
+        <Route
+          path="/hr/recruitment/job-openings"
+          element={<HRPage Component={JobOpenings} title="Job Openings" />}
+        />
+        <Route
+          path="/hr/recruitment/job-openings/add"
+          element={
+            <HRPage Component={JobOpeningForm} title="Create Job Opening" />
+          }
+        />
+        <Route
+          path="/hr/recruitment/job-openings/:id/edit"
+          element={
+            <HRPage Component={JobOpeningForm} title="Edit Job Opening" />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

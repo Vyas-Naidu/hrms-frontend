@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaBuilding,
+  FaBriefcase,
   FaClipboardList,
   FaUsers,
   FaCalendarCheck,
@@ -28,6 +29,15 @@ const navigationGroups = [
       { label: "Employees", path: "/hr/employeemanagement", icon: FaUsers },
     ],
   },
+  {
+  items: [
+    {
+      label: "Recruitment",
+      path: "/hr/recruitment/job-openings",
+      icon: FaBriefcase,
+    },
+  ],
+},
   {
     items: [
       { label: "Attendance", path: "/hr/attendance", icon: FaCalendarCheck },
