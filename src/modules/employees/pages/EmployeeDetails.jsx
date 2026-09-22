@@ -25,12 +25,12 @@ import {
   Users,
 } from "lucide-react";
 
-import { employeeApi } from "../../services/api/employee.api";
+import { employeeApi } from "../../../services/api/employee.api";
 
 import {
   clearSelectedEmployee,
   fetchEmployeeById,
-} from "../../store/slices/employeeSlice";
+} from "../../../store/slices/employeeSlice";
 
 import styles from "./EmployeeDetails.module.css";
 

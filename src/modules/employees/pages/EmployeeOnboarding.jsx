@@ -14,9 +14,9 @@ import {
   Download,
 } from "lucide-react";
 
-import { departmentApi } from "../../services/api/department.api";
-import { designationApi } from "../../services/api/designation.api";
-import { employeeApi } from "../../services/api/employee.api";
+import { departmentApi } from "../../../services/api/department.api";
+import { designationApi } from "../../../services/api/designation.api";
+import { employeeApi } from "../../../services/api/employee.api";
 
 const formatInputDate = (value) => {
   if (!value) return "";

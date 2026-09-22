@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Sidebar from "../shared/components/Sidebar/Sidebar";
 import Navbar from "../shared/components/Navbar/Navbar";
-import EmployeeOnboarding from "../pages/HR/EmployeeOnboarding";
+import EmployeeOnboarding from "../modules/employees/pages/EmployeeOnboarding";
 import Login from "../pages/Login/Login";
 import AdminDashboard from "../pages/Admin/Dashboard";
 import EmployeeDashboard from "../pages/Employee/Dashboard";
@@ -18,8 +18,8 @@ import View_Designation from "../modules/designations/View_Designation";
 import Edit_Designation from "../modules/designations/Edit_Designation";
 
 import Attendance from "../pages/HR/Attendance/Attendance";
-import HREmployeeManagement from "../pages/HR/EmployeeManagement";
-import EmployeeDetails from "../pages/HR/EmployeeeDetails";
+import HREmployeeManagement from "../modules/employees/pages/EmployeeManagement";
+import EmployeeDetails from "../modules/employees/pages/EmployeeDetails";
 import Email from "../pages/HR/Email";
 import Notifications from "../pages/HR/Notifications";
 import LeaveManagement from "../pages/HR/LeaveManagement/LeaveManagement";

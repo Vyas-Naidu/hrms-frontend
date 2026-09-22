@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { employeeApi } from "../../services/api/employee.api";
+import { employeeApi } from "../../../services/api/employee.api";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -12,8 +12,8 @@ import {
 
 import styles from "./EmployeeManagement.module.css";
 
-import { departmentApi } from "../../services/api/department.api";
-import { designationApi } from "../../services/api/designation.api";
+import { departmentApi } from "../../../services/api/department.api";
+import { designationApi } from "../../../services/api/designation.api";
 
 
 function EmployeeManagement() {
