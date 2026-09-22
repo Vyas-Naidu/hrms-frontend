@@ -11,11 +11,11 @@ import Dashboard from "../pages/HR/Dashboard/Dashboard";
 import Departments from "../modules/departments/Departments";
 import Add_Department from "../modules/departments/Add_Department";
 import View_Department from "../modules/departments/View_Department";
-import Designations from "../pages/HR/Designations/Designations";
-import Add_Designation from "../pages/HR/Designations/Add_Designation";
-import View_Designation from "../pages/HR/Designations/View_Designation";
+import Designations from "../modules/designations/Designations";
+import Add_Designation from "../modules/designations/Add_Designation";
+import View_Designation from "../modules/designations/View_Designation";
 
-import Edit_Designation from "../pages/HR/Designations/Edit_Designation";
+import Edit_Designation from "../modules/designations/Edit_Designation";
 
 import Attendance from "../pages/HR/Attendance/Attendance";
 import HREmployeeManagement from "../pages/HR/EmployeeManagement";

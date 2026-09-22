@@ -13,7 +13,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { designationApi } from "../../../services/api/designation.api";
+import { designationApi } from "../../services/api/designation.api";
 
 import styles from "./DesignationTable.module.css";
 

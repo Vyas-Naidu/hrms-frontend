@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ChevronDown, ArrowLeft } from "lucide-react";
 import styles from "./Add_Designation.module.css";
 
-import { designationApi } from "../../../services/api/designation.api";
+import { designationApi } from "../../services/api/designation.api";
 
-// const DESIGNATION_API = "http://localhost:3000/designations";
 const DEPARTMENT_API = "http://localhost:3000/departments";
 
 const designations = [
@@ -16,16 +15,57 @@ const designations = [
   "Project Manager",
 ];
 
-const Add_Designation = () => {
+const Edit_Designation = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const [designation, setDesignation] = useState("");
   const [departmentId, setDepartmentId] = useState("");
   const [departments, setDepartments] = useState([]);
-  const [loading, setLoading] = useState(false);
+
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [departmentLoading, setDepartmentLoading] = useState(true);
 
-  // Get departments from database
+  // Get existing designation
+  useEffect(() => {
+    const fetchDesignation = async () => {
+      try {
+        setLoading(true);
+
+        const response = await designationApi.getById(id);
+
+        setDesignation(response.data.designation_name || "");
+        setDepartmentId(
+          response.data.department_id
+            ? String(response.data.department_id)
+            : ""
+        );
+      } catch (error) {
+        console.error("Error fetching designation:", error);
+
+        const message =
+          error?.response?.data?.message ||
+          "Unable to load designation";
+
+        alert(
+          Array.isArray(message)
+            ? message.join(", ")
+            : message
+        );
+
+        navigate("/hr/designations");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchDesignation();
+    }
+  }, [id, navigate]);
+
+  // Get departments
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
@@ -51,7 +91,8 @@ const Add_Designation = () => {
     fetchDepartments();
   }, []);
 
-  const handleSave = async (e) => {
+  // Update designation
+  const handleUpdate = async (e) => {
     e.preventDefault();
 
     if (!departmentId) {
@@ -65,22 +106,21 @@ const Add_Designation = () => {
     }
 
     try {
-      setLoading(true);
+      setSaving(true);
 
-      const response = await designationApi.create({
+      const response = await designationApi.update(id, {
         designationName: designation,
-        department_id: Number(departmentId),
       });
 
-      alert("Designation added successfully!");
+      alert("Designation updated successfully!");
 
       navigate("/hr/designations");
     } catch (error) {
-      console.error("Error creating designation:", error);
+      console.error("Error updating designation:", error);
 
       const message =
         error?.response?.data?.message ||
-        "Failed to create designation";
+        "Failed to update designation";
 
       alert(
         Array.isArray(message)
@@ -88,9 +128,18 @@ const Add_Designation = () => {
           : message
       );
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (loading || departmentLoading) {
+    return (
+      <div className={styles.addDesignationPage}>
+        <p>Loading designation...</p>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.addDesignationPage}>
 
@@ -103,28 +152,23 @@ const Add_Designation = () => {
         Back
       </button>
 
-      <h2>Add Designation</h2>
+      <h2>Edit Designation</h2>
 
       <form
         className={styles.designationForm}
-        onSubmit={handleSave}
+        onSubmit={handleUpdate}
       >
 
         {/* SELECT DEPARTMENT */}
-        <div className={styles.formGroup}>
         <label>Select Department</label>
 
         <div className={styles.selectWrapper}>
           <select
             value={departmentId}
             onChange={(e) => setDepartmentId(e.target.value)}
-            disabled={departmentLoading}
+            disabled={saving}
           >
-            <option value="">
-              {departmentLoading
-                ? "Loading departments..."
-                : "Select Department"}
-            </option>
+            <option value="">Select Department</option>
 
             {departments.map((department) => (
               <option
@@ -138,16 +182,15 @@ const Add_Designation = () => {
 
           <ChevronDown size={18} />
         </div>
-        </div>
 
         {/* SELECT DESIGNATION */}
-        <div className={styles.formGroup}>
         <label>Select Designation</label>
 
         <div className={styles.selectWrapper}>
           <select
             value={designation}
             onChange={(e) => setDesignation(e.target.value)}
+            disabled={saving}
           >
             <option value="">Select Designation</option>
 
@@ -163,14 +206,14 @@ const Add_Designation = () => {
 
           <ChevronDown size={18} />
         </div>
-        </div>
-        {/* SAVE */}
+
+        {/* UPDATE */}
         <button
           type="submit"
           className={styles.saveBtn}
-          disabled={loading || departmentLoading}
+          disabled={saving}
         >
-          {loading ? "Saving..." : "Save Designation"}
+          {saving ? "Updating..." : "Update Designation"}
         </button>
 
       </form>
@@ -178,4 +221,4 @@ const Add_Designation = () => {
   );
 };
 
-export default Add_Designation;
+export default Edit_Designation;

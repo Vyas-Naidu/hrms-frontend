@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-import { designationApi } from "../../../services/api/designation.api";
+import { designationApi } from "../../services/api/designation.api";
 import styles from "./View_Designation.module.css";
 
 const View_Designation = () => {
