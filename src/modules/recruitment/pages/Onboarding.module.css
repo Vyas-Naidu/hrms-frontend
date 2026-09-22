@@ -1,0 +1,85 @@
+.container {
+  padding: 24px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.header p {
+  margin: 6px 0 0;
+  color: #666;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.table th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.status,
+.progress {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.status {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.progress {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.empty,
+.message {
+  padding: 48px;
+  text-align: center;
+  color: #666;
+}
+
+.empty {
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.error {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+}

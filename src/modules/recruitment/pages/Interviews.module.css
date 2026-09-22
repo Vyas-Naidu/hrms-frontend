@@ -1,0 +1,102 @@
+.container {
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.header p {
+  margin: 6px 0 0;
+  color: #666;
+}
+
+.primaryButton,
+.viewButton,
+.cancelButton {
+  border: none;
+  border-radius: 6px;
+  padding: 9px 14px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.primaryButton {
+  background: #2563eb;
+  color: white;
+}
+
+.viewButton {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.cancelButton {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.table th {
+  font-weight: 600;
+  background: #f8fafc;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  font-size: 13px;
+}
+
+.empty,
+.message {
+  padding: 48px;
+  text-align: center;
+  color: #666;
+}
+
+.empty {
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.error {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #b91c1c;
+}

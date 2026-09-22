@@ -1,0 +1,168 @@
+.page {
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  margin: 0 0 6px;
+}
+
+.header p {
+  margin: 0;
+  color: #666;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card,
+.screeningCard {
+  background: #fff;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.card h2,
+.screeningCard h2 {
+  margin: 0 0 18px;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.infoGrid div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.infoGrid span {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.infoGrid strong {
+  color: #111827;
+}
+
+.resumeLink {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.screeningCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.screeningCard p {
+  margin: 0;
+  color: #666;
+}
+
+.screeningActions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.screeningActions button,
+.secondaryButton {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.shortlistButton {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.holdButton {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.rejectButton {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.secondaryButton {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.screeningActions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.loading {
+  padding: 40px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .infoGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .screeningCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .screeningActions {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .screeningActions {
+    flex-direction: column;
+  }
+
+  .screeningActions button {
+    width: 100%;
+  }
+}

@@ -28,7 +28,15 @@ import Reports from "../pages/HR/Reports/Reports";
 import styles from "../layouts/Layout.module.css";
 import JobOpenings from "../modules/recruitment/pages/JobOpenings";
 import JobOpeningForm from "../modules/recruitment/pages/JobOpeningForm";
+import Applications from "../modules/recruitment/pages/Applications";
+import ApplicationDetails from "../modules/recruitment/pages/ApplicationDetails";
+import Interviews from "../modules/recruitment/pages/Interviews";
+import InterviewForm from "../modules/recruitment/pages/InterviewForm";
+import InterviewDetails from "../modules/recruitment/pages/InterviewDetails";
 
+import Offers from "../modules/recruitment/pages/Offers";
+import OfferForm from "../modules/recruitment/pages/OfferForm";
+import Onboarding from "../modules/recruitment/pages/Onboarding";
 function HRPage({ Component, title }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -211,6 +219,53 @@ function AppRoutes() {
           element={
             <HRPage Component={JobOpeningForm} title="Edit Job Opening" />
           }
+        />
+        <Route
+          path="/hr/recruitment/applications"
+          element={<HRPage Component={Applications} title="Applications" />}
+        />
+        <Route
+          path="/hr/recruitment/applications/:id"
+          element={
+            <HRPage
+              Component={ApplicationDetails}
+              title="Application Details"
+            />
+          }
+        />
+        <Route
+          path="/hr/recruitment/interviews"
+          element={<HRPage Component={Interviews} title="Interviews" />}
+        />
+        <Route
+          path="/hr/recruitment/interviews/add"
+          element={
+            <HRPage Component={InterviewForm} title="Schedule Interview" />
+          }
+        />
+
+        <Route
+          path="/hr/recruitment/interviews/:id/edit"
+          element={<HRPage Component={InterviewForm} title="Edit Interview" />}
+        />
+        <Route
+          path="/hr/recruitment/interviews/:id"
+          element={
+            <HRPage Component={InterviewDetails} title="Interview Details" />
+          }
+        />
+        <Route
+          path="/hr/recruitment/offers"
+          element={<HRPage Component={Offers} title="Offers" />}
+        />
+
+        <Route
+          path="/hr/recruitment/offers/add"
+          element={<HRPage Component={OfferForm} title="Create Offer" />}
+        />
+        <Route
+          path="/hr/recruitment/onboarding"
+          element={<HRPage Component={Onboarding} title="Onboarding" />}
         />
       </Routes>
     </BrowserRouter>

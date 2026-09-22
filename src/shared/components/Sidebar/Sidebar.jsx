@@ -6,6 +6,8 @@ import {
   FaBriefcase,
   FaClipboardList,
   FaUsers,
+  FaUserCheck,
+  FaFileContract,
   FaCalendarCheck,
   FaCalendarAlt,
   FaStar,
@@ -18,26 +20,44 @@ import styles from "./Sidebar.module.css";
 
 const navigationGroups = [
   {
-    items: [
-      { label: "Dashboard", path: "/hr/dashboard", icon: FaHome },
-    ],
+    items: [{ label: "Dashboard", path: "/hr/dashboard", icon: FaHome }],
   },
   {
     items: [
       { label: "Departments", path: "/hr/departments", icon: FaBuilding },
-      { label: "Designations", path: "/hr/designations", icon: FaClipboardList },
+      {
+        label: "Designations",
+        path: "/hr/designations",
+        icon: FaClipboardList,
+      },
       { label: "Employees", path: "/hr/employeemanagement", icon: FaUsers },
     ],
   },
   {
-  items: [
-    {
-      label: "Recruitment",
-      path: "/hr/recruitment/job-openings",
-      icon: FaBriefcase,
-    },
-  ],
-},
+    label: "Recruitment",
+    path: "/hr/recruitment/job-openings",
+    icon: <FaBriefcase />,
+  },
+  {
+    label: "Applications",
+    path: "/hr/recruitment/applications",
+    icon: <FaUsers />,
+  },
+  {
+    label: "Interviews",
+    path: "/hr/recruitment/interviews",
+    icon: <FaCalendarAlt />,
+  },
+  {
+    label: "Offers",
+    path: "/hr/recruitment/offers",
+    icon: <FaFileContract />,
+  },
+  {
+    label: "Onboarding",
+    path: "/hr/recruitment/onboarding",
+    icon: <FaUserCheck />,
+  },
   {
     items: [
       { label: "Attendance", path: "/hr/attendance", icon: FaCalendarCheck },
@@ -56,12 +76,7 @@ const navigationGroups = [
   },
 ];
 
-function Sidebar({
-  collapsed,
-  onToggle,
-  mobileOpen = false,
-  onMobileClose,
-}) {
+function Sidebar({ collapsed, onToggle, mobileOpen = false, onMobileClose }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -137,11 +152,7 @@ function Sidebar({
       {/* Bottom section */}
       <div className={styles.bottom}>
         {/* Logout */}
-        <button
-          type="button"
-          className={styles.logout}
-          onClick={handleLogout}
-        >
+        <button type="button" className={styles.logout} onClick={handleLogout}>
           <FaSignOutAlt />
           <span>Logout</span>
         </button>
