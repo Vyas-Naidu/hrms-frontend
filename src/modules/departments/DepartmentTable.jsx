@@ -10,7 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { departmentApi } from "../../../services/api/department.api";
+import { departmentApi } from "../../services/api/department.api";
 
 import styles from "./DepartmentTable.module.css";
 

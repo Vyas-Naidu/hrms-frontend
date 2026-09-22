@@ -1,4 +1,4 @@
-import { departmentApi } from "../../../services/api/department.api";
+import { departmentApi } from "../../services/api/department.api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./Add_Department.module.css";

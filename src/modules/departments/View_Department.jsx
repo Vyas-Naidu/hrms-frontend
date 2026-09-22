@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-import { departmentApi } from "../../../services/api/department.api";
+import { departmentApi } from "../../services/api/department.api";
 import styles from "./View_Department.module.css";
 
 const View_Department = () => {
