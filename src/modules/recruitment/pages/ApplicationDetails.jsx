@@ -75,7 +75,7 @@ const ApplicationDetails = () => {
         <button
           type="button"
           className={styles.secondaryButton}
-          onClick={() => navigate("/hr/recruitment/applications")}
+          onClick={() => navigate("/hr/recruitment/management?tab=applications")}
         >
           Back to Applications
         </button>
@@ -94,7 +94,7 @@ const ApplicationDetails = () => {
         <button
           type="button"
           className={styles.secondaryButton}
-          onClick={() => navigate("/hr/recruitment/applications")}
+          onClick={() => navigate("/hr/recruitment/management?tab=applications")}
         >
           Back
         </button>

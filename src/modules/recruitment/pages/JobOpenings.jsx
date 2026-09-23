@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { jobOpeningsMock } from "../mockData";
 import { recruitmentApi } from "../../../services/api/recruitment.api";
 
 import styles from "./JobOpenings.module.css";
@@ -22,7 +22,7 @@ const JobOpenings = () => {
       setJobOpenings(response.data ?? []);
     } catch (err) {
       console.error("Failed to fetch job openings:", err);
-      setError("Failed to load job openings.");
+      setJobOpenings(jobOpeningsMock); // Fallback to mock data
     } finally {
       setLoading(false);
     }

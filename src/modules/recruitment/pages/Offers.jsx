@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { offersMock } from "../mockData";
 import { offerApi } from "../../../services/api/offer.api";
 import styles from "./Offers.module.css";
 
@@ -18,13 +19,8 @@ const Offers = () => {
       const response = await offerApi.getAll();
       setOffers(response.data || []);
     } catch (err) {
-      const message = err.response?.data?.message;
-
-      setError(
-        Array.isArray(message)
-          ? message.join(", ")
-          : message || "Failed to load offers."
-      );
+      console.error("Failed to load offers:", err);
+      setOffers(offersMock);
     } finally {
       setLoading(false);
     }

@@ -13,7 +13,6 @@
 
   box-sizing: border-box;
   z-index: 1000;
-
   overflow: visible;
 
   transition:
@@ -81,6 +80,26 @@
 }
 
 /* =========================
+   HOVER EXPANSION
+========================= */
+
+.collapsed:hover {
+  width: 220px;
+}
+
+.collapsed:hover .logoFull {
+  display: block;
+}
+
+.collapsed:hover .logoCollapsed {
+  display: none;
+}
+
+.collapsed:hover .logoArea {
+  padding: 12px 16px;
+}
+
+/* =========================
    NAVIGATION
 ========================= */
 
@@ -91,15 +110,11 @@
   padding: 12px 8px;
 
   overflow: visible;
-
   box-sizing: border-box;
 }
 
-/* .navigation::-webkit-scrollbar {
-  display: none;
-} */
-
 .group {
+  position: relative;
   margin-bottom: 5px;
 }
 
@@ -121,12 +136,20 @@
   padding: 0 10px;
   margin-bottom: 2px;
 
+  border: 0;
   border-radius: 8px;
+
+  background: transparent;
 
   color: #202020;
   text-decoration: none;
 
   box-sizing: border-box;
+
+  cursor: pointer;
+
+  font: inherit;
+  text-align: left;
 }
 
 .navItem:hover {
@@ -162,7 +185,6 @@
   justify-content: center;
 
   color: #555;
-
   font-size: 16px;
 }
 
@@ -186,7 +208,6 @@
 
 .collapsed .navItem {
   justify-content: center;
-
   gap: 0;
 
   padding-left: 0;
@@ -197,8 +218,29 @@
   display: none;
 }
 
+.collapsed .dropdownArrow {
+  display: none;
+}
+
+/* Expand contents while hovered */
+.collapsed:hover .navItem {
+  justify-content: flex-start;
+  gap: 11px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.collapsed:hover .label {
+  display: block;
+}
+
+.collapsed:hover .dropdownArrow {
+  display: block;
+}
+
 /* =========================
-   FAST TOOLTIP
+   TOOLTIP
 ========================= */
 
 .collapsed .navItem[data-tooltip]::after,
@@ -245,6 +287,74 @@
   transform: translateY(-50%) translateX(0);
 }
 
+/* Do not show tooltips while sidebar itself is expanded by hover */
+.collapsed:hover .navItem[data-tooltip]::after,
+.collapsed:hover .profile[data-tooltip]::after {
+  display: none;
+}
+
+/* =========================
+   RECRUITMENT DROPDOWN
+========================= */
+
+.dropdownArrow {
+  margin-left: auto;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.subMenu {
+  margin-left: 42px;
+  padding-left: 12px;
+
+  
+
+  overflow: hidden;
+
+  animation: recruitmentDropIn 180ms ease;
+}
+
+@keyframes recruitmentDropIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subNavItem {
+  display: block;
+
+  padding: 9px 12px;
+  margin: 2px 0;
+
+  border-radius: 6px;
+
+  color: #6b7280;
+  text-decoration: none;
+
+  font-size: 13px;
+
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.subNavItem:hover {
+  background: #f5f5f5;
+  color: #111827;
+}
+
+.subActive {
+  background: #fff0d8;
+  color: #111827;
+  font-weight: 600;
+}
+
 /* =========================
    BOTTOM
 ========================= */
@@ -284,7 +394,7 @@
 }
 
 .logout:hover {
-  background: #f7f7f7;
+  background: #f44336;
 }
 
 .profile {
@@ -354,7 +464,6 @@
 .profileInfo small {
   color: #999;
   font-size: 10px;
-
   white-space: nowrap;
 }
 
@@ -386,6 +495,33 @@
   justify-content: center;
 }
 
+/* Expand bottom section on hover */
+.collapsed:hover .bottom {
+  padding: 10px;
+}
+
+.collapsed:hover .logout {
+  width: 100%;
+  justify-content: flex-start;
+
+  padding: 0 9px;
+
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.collapsed:hover .logout span {
+  display: inline;
+}
+
+.collapsed:hover .profileInfo {
+  display: flex;
+}
+
+.collapsed:hover .profile {
+  justify-content: flex-start;
+}
+
 /* =========================
    MOBILE
 ========================= */
@@ -409,24 +545,33 @@
     box-shadow: 8px 0 30px rgba(0, 0, 0, 0.12);
   }
 
-  /* Mobile drawer is always expanded */
+  /* Mobile drawer is always expanded.
+     Disable desktop hover expansion. */
   .sidebar.collapsed {
     width: min(280px, 86vw);
   }
 
-  .sidebar.collapsed .logoFull {
+  .sidebar.collapsed:hover {
+    width: min(280px, 86vw);
+  }
+
+  .sidebar.collapsed .logoFull,
+  .sidebar.collapsed:hover .logoFull {
     display: block;
   }
 
-  .sidebar.collapsed .logoCollapsed {
+  .sidebar.collapsed .logoCollapsed,
+  .sidebar.collapsed:hover .logoCollapsed {
     display: none;
   }
 
-  .sidebar.collapsed .label {
+  .sidebar.collapsed .label,
+  .sidebar.collapsed:hover .label {
     display: block;
   }
 
-  .sidebar.collapsed .navItem {
+  .sidebar.collapsed .navItem,
+  .sidebar.collapsed:hover .navItem {
     justify-content: flex-start;
 
     gap: 11px;
@@ -435,11 +580,18 @@
     padding-right: 10px;
   }
 
-  .sidebar.collapsed .profileInfo {
+  .sidebar.collapsed .dropdownArrow,
+  .sidebar.collapsed:hover .dropdownArrow {
+    display: block;
+  }
+
+  .sidebar.collapsed .profileInfo,
+  .sidebar.collapsed:hover .profileInfo {
     display: flex;
   }
 
-  .sidebar.collapsed .logout {
+  .sidebar.collapsed .logout,
+  .sidebar.collapsed:hover .logout {
     width: 100%;
 
     justify-content: flex-start;
@@ -450,17 +602,20 @@
     margin-right: 0;
   }
 
-  .sidebar.collapsed .logout span {
+  .sidebar.collapsed .logout span,
+  .sidebar.collapsed:hover .logout span {
     display: inline;
   }
 
-  .sidebar.collapsed .bottom {
+  .sidebar.collapsed .bottom,
+  .sidebar.collapsed:hover .bottom {
     padding: 10px;
   }
 
-  /* Hide desktop tooltip on mobile */
   .sidebar.collapsed .navItem[data-tooltip]::after,
-  .sidebar.collapsed .profile[data-tooltip]::after {
+  .sidebar.collapsed .profile[data-tooltip]::after,
+  .sidebar.collapsed:hover .navItem[data-tooltip]::after,
+  .sidebar.collapsed:hover .profile[data-tooltip]::after {
     display: none;
   }
 

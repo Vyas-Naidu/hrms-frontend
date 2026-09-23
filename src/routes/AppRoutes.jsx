@@ -37,8 +37,10 @@ import InterviewDetails from "../modules/recruitment/pages/InterviewDetails";
 import Offers from "../modules/recruitment/pages/Offers";
 import OfferForm from "../modules/recruitment/pages/OfferForm";
 import Onboarding from "../modules/recruitment/pages/Onboarding";
+import RecruitmentManagement from "../modules/recruitment/pages/RecruitmentManagement";
+import RecruitmentDashboard from "../modules/recruitment/pages/RecruitmentDashboard";
 function HRPage({ Component, title }) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -266,6 +268,24 @@ function AppRoutes() {
         <Route
           path="/hr/recruitment/onboarding"
           element={<HRPage Component={Onboarding} title="Onboarding" />}
+        />
+        <Route
+          path="/hr/recruitment/dashboard"
+          element={
+            <HRPage
+              Component={RecruitmentDashboard}
+              title="Recruitment Dashboard"
+            />
+          }
+        />
+        <Route
+          path="/hr/recruitment/management"
+          element={
+            <HRPage
+              Component={RecruitmentManagement}
+              title="Recruitment Management"
+            />
+          }
         />
       </Routes>
     </BrowserRouter>

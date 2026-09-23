@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { onboardingMock } from "../mockData";
 import { applicantApi } from "../../../services/api/applicant.api";
 import styles from "./Onboarding.module.css";
 
@@ -25,13 +26,8 @@ const Onboarding = () => {
         )
       );
     } catch (err) {
-      const message = err.response?.data?.message;
-
-      setError(
-        Array.isArray(message)
-          ? message.join(", ")
-          : message || "Failed to load onboarding candidates."
-      );
+      console.error("Failed to load onboarding candidates:", err);
+      setCandidates(onboardingMock);
     } finally {
       setLoading(false);
     }

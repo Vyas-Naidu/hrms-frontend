@@ -135,7 +135,7 @@ const InterviewForm = () => {
         await interviewApi.create(payload);
       }
 
-      navigate("/hr/recruitment/interviews");
+      navigate("/hr/recruitment/management?tab=interviews");
     } catch (err) {
       const message = err.response?.data?.message;
 
@@ -328,7 +328,7 @@ const InterviewForm = () => {
           <button
             type="button"
             className={styles.secondaryButton}
-            onClick={() => navigate("/hr/recruitment/interviews")}
+            onClick={() => navigate("/hr/recruitment/management?tab=interviews")}
           >
             Cancel
           </button>

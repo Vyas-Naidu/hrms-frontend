@@ -13,4 +13,7 @@ export const recruitmentApi = {
   getDashboard: () => apiClient.get("/recruitment/dashboard"),
 
   getPipeline: () => apiClient.get("/recruitment/pipeline"),
+  getDashboard: () => apiClient.get("/recruitment/dashboard"),
+
+  getPipeline: () => apiClient.get("/recruitment/pipeline"),
 };

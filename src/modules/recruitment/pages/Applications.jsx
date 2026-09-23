@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import {applicationsMock} from "../mockData";
 import { applicantApi } from "../../../services/api/applicant.api";
 
 import styles from "./Applications.module.css";
@@ -24,7 +24,7 @@ const Applications = () => {
       setApplications(response.data ?? []);
     } catch (err) {
       console.error("Failed to fetch applications:", err);
-      setError("Failed to load applications.");
+      setApplications(applicationsMock); // Fallback to mock data
     } finally {
       setLoading(false);
     }

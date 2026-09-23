@@ -1,13 +1,12 @@
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import {
   FaHome,
   FaBuilding,
-  FaBriefcase,
   FaClipboardList,
   FaUsers,
-  FaUserCheck,
-  FaFileContract,
+  FaBriefcase,
   FaCalendarCheck,
   FaCalendarAlt,
   FaStar,
@@ -20,47 +19,40 @@ import styles from "./Sidebar.module.css";
 
 const navigationGroups = [
   {
-    items: [{ label: "Dashboard", path: "/hr/dashboard", icon: FaHome }],
+    items: [
+      {
+        label: "Dashboard",
+        path: "/hr/dashboard",
+        icon: FaHome,
+      },
+    ],
   },
   {
     items: [
-      { label: "Departments", path: "/hr/departments", icon: FaBuilding },
+      {
+        label: "Departments",
+        path: "/hr/departments",
+        icon: FaBuilding,
+      },
       {
         label: "Designations",
         path: "/hr/designations",
         icon: FaClipboardList,
       },
-      { label: "Employees", path: "/hr/employeemanagement", icon: FaUsers },
+      {
+        label: "Employees",
+        path: "/hr/employeemanagement",
+        icon: FaUsers,
+      },
     ],
   },
   {
-    label: "Recruitment",
-    path: "/hr/recruitment/job-openings",
-    icon: <FaBriefcase />,
-  },
-  {
-    label: "Applications",
-    path: "/hr/recruitment/applications",
-    icon: <FaUsers />,
-  },
-  {
-    label: "Interviews",
-    path: "/hr/recruitment/interviews",
-    icon: <FaCalendarAlt />,
-  },
-  {
-    label: "Offers",
-    path: "/hr/recruitment/offers",
-    icon: <FaFileContract />,
-  },
-  {
-    label: "Onboarding",
-    path: "/hr/recruitment/onboarding",
-    icon: <FaUserCheck />,
-  },
-  {
     items: [
-      { label: "Attendance", path: "/hr/attendance", icon: FaCalendarCheck },
+      {
+        label: "Attendance",
+        path: "/hr/attendance",
+        icon: FaCalendarCheck,
+      },
       {
         label: "Leave Management",
         path: "/hr/leave-management",
@@ -71,13 +63,34 @@ const navigationGroups = [
         path: "/hr/performance-reviews",
         icon: FaStar,
       },
-      { label: "Reports", path: "/hr/reports", icon: FaFileAlt },
+      {
+        label: "Reports",
+        path: "/hr/reports",
+        icon: FaFileAlt,
+      },
     ],
   },
 ];
 
-function Sidebar({ collapsed, onToggle, mobileOpen = false, onMobileClose }) {
+const recruitmentItems = [
+  {
+    label: "Dashboard",
+    path: "/hr/recruitment/dashboard",
+  },
+  {
+    label: "Recruitment Management",
+    path: "/hr/recruitment/management",
+  },
+];
+
+function Sidebar({
+  collapsed,
+  onToggle,
+  mobileOpen = false,
+  onMobileClose,
+}) {
   const navigate = useNavigate();
+  const [recruitmentOpen, setRecruitmentOpen] = useState(false);
 
   const handleLogout = () => {
     navigate("/", { replace: true });
@@ -85,9 +98,9 @@ function Sidebar({ collapsed, onToggle, mobileOpen = false, onMobileClose }) {
 
   return (
     <aside
-      className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""} ${
-        mobileOpen ? styles.mobileOpen : ""
-      }`}
+      className={`${styles.sidebar} ${
+        collapsed ? styles.collapsed : ""
+      } ${mobileOpen ? styles.mobileOpen : ""}`}
       aria-label="Main navigation"
     >
       {/* Logo */}
@@ -95,7 +108,9 @@ function Sidebar({ collapsed, onToggle, mobileOpen = false, onMobileClose }) {
         type="button"
         className={styles.logoArea}
         onClick={onToggle}
-        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        aria-label={
+          collapsed ? "Expand sidebar" : "Collapse sidebar"
+        }
       >
         <img
           src="/hrms-logo.png"
@@ -134,7 +149,9 @@ function Sidebar({ collapsed, onToggle, mobileOpen = false, onMobileClose }) {
                   onClick={onMobileClose}
                   data-tooltip={collapsed ? item.label : ""}
                   className={({ isActive }) =>
-                    `${styles.navItem} ${isActive ? styles.active : ""}`
+                    `${styles.navItem} ${
+                      isActive ? styles.active : ""
+                    }`
                   }
                 >
                   <span className={styles.icon}>
@@ -147,17 +164,61 @@ function Sidebar({ collapsed, onToggle, mobileOpen = false, onMobileClose }) {
             })}
           </div>
         ))}
+
+        {/* Recruitment */}
+        <div className={styles.group}>
+          <button
+            type="button"
+            className={styles.navItem}
+            onClick={() =>
+              setRecruitmentOpen((previous) => !previous)
+            }
+            data-tooltip={collapsed ? "Recruitment" : ""}
+            aria-expanded={recruitmentOpen}
+          >
+            <span className={styles.icon}>
+              <FaBriefcase />
+            </span>
+
+            <span className={styles.label}>Recruitment</span>
+
+            <span className={styles.dropdownArrow}>
+              {recruitmentOpen ? "⌃" : "⌄"}
+            </span>
+          </button>
+
+          {recruitmentOpen && (
+            <div className={styles.subMenu}>
+              {recruitmentItems.map((item) => (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  onClick={onMobileClose}
+                  className={({ isActive }) =>
+                    `${styles.subNavItem} ${
+                      isActive ? styles.subActive : ""
+                    }`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
+          )}
+        </div>
       </nav>
 
       {/* Bottom section */}
       <div className={styles.bottom}>
-        {/* Logout */}
-        <button type="button" className={styles.logout} onClick={handleLogout}>
+        <button
+          type="button"
+          className={styles.logout}
+          onClick={handleLogout}
+        >
           <FaSignOutAlt />
           <span>Logout</span>
         </button>
 
-        {/* Profile */}
         <button
           type="button"
           className={styles.profile}

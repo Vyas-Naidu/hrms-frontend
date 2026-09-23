@@ -106,7 +106,7 @@ const OfferForm = () => {
 
       await offerApi.create(payload);
 
-      navigate("/hr/recruitment/offers");
+      navigate("/hr/recruitment/management?tab=offers");
     } catch (err) {
       const message = err.response?.data?.message;
 
@@ -253,7 +253,7 @@ const OfferForm = () => {
           <button
             type="button"
             className={styles.secondaryButton}
-            onClick={() => navigate("/hr/recruitment/offers")}
+            onClick={() => navigate("/hr/recruitment/management?tab=offers")}
           >
             Cancel
           </button>

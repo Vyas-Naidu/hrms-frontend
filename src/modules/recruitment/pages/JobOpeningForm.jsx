@@ -92,7 +92,7 @@ const JobOpeningForm = () => {
 
     return designations.filter(
       (designation) =>
-        Number(designation.department_id) === Number(formData.department_id)
+        Number(designation.department_id) === Number(formData.department_id),
     );
   }, [designations, formData.department_id]);
 
@@ -189,11 +189,11 @@ const JobOpeningForm = () => {
         await recruitmentApi.createJobOpening(payload);
       }
 
-      navigate("/hr/recruitment/job-openings");
+      navigate("/hr/recruitment/management?tab=job-openings");
     } catch (err) {
       console.error("Failed to save job opening:", err);
       setError(
-        getErrorMessage(err, "Failed to save job opening. Please try again.")
+        getErrorMessage(err, "Failed to save job opening. Please try again."),
       );
     } finally {
       setSubmitting(false);
@@ -219,7 +219,7 @@ const JobOpeningForm = () => {
         <button
           type="button"
           className={styles.secondaryButton}
-          onClick={() => navigate("/hr/recruitment/job-openings")}
+          onClick={() => navigate("/hr/recruitment/management?tab=job-openings")}
         >
           Back
         </button>
@@ -306,9 +306,7 @@ const JobOpeningForm = () => {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="experience_required">
-              Experience Required
-            </label>
+            <label htmlFor="experience_required">Experience Required</label>
             <input
               id="experience_required"
               name="experience_required"
@@ -420,7 +418,9 @@ const JobOpeningForm = () => {
           <button
             type="button"
             className={styles.secondaryButton}
-            onClick={() => navigate("/hr/recruitment/job-openings")}
+            onClick={() =>
+              navigate("/hr/recruitment/management?tab=job-openings")
+            }
             disabled={submitting}
           >
             Cancel

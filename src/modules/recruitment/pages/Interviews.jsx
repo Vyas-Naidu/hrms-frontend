@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { interviewsMock } from "../mockData";
 import { interviewApi } from "../../../services/api/interview.api";
 import styles from "./Interviews.module.css";
 
@@ -18,13 +19,8 @@ const Interviews = () => {
       const response = await interviewApi.getAll();
       setInterviews(response.data || []);
     } catch (err) {
-      const message = err.response?.data?.message;
-
-      setError(
-        Array.isArray(message)
-          ? message.join(", ")
-          : message || "Failed to load interviews."
-      );
+      console.error("Failed to load interviews:", err);
+      setInterviews(interviewsMock);
     } finally {
       setLoading(false);
     }
@@ -36,7 +32,7 @@ const Interviews = () => {
 
   const handleCancel = async (id) => {
     const confirmed = window.confirm(
-      "Are you sure you want to cancel this interview?"
+      "Are you sure you want to cancel this interview?",
     );
 
     if (!confirmed) return;
@@ -50,7 +46,7 @@ const Interviews = () => {
       setError(
         Array.isArray(message)
           ? message.join(", ")
-          : message || "Failed to cancel interview."
+          : message || "Failed to cancel interview.",
       );
     }
   };
@@ -113,9 +109,7 @@ const Interviews = () => {
 
                   <td>
                     {interview.interview_date
-                      ? new Date(
-                          interview.interview_date
-                        ).toLocaleDateString()
+                      ? new Date(interview.interview_date).toLocaleDateString()
                       : "-"}
                   </td>
 
@@ -138,9 +132,7 @@ const Interviews = () => {
                       <button
                         className={styles.viewButton}
                         onClick={() =>
-                          navigate(
-                            `/hr/recruitment/interviews/${interview.id}`
-                          )
+                          navigate(`/hr/recruitment/interviews/${interview.id}`)
                         }
                       >
                         View

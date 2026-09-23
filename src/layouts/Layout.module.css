@@ -20,6 +20,12 @@
   margin-left: 64px;
 }
 
+/* When collapsed sidebar is hovered, move content with it */
+.sidebarCollapsed:has(aside:hover) .mainArea {
+  width: calc(100% - 220px);
+  margin-left: 220px;
+}
+
 .pageContent {
   flex: 1;
   width: 100%;
@@ -47,7 +53,7 @@
   line-height: 1;
   cursor: pointer;
   z-index: 1200;
-  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .mobileMenuButton:hover {
@@ -66,7 +72,7 @@
   height: 100%;
   padding: 0;
   border: 0;
-  background: rgba(0,0,0,.18);
+  background: rgba(0, 0, 0, 0.18);
   cursor: pointer;
   z-index: 900;
 }
@@ -82,6 +88,11 @@
     margin-left: 64px;
   }
 
+  .sidebarCollapsed:has(aside:hover) .mainArea {
+    width: calc(100% - 220px);
+    margin-left: 220px;
+  }
+
   .pageContent {
     padding: 20px;
   }
@@ -89,7 +100,8 @@
 
 @media (max-width: 768px) {
   .mainArea,
-  .sidebarCollapsed .mainArea {
+  .sidebarCollapsed .mainArea,
+  .sidebarCollapsed:has(aside:hover) .mainArea {
     width: 100%;
     margin-left: 0;
   }
