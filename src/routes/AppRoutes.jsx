@@ -22,7 +22,6 @@ import HREmployeeManagement from "../modules/employees/pages/EmployeeManagement"
 import EmployeeDetails from "../modules/employees/pages/EmployeeDetails";
 import Email from "../pages/HR/Email";
 import Notifications from "../pages/HR/Notifications";
-import LeaveManagement from "../pages/HR/LeaveManagement/LeaveManagement";
 import PerformanceReviews from "../pages/HR/PerformanceReviews/PerformanceReviews";
 import Reports from "../pages/HR/Reports/Reports";
 import styles from "../layouts/Layout.module.css";
@@ -39,6 +38,13 @@ import OfferForm from "../modules/recruitment/pages/OfferForm";
 import Onboarding from "../modules/recruitment/pages/Onboarding";
 import RecruitmentManagement from "../modules/recruitment/pages/RecruitmentManagement";
 import RecruitmentDashboard from "../modules/recruitment/pages/RecruitmentDashboard";
+
+import LeaveManagement from "../pages/HR/LeaveManagement/LeaveManagement";
+import LeaveSettings from "../pages/HR/LeaveManagement/settings/LeaveSettings";
+import LeaveTypes from "../pages/HR/LeaveManagement/settings/LeaveTypes";
+import LeavePeriod from "../pages/HR/LeaveManagement/settings/LeavePeriod";
+import HolidayList from "../pages/HR/LeaveManagement/settings/HolidayList";
+import LeaveAllocations from "../pages/HR/LeaveManagement/settings/LeaveAllocations";
 function HRPage({ Component, title }) {
   const [collapsed, setCollapsed] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -287,6 +293,55 @@ function AppRoutes() {
             />
           }
         />
+        <Route
+  path="/hr/leave-management/settings"
+  element={
+    <HRPage
+      Component={LeaveSettings}
+      title="Leave Settings"
+    />
+  }
+/>
+
+<Route
+  path="/hr/leave-management/settings/leave-types"
+  element={
+    <HRPage
+      Component={LeaveTypes}
+      title="Leave Types"
+    />
+  }
+/>
+
+<Route
+  path="/hr/leave-management/settings/leave-period"
+  element={
+    <HRPage
+      Component={LeavePeriod}
+      title="Leave Period"
+    />
+  }
+/>
+
+<Route
+  path="/hr/leave-management/settings/holidays"
+  element={
+    <HRPage
+      Component={HolidayList}
+      title="Holiday List"
+    />
+  }
+/>
+
+<Route
+  path="/hr/leave-management/settings/allocations"
+  element={
+    <HRPage
+      Component={LeaveAllocations}
+      title="Leave Allocations"
+    />
+  }
+/>
       </Routes>
     </BrowserRouter>
   );

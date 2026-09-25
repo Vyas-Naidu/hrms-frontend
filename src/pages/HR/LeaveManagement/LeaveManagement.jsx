@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import LeaveManagementCard from "./LeaveManagementChart";
 import LeaveManagementGraph from "./LeaveManagementGraph";
 import LeaveManagementTable from "./LeaveManagementTable";
@@ -78,25 +78,25 @@ const LeaveManagement = () => {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-
+  const navigate = useNavigate();
   const selectedEmployee = employees.find(
-    (employee) => employee.id === form.employeeId
+    (employee) => employee.id === form.employeeId,
   );
 
   const selectedLeaveType = leaveTypes.find(
-    (leaveType) => leaveType.name === form.leaveType
+    (leaveType) => leaveType.name === form.leaveType,
   );
 
   const currentBalance =
     selectedEmployee && form.leaveType
-      ? selectedEmployee.balances[form.leaveType] ?? 0
+      ? (selectedEmployee.balances[form.leaveType] ?? 0)
       : 0;
 
   const numberOfDays =
     form.fromDate && form.toDate
       ? Math.floor(
           (new Date(form.toDate) - new Date(form.fromDate)) /
-            (1000 * 60 * 60 * 24)
+            (1000 * 60 * 60 * 24),
         ) + 1
       : 0;
 
@@ -156,10 +156,7 @@ const LeaveManagement = () => {
       nextErrors.toDate = "To date cannot be before from date.";
     }
 
-    if (
-      selectedLeaveType &&
-      numberOfDays > selectedLeaveType.maxDays
-    ) {
+    if (selectedLeaveType && numberOfDays > selectedLeaveType.maxDays) {
       nextErrors.toDate = `This leave type allows a maximum of ${selectedLeaveType.maxDays} days.`;
     }
 
@@ -220,16 +217,26 @@ const LeaveManagement = () => {
       <div className={styles["leave-page-header"]}>
         <div>
           <h1>Leave Management</h1>
-          <p>Home › Leave Management</p>
+         
         </div>
 
-        <button
-          type="button"
-          className={styles["apply-leave-btn"]}
-          onClick={openApplyLeave}
-        >
-          + Apply Leave
-        </button>
+        <div className={styles["leave-page-actions"]}>
+          <button
+            type="button"
+            className={styles["settings-btn"]}
+            onClick={() => navigate("/hr/leave-management/settings")}
+          >
+            Settings
+          </button>
+
+          <button
+            type="button"
+            className={styles["apply-leave-btn"]}
+            onClick={openApplyLeave}
+          >
+            + Apply Leave
+          </button>
+        </div>
       </div>
 
       <LeaveManagementCard />
@@ -266,10 +273,7 @@ const LeaveManagement = () => {
               </button>
             </div>
 
-            <form
-              className={styles["leave-form"]}
-              onSubmit={handleSubmit}
-            >
+            <form className={styles["leave-form"]} onSubmit={handleSubmit}>
               <div className={styles["leave-form-grid"]}>
                 <div className={styles["leave-form-field"]}>
                   <label htmlFor="employeeId">Employee</label>
@@ -308,10 +312,7 @@ const LeaveManagement = () => {
                     <option value="">Select leave type</option>
 
                     {leaveTypes.map((leaveType) => (
-                      <option
-                        key={leaveType.name}
-                        value={leaveType.name}
-                      >
+                      <option key={leaveType.name} value={leaveType.name}>
                         {leaveType.name}
                       </option>
                     ))}
@@ -409,10 +410,7 @@ const LeaveManagement = () => {
                   Cancel
                 </button>
 
-                <button
-                  type="submit"
-                  className={styles["leave-submit-btn"]}
-                >
+                <button type="submit" className={styles["leave-submit-btn"]}>
                   Submit Leave
                 </button>
               </div>
