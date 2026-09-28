@@ -163,29 +163,6 @@ function Login() {
 
           </form>
 
-          {/* <div className={styles["demo-box"]}>
-            <h4>Demo Credentials</h4>
-
-            <p>
-              <strong>Admin</strong> :
-              admin@gmail.com /
-              admin@123
-            </p>
-
-            <p>
-              <strong>HR</strong> :
-              hr@gmail.com /
-              hr@123
-            </p>
-
-            <p>
-              <strong>Employee</strong> :
-              employee@gmail.com /
-              employee@123
-            </p>
-
-          </div> */}
-
         </div>
       </div>
     </div>
