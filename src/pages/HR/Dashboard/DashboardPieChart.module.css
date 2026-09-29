@@ -9,21 +9,18 @@
   align-items: stretch;
 }
 
-
 /* ==========================
    COMMON CARD
 ========================== */
 
 .dashboard-bottom-row .dashboard-card {
   width: calc(50% - 10px);
-  height: 360px; /* decreased height */
+  height: 360px;
   box-sizing: border-box;
-
   background: #ffffff;
   border-radius: 12px;
   border: 1px solid #e8d4b0;
 }
-
 
 /* ==========================
    ATTENDANCE CARD
@@ -34,8 +31,10 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-}
 
+  /* Important */
+  min-width: 0;
+}
 
 /* ==========================
    ATTENDANCE CONTENT
@@ -45,13 +44,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  gap: 30px;
+  gap: 25px;
   margin-top: 20px;
-
   flex: 1;
-}
 
+  /* Important */
+  min-width: 0;
+}
 
 /* ==========================
    ATTENDANCE CIRCLE
@@ -60,13 +59,14 @@
 .attendance-circle {
   width: 180px;
   height: 180px;
+  min-width: 180px;
+  min-height: 180px;
 
   border-radius: 50%;
-  flex-shrink: 0;
 
   background: conic-gradient(
-    rgb(66, 221, 66)  0deg 240deg,
-    rgb(227, 67, 67)  240deg 340deg,
+    rgb(66, 221, 66) 0deg 240deg,
+    rgb(227, 67, 67) 240deg 340deg,
     orange 340deg 360deg
   );
 
@@ -75,7 +75,6 @@
   justify-content: center;
 }
 
-
 /* ==========================
    ATTENDANCE INNER
 ========================== */
@@ -83,7 +82,6 @@
 .attendance-inner {
   width: 115px;
   height: 115px;
-
   border-radius: 50%;
   background: #ffffff;
 
@@ -104,7 +102,6 @@
   color: #121212;
 }
 
-
 /* ==========================
    ATTENDANCE DETAILS
 ========================== */
@@ -113,23 +110,23 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 
 .attendance-item {
   display: grid;
-  grid-template-columns: 14px 80px 90px;
-
+  grid-template-columns: 13px minmax(65px, 80px) minmax(75px, 90px);
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 
   color: #121212;
   font-size: 15px;
+  white-space: nowrap;
 }
 
 .attendance-item b {
   font-weight: 400;
 }
-
 
 /* ==========================
    DOTS
@@ -146,13 +143,12 @@
 }
 
 .attendance-dot.leave {
-  background: rgb(199, 25, 25);;
+  background: rgb(199, 25, 25);
 }
 
 .attendance-dot.absent {
   background: orange;
 }
-
 
 /* ==========================
    ATTENDANCE BUTTON
@@ -161,25 +157,21 @@
 .attendance-button {
   width: 200px;
   height: 42px;
-
   margin: 10px auto 0;
 
   border: none;
   border-radius: 10px;
-
   background: #fff7ed;
   color: #121212;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 10px;
 
   font-size: 15px;
   cursor: pointer;
 }
-
 
 /* ==========================
    ANNOUNCEMENTS
@@ -188,47 +180,27 @@
 .announcements-card {
   padding: 20px;
   box-sizing: border-box;
+  min-width: 0;
 }
-
-
-/* ==========================
-   ANNOUNCEMENT TITLE
-========================== */
 
 .announcements-card h3 {
   margin: 0;
-
   color: #121212;
-
   font-size: 24px;
   font-weight: 600;
 }
 
-
-/* ==========================
-   ANNOUNCEMENT LIST
-========================== */
-
 .announcement-list {
   margin-top: 20px;
-
   display: flex;
   flex-direction: column;
-
   gap: 20px;
 }
-
-
-/* ==========================
-   ANNOUNCEMENT ITEM
-========================== */
 
 .announcement-item {
   display: flex;
   align-items: flex-start;
-
   gap: 12px;
-
   color: #121212;
 }
 
@@ -237,15 +209,11 @@
   color: #121212;
 }
 
-
-/* ==========================
-   ANNOUNCEMENT INFO
-========================== */
-
 .announcement-info {
   display: flex;
   align-items: center;
   gap: 4px;
+  min-width: 0;
 }
 
 .announcement-info strong {
@@ -258,7 +226,6 @@
   color: #121212;
 }
 
-
 /* ==========================
    VIEW ALL
 ========================== */
@@ -269,24 +236,59 @@
 
   border: none;
   background: transparent;
-
   color: #121212;
 
   display: flex;
   align-items: center;
-
   gap: 5px;
 
   font-size: 14px;
   cursor: pointer;
 }
 
+/* ==========================
+   MEDIUM SCREEN
+========================== */
+
+@media (max-width: 1200px) {
+
+  .attendance-content {
+    gap: 15px;
+  }
+
+  .attendance-circle {
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    min-height: 150px;
+  }
+
+  .attendance-inner {
+    width: 100px;
+    height: 100px;
+  }
+
+  .attendance-inner strong {
+    font-size: 28px;
+  }
+
+  .attendance-inner span {
+    font-size: 13px;
+  }
+
+  .attendance-item {
+    grid-template-columns: 13px 65px 75px;
+    gap: 6px;
+    font-size: 14px;
+  }
+}
 
 /* ==========================
-   RESPONSIVE
+   SMALL SCREEN
 ========================== */
 
 @media (max-width: 900px) {
+
   .dashboard-bottom-row {
     flex-direction: column;
   }
@@ -296,11 +298,55 @@
     height: auto;
     min-height: 360px;
   }
+
+  .attendance-circle {
+    width: 180px;
+    height: 180px;
+    min-width: 180px;
+    min-height: 180px;
+  }
+
+  .attendance-inner {
+    width: 115px;
+    height: 115px;
+  }
+
+  .attendance-item {
+    grid-template-columns: 13px 80px 90px;
+    font-size: 15px;
+  }
 }
 
+/* ==========================
+   MOBILE
+========================== */
+
 @media (max-width: 600px) {
+
   .attendance-content {
     flex-direction: column;
+    gap: 20px;
+  }
+
+  .attendance-circle {
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    min-height: 150px;
+  }
+
+  .attendance-inner {
+    width: 100px;
+    height: 100px;
+  }
+
+  .attendance-inner strong {
+    font-size: 28px;
+  }
+
+  .attendance-details {
+    width: 100%;
+    align-items: center;
   }
 
   .announcement-info {

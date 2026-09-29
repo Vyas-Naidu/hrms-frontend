@@ -7,7 +7,7 @@ import {
   EyeOff,
 } from "lucide-react";
 
-import { loginUser } from "../../services/auth";
+import { authApi } from "../../services/api/auth.api";
 
 function Login() {
   const navigate = useNavigate();
@@ -19,17 +19,18 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setError("");
 
-    const result = loginUser(role, email, password);
+  try {
+    const response = await authApi.login({
+      email,
+      password,
+      role,
+    });
 
-    if (!result.success) {
-      setError(result.message);
-      return;
-    }
-
-    setError("");
+    console.log("Login successful:", response);
 
     switch (role) {
       case "admin":
@@ -47,7 +48,15 @@ function Login() {
       default:
         navigate("/");
     }
-  };
+  } catch (error) {
+    console.error("Login failed:", error);
+
+    setError(
+      error.response?.data?.message ||
+        "Invalid email or password"
+    );
+  }
+};
 
   return (
     <div className={styles["login-page"]}>

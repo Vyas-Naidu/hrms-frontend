@@ -17,7 +17,9 @@ import {
 import { departmentApi } from "../../../services/api/department.api";
 import { designationApi } from "../../../services/api/designation.api";
 import { employeeApi } from "../../../services/api/employee.api";
-
+import { authApi } from "../../../services/api/auth.api";
+const DUMMY_MANAGER_VALUE = "DUMMY_MANAGER";
+const DUMMY_MANAGER_NAME = "Ramesh Kumar (Dummy Manager)";
 const formatInputDate = (value) => {
   if (!value) return "";
 
@@ -53,9 +55,9 @@ const EmployeeOnboarding = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
-
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [createdEmployeeCode, setCreatedEmployeeCode] = useState("");
+  const [temporaryPassword, setTemporaryPassword] = useState("");
   // ==========================================
   // FORM DATA
   // ==========================================
@@ -106,7 +108,7 @@ const EmployeeOnboarding = () => {
     permanentState: "",
     permanentPincode: "",
     permanentCountry: "",
-    permanentAddress: "",
+    // permanentAddress: "",
 
     // Current Address
     currentHouseNo: "",
@@ -115,7 +117,7 @@ const EmployeeOnboarding = () => {
     currentState: "",
     currentPincode: "",
     currentCountry: "",
-    currentAddress: "",
+    // currentAddress: "",
 
     sameAsPermanent: false,
 
@@ -321,10 +323,10 @@ const EmployeeOnboarding = () => {
             permanentAddress?.country ??
             "",
 
-          permanentAddress:
-            permanentAddress?.address ??
-            permanentAddress?.full_address ??
-            "",
+          // permanentAddress:
+          //   permanentAddress?.address ??
+          //   permanentAddress?.full_address ??
+          //   "",
 
           // Current Address
           currentHouseNo:
@@ -353,10 +355,10 @@ const EmployeeOnboarding = () => {
             currentAddress?.country ??
             "",
 
-          currentAddress:
-            currentAddress?.address ??
-            currentAddress?.full_address ??
-            "",
+          // currentAddress:
+          //   currentAddress?.address ??
+          //   currentAddress?.full_address ??
+          //   "",
 
           sameAsPermanent:
             Boolean(
@@ -446,7 +448,6 @@ const EmployeeOnboarding = () => {
   // ==========================================
   // FORM UPDATE
   // ==========================================
-
   const updateField = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -457,6 +458,22 @@ const EmployeeOnboarding = () => {
         : {}),
     }));
   };
+
+  // FILTER DESIGNATIONS BY DEPARTMENT
+  const filteredDesignations = !formData.department
+    ? []
+    : designations.filter((designation) => {
+      const designationDepartmentId =
+        designation.department_id ??
+        designation.departmentId ??
+        designation.department?.id;
+
+      return (
+        String(designationDepartmentId) ===
+        String(formData.department)
+      );
+    });
+
   // ==========================================
   // BUILD BACKEND PAYLOAD
   // ==========================================
@@ -476,9 +493,12 @@ const EmployeeOnboarding = () => {
 
       designationId: formData.designation ? Number(formData.designation) : null,
 
-      managerId: formData.reportingManager
-        ? Number(formData.reportingManager)
-        : null,
+      managerId:
+        formData.reportingManager === DUMMY_MANAGER_VALUE
+          ? null
+          : formData.reportingManager
+            ? Number(formData.reportingManager)
+            : null,
 
       employmentType: formData.employmentType,
       workLocation: formData.workLocation,
@@ -655,12 +675,24 @@ const EmployeeOnboarding = () => {
       let response;
 
       if (isEditMode) {
-
         response = await employeeApi.update(id, formDataToSend);
-      } else {
 
-        response = await employeeApi.create(formDataToSend);
+        navigate(`/hr/employees/${id}`);
+        return;
       }
+
+      // ==========================================
+      // 1. CREATE EMPLOYEE
+      // ==========================================
+
+      response = await employeeApi.create(formDataToSend);
+
+      const employeeId =
+        response.data?.employeeId ||
+        response.data?.employee_id ||
+        response.data?.employee?.id ||
+        response.data?.employee?.employee_id ||
+        response.data?.id;
 
       const employeeCode =
         response.data?.employeeCode ||
@@ -668,14 +700,37 @@ const EmployeeOnboarding = () => {
         response.data?.employee?.employeeCode ||
         "";
 
-      if (isEditMode) {
-        navigate(`/hr/employees/${id}`);
-        return;
+      // Employee creation must succeed
+      if (!employeeId) {
+        throw new Error("Employee creation failed.");
       }
 
-      setCreatedEmployeeCode(employeeCode);
-      setRegistrationSuccess(true);
+      // ==========================================
+      // 2. CREATE LOGIN ACCOUNT
+      // ==========================================
 
+      const accountResponse = await authApi.createEmployeeAccount(
+        employeeId,
+        formData.email.trim()
+      );
+
+      const temporaryPassword =
+        accountResponse.data?.temporaryPassword;
+
+      if (!temporaryPassword) {
+        throw new Error(
+          "Employee was created, but login account creation failed."
+        );
+      }
+
+      // ==========================================
+      // 3. BOTH COMPLETED
+      // ==========================================
+      setCreatedEmployeeCode(employeeCode);
+      setTemporaryPassword(temporaryPassword);
+
+      // Open Employee Overview after successful registration
+      navigate(`/hr/employees/${employeeId}`);
     } catch (error) {
       console.error("Employee registration failed:", error);
       console.error("Status:", error.response?.status);
@@ -927,10 +982,10 @@ const EmployeeOnboarding = () => {
         newErrors.permanentCountry = "Country is required";
       }
 
-      if (!formData.permanentAddress.trim()) {
-        newErrors.permanentAddress =
-          "Permanent Address is required";
-      }
+      // if (!formData.permanentAddress.trim()) {
+      //   newErrors.permanentAddress =
+      //     "Permanent Address is required";
+      // }
 
       // Current Address
       // If Same as Permanent is checked, copied values are accepted.
@@ -972,10 +1027,10 @@ const EmployeeOnboarding = () => {
           newErrors.currentCountry = "Country is required";
         }
 
-        if (!formData.currentAddress.trim()) {
-          newErrors.currentAddress =
-            "Current Address is required";
-        }
+        // if (!formData.currentAddress.trim()) {
+        //   newErrors.currentAddress =
+        //     "Current Address is required";
+        // }
       }
     }
 
@@ -1048,7 +1103,7 @@ const EmployeeOnboarding = () => {
       const isValid = validateStep(4);
 
       if (!isValid) {
-                return;
+        return;
       }
 
       try {
@@ -1064,7 +1119,7 @@ const EmployeeOnboarding = () => {
     const isValid = validateStep(currentStep);
 
     if (!isValid) {
-            return;
+      return;
     }
 
     setCompletedSteps((prev) => {
@@ -1104,22 +1159,42 @@ const EmployeeOnboarding = () => {
             <Check size={40} strokeWidth={3} />
           </div>
 
-          <h1>Registration Completed Successfully!</h1>
+          <h1>Employee Created Successfully!</h1>
 
           <p>
-            Employee registration has been completed successfully.
+            Employee registration and login account
+            have been completed successfully.
           </p>
 
-          {createdEmployeeCode && (
-            <p className={styles["employee-code"]}>
-              Employee Code: <strong>{createdEmployeeCode}</strong>
-            </p>
-          )}
+          <div className={styles["employee-credentials"]}>
+
+            <div className={styles["credential-row"]}>
+              <span>Employee ID</span>
+              <strong>{createdEmployeeCode}</strong>
+            </div>
+
+            <div className={styles["credential-row"]}>
+              <span>Email</span>
+              <strong>{formData.email}</strong>
+            </div>
+
+            <div className={styles["credential-row"]}>
+              <span>Temporary Password</span>
+              <strong>{temporaryPassword}</strong>
+            </div>
+
+          </div>
+
+          <p>
+            Please use these credentials to log in.
+          </p>
 
           <button
             type="button"
             className={styles["success-btn"]}
-            onClick={() => navigate("/hr/employeemanagement")}
+            onClick={() =>
+              navigate("/hr/employeemanagement")
+            }
           >
             Go to Employee Management
           </button>
@@ -1209,7 +1284,7 @@ const EmployeeOnboarding = () => {
               formData={formData}
               updateField={updateField}
               departments={departments}
-              designations={designations}
+              designations={filteredDesignations}
               managers={managers}
               id={id}
               isLoadingOptions={isLoadingOptions}
@@ -1386,18 +1461,34 @@ const EmployeeRegistration = ({
             !formData.department ||
             !formData.designation
           }
-          options={(managers || [])
-            .filter(
-              (manager) =>
-                String(manager.department_id) === String(formData.department) &&
-                String(manager.designation_id) === String(formData.designation) &&
-                String(manager.id) !== String(id)
-            )
-            .map((manager) => ({
-              value: String(manager.id),
-              label: `${manager.first_name ?? manager.firstName ?? ""} ${manager.last_name ?? manager.lastName ?? ""
-                }`.trim(),
-            }))}
+          options={(() => {
+            const filteredManagers = (managers || [])
+              .filter(
+                (manager) =>
+                  String(manager.department_id) ===
+                  String(formData.department) &&
+                  String(manager.designation_id) ===
+                  String(formData.designation) &&
+                  String(manager.id) !== String(id)
+              )
+              .map((manager) => ({
+                value: String(manager.id),
+                label: `${manager.first_name ?? manager.firstName ?? ""} ${manager.last_name ?? manager.lastName ?? ""
+                  }`.trim(),
+              }));
+
+            // If no manager is available, show dummy manager
+            if (filteredManagers.length === 0) {
+              return [
+                {
+                  value: DUMMY_MANAGER_VALUE,
+                  label: DUMMY_MANAGER_NAME,
+                },
+              ];
+            }
+
+            return filteredManagers;
+          })()}
           error={errors.reportingManager}
         />
 
@@ -1629,14 +1720,14 @@ const AddressManagement = ({ formData, updateField, errors }) => {
           error={errors?.permanentCountry}
         />
 
-        <Input
+        {/* <Input
           label="Permanent Address"
           value={formData.permanentAddress}
           onChange={(e) =>
             updateField("permanentAddress", e.target.value)
           }
           error={errors?.permanentAddress}
-        />
+        /> */}
       </div>
 
       {/* ================= SAME ADDRESS ================= */}
@@ -1716,14 +1807,14 @@ const AddressManagement = ({ formData, updateField, errors }) => {
           error={errors?.currentCountry}
         />
 
-        <Input
+        {/* <Input
           label="Current Address"
           value={formData.currentAddress}
           onChange={(e) =>
             updateField("currentAddress", e.target.value)
           }
           error={errors?.currentAddress}
-        />
+        /> */}
       </div>
     </div>
   );

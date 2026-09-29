@@ -1,3 +1,5 @@
+/* ================= GLOBAL ================= */
+
 * {
   box-sizing: border-box;
 }
@@ -5,65 +7,64 @@
 body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
-  background: #F7F3EC;
-  color: #622B14;
+  background: #f7f3ec;
+  color: #622b14;
 }
+
 
 /* ================= PAGE ================= */
 
 .employee-page {
-
-  position: relative;
-  top: -40px;
-  width: 100%;
-  padding: 30px 30px 25px 15px;
+  position: relative !important;
+  top: 0;
+  margin-top: 0 !important;
+  padding: 24px 8px 28px;
 }
 
 .employee-page h1 {
-  margin: 0 0 24px;
-  color: #121212;
-  font-size: 30px;
+  margin-top: 0 !important;
+  margin-bottom: 24px !important;
+  font-size: 28px;
   font-weight: 700;
 }
 
+
 /* ================= FILTERS ================= */
+
 .filter-card {
-   display: flex;
+  display: flex;
   align-items: center;
   gap: 14px;
   flex-wrap: nowrap;
   width: 100%;
-  
-
-  
+  margin-bottom: 18px;
 }
 
-/* Search */
+
+/* ================= SEARCH ================= */
+
 .filter-card .search-box {
+  flex: 1;
   width: 100%;
   min-width: 0;
   height: 40px;
 
   display: flex;
   align-items: center;
-
   gap: 8px;
+
   padding: 0 14px;
 
   background: #ffffff;
-  border: 1px solid #E4D6A9;
+  border: 1px solid #e4d6a9;
   border-radius: 10px;
-
-  box-sizing: border-box;
 }
 
 .filter-card .search-box svg {
   width: 22px;
   height: 22px;
-
   flex-shrink: 0;
-
-  color: #978F66;
+  color: #978f66;
 }
 
 .filter-card .search-box input {
@@ -72,25 +73,24 @@ body {
 
   border: none;
   outline: none;
-
   background: transparent;
 
   color: #121212;
-
   font-family: inherit;
   font-size: 14px;
 }
 
 .filter-card .search-box input::placeholder {
   color: #121212;
-
 }
+
+
 /* ================= SELECT ================= */
+
 .filter-card .select-box {
   width: 150px;
   min-width: 100px;
   height: 40px;
-
   position: relative;
 }
 
@@ -100,7 +100,7 @@ body {
 
   padding: 0 38px 0 14px;
 
-  border: 1px solid #E4D6A9;
+  border: 1px solid #e4d6a9;
   border-radius: 10px;
 
   outline: none;
@@ -127,20 +127,70 @@ body {
   transform: translateY(-50%);
 
   pointer-events: none;
-
   color: #121212;
 }
 
-/*============= BUTTONS ================= */
+
+/* ================= STATUS SELECT ================= */
+
+.filter-card .status-select {
+  width: 130px;
+  min-width: 130px;
+  height: 40px;
+  position: relative;
+}
+
+.filter-card .status-select select {
+  width: 100%;
+  height: 100%;
+
+  padding: 0 36px 0 14px;
+
+  border: 1px solid #e4d6a9;
+  border-radius: 10px;
+
+  outline: none;
+  appearance: none;
+
+  background: #ffffff;
+  color: #121212;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.filter-card .status-select select:focus {
+  border-color: #995f2f;
+}
+
+.filter-card .status-select svg {
+  position: absolute;
+
+  top: 50%;
+  right: 10px;
+
+  width: 18px;
+  height: 18px;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+  color: #121212;
+}
+
+
+/* ================= BUTTONS ================= */
 
 .filter-card .export-button {
   width: 100px;
+  min-width: 100px;
   height: 40px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 8px;
 
   padding: 0;
@@ -148,7 +198,7 @@ body {
   border: none;
   border-radius: 10px;
 
-  background: #F5EADB;
+  background: #f5eadb;
   color: #121212;
 
   font-family: inherit;
@@ -156,7 +206,6 @@ body {
   font-weight: 400;
 
   cursor: pointer;
-
   white-space: nowrap;
 }
 
@@ -165,20 +214,17 @@ body {
 }
 
 
-
-/* ================= EMPLOYEE CARD ================= */
+/* ================= ADD EMPLOYEE ================= */
 
 .filter-card .add-button {
   width: 155px;
   min-width: 155px;
   max-width: 155px;
-
   height: 40px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 7px;
 
   padding: 0;
@@ -194,7 +240,6 @@ body {
   font-weight: 600;
 
   cursor: pointer;
-
   white-space: nowrap;
 
   box-shadow: 0 5px 14px rgba(153, 95, 47, 0.18);
@@ -202,15 +247,40 @@ body {
 
 .filter-card .add-button:hover {
   background: #121212;
-  color:#f2b353;
+  color: #f2b353;
 }
 
 .filter-card .add-button span {
   font-size: 20px;
   line-height: 1;
 }
+
+
+/* ================= EMPLOYEE LIST TITLE ================= */
+
+.employee-cards {
+  margin-bottom: 10px;
+}
+
+.employee-cards h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #121212;
+}
+
+
 /* ================= TABLE ================= */
 
+.employee-card {
+  background: #ffffff;
+  border: 1px solid #e8ded4;
+  border-radius: 16px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+
+  overflow: hidden;
+}
 
 .table-wrapper {
   width: 100%;
@@ -219,16 +289,15 @@ body {
 
 .employee-card table {
   width: 100%;
-  min-width: 1100px;
-
+  min-width: 980px;
   border-collapse: collapse;
 }
 
 .employee-card th {
   padding: 14px 14px;
 
-  background: #FFFAF0;
-  color: #978F66;
+  background: #fffaf0;
+  color: #978f66;
 
   text-align: left;
 
@@ -244,7 +313,7 @@ body {
 .employee-card td {
   padding: 16px 14px;
 
-  border-top: 1px solid #F0E7D8;
+  border-top: 1px solid #f0e7d8;
 
   color: #121212;
 
@@ -255,10 +324,11 @@ body {
 
 .employee-card tbody tr {
   height: 70px;
+  transition: background 0.18s ease;
 }
 
 .employee-card tbody tr:hover {
-  background: #FFFAF0;
+  background: #fffaf0;
 }
 
 
@@ -274,8 +344,8 @@ body {
 
   border-radius: 50%;
 
-  background: #E4D6A9;
-  color: #995F2F;
+  background: #e4d6a9;
+  color: #995f2f;
 
   font-size: 12px;
   font-weight: 700;
@@ -304,19 +374,46 @@ body {
   font-weight: 700;
 }
 
+
+/* Active */
+
+.status.active {
+  background: #d8efdf;
+  color: #3d7650;
+}
+
+
+/* Inactive */
+
+.status.inactive {
+  background: #f3dede;
+  color: #9a3f3f;
+}
+
+
+/* Resigned */
+
+.status.resigned {
+  background: #e9e4dc;
+  color: #6f6257;
+}
+
+
+/* Existing statuses */
+
 .status.present {
-  background: #D8EFDF;
-  color: #3D7650;
+  background: #d8efdf;
+  color: #3d7650;
 }
 
 .status.on-leave {
-  background: #E4D6A9;
-  color: #622B14;
+  background: #e4d6a9;
+  color: #622b14;
 }
 
 .status.absent {
-  background: #F3DEDA;
-  color: #8A3F32;
+  background: #f3deda;
+  color: #8a3f32;
 }
 
 
@@ -330,30 +427,38 @@ body {
 .view-button {
   min-width: 62px;
   height: 34px;
+
   padding: 0 14px;
-  border: 1px solid #E4D6A9;
+
+  border: 1px solid #e4d6a9;
   border-radius: 8px;
+
   background: #ffffff;
-  color: #995F2F;
+  color: #995f2f;
+
   font-family: inherit;
   font-size: 12px;
   font-weight: 600;
+
   cursor: pointer;
+
   transition: 0.2s;
 }
 
 .view-button:hover {
-  background: #995F2F;
+  background: #995f2f;
   color: #ffffff;
-  border-color: #995F2F;
+  border-color: #995f2f;
 }
+
 
 /* ================= NO DATA ================= */
 
 .no-data {
   padding: 30px;
 
-  color: #978F66 ;
+  color: #978f66;
+
   text-align: center;
   font-style: italic;
 }
@@ -368,7 +473,7 @@ body {
 
   padding: 18px 20px;
 
-  border-top: 1px solid #F0E7D8;
+  border-top: 1px solid #f0e7d8;
 }
 
 .pagination-arrow,
@@ -377,11 +482,11 @@ body {
 .next-button {
   height: 34px;
 
-  border: 1px solid #E4D6A9;
+  border: 1px solid #e4d6a9;
   border-radius: 7px;
 
   background: #ffffff;
-  color: #978F66;
+  color: #978f66;
 
   font-family: inherit;
   font-size: 12px;
@@ -398,15 +503,15 @@ body {
 }
 
 .page-number.selected {
-  border-color: #995F2F;
-  background: #995F2F;
+  border-color: #995f2f;
+  background: #995f2f;
   color: #ffffff;
 }
 
 .pagination-arrow:hover,
 .page-number:hover {
-  border-color: #995F2F;
-  color: #995F2F;
+  border-color: #995f2f;
+  color: #995f2f;
 }
 
 .page-number.selected:hover {
@@ -423,8 +528,8 @@ body {
 }
 
 .next-button {
-  border-color: #995F2F;
-  background: #995F2F;
+  border-color: #995f2f;
+  background: #995f2f;
   color: #ffffff;
 }
 
@@ -438,7 +543,7 @@ body {
 
   padding: 22px 4px 5px;
 
-  color: #978F66;
+  color: #978f66;
   font-size: 11px;
 }
 
@@ -449,7 +554,7 @@ body {
 }
 
 .footer b {
-  color: #978F66;
+  color: #978f66;
 }
 
 
@@ -458,29 +563,33 @@ body {
 @media (max-width: 1200px) {
 
   .employee-page {
-    padding: 25px 20px;
+    padding: 20px 4px;
   }
 
   .filter-card {
-    grid-template-columns:
-      minmax(220px, 1fr)
-      180px
-      180px
-      110px
-      160px;
-
     gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .filter-card .search-box {
+    flex: 1 1 280px;
   }
 
   .filter-card .select-box {
     width: 180px;
     min-width: 180px;
+    flex: 0 0 180px;
+  }
+
+  .filter-card .status-select {
+    width: 140px;
+    min-width: 140px;
+    flex: 0 0 140px;
   }
 
   .filter-card .export-button {
     width: 110px;
     min-width: 110px;
-    max-width: 110px;
   }
 
   .filter-card .add-button {
@@ -491,6 +600,8 @@ body {
 }
 
 
+/* ================= TABLET ================= */
+
 @media (max-width: 800px) {
 
   .employee-page {
@@ -498,22 +609,71 @@ body {
   }
 
   .filter-card {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .search-box,
-  .select-box,
-  .export-button,
-  .add-button {
+  .filter-card .search-box,
+  .filter-card .select-box,
+  .filter-card .status-select,
+  .filter-card .export-button,
+  .filter-card .add-button {
     width: 100%;
     min-width: 0;
     max-width: none;
+    flex: 1 1 100%;
   }
 
   .footer {
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
+  }
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+  .employee-page {
+    padding: 16px 0;
+  }
+
+  .employee-page h1 {
+    font-size: 24px;
+    margin-bottom: 18px;
+  }
+
+  .filter-card {
+    gap: 10px;
+  }
+
+  .filter-card .search-box,
+  .filter-card .select-box,
+  .filter-card .status-select,
+  .filter-card .export-button,
+  .filter-card .add-button {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .table-wrapper {
+    border: 1px solid #e8ded4;
+    border-radius: 12px;
+  }
+
+  .employee-card table {
+    min-width: 900px;
+  }
+}
+
+
+@media (max-width: 360px) {
+
+  .employee-page h1 {
+    font-size: 21px;
   }
 }
 
@@ -565,8 +725,8 @@ body {
   border: none;
   border-radius: 50%;
 
-  background: #F3E5D4;
-  color: #622B14;
+  background: #f3e5d4;
+  color: #622b14;
 
   font-size: 25px;
 
@@ -578,7 +738,7 @@ body {
 }
 
 .employee-modal-close:hover {
-  background: #995F2F;
+  background: #995f2f;
   color: #ffffff;
 }
 
@@ -596,7 +756,3 @@ body {
   max-width: 100%;
   margin: 0;
 }
-.employee-card{background:#fff;border:1px solid #E8DED4;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,.06);overflow:hidden}.employee-card table{min-width:980px}.employee-card tbody tr{transition:background .18s ease}.filter-card{margin-bottom:18px}.filter-card .search-box{flex:1}.employee-page{top:0;padding:24px 8px 28px}
-@media(max-width:1024px){.employee-page{padding:20px 4px}.filter-card{flex-wrap:wrap}.filter-card .search-box{flex:1 1 280px}.filter-card .select-box{flex:1 1 180px}.filter-card .export-button,.filter-card .add-button{flex:0 1 auto}}
-@media(max-width:600px){.employee-page{padding:16px 0}.employee-page h1{font-size:24px;margin-bottom:18px}.filter-card{gap:10px}.filter-card .search-box,.filter-card .select-box,.filter-card .export-button,.filter-card .add-button{width:100%;max-width:none;min-width:0;flex-basis:100%}.table-wrapper{border:1px solid #E8DED4;border-radius:12px}.employee-card table{min-width:900px}}
-@media(max-width:360px){.employee-page h1{font-size:21px}}

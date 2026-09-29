@@ -15,7 +15,6 @@ import styles from "./EmployeeManagement.module.css";
 import { departmentApi } from "../../../services/api/department.api";
 import { designationApi } from "../../../services/api/designation.api";
 
-
 function EmployeeManagement() {
   const navigate = useNavigate();
 
@@ -27,14 +26,20 @@ function EmployeeManagement() {
   const [departments, setDepartments] = useState([]);
   const [designations, setDesignations] = useState([]);
   const [employees, setEmployees] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+
   const [isLoadingFilters, setIsLoadingFilters] = useState(true);
   const [filterError, setFilterError] = useState("");
 
   const handleView = (id) => {
     navigate(`/hr/employees/${id}`);
   };
+
+  // =====================================================
+  // LOAD EMPLOYEES
+  // =====================================================
 
   useEffect(() => {
     const loadEmployees = async () => {
@@ -63,7 +68,7 @@ function EmployeeManagement() {
 
         setError(
           err?.response?.data?.message ||
-          "Failed to load employees."
+            "Failed to load employees."
         );
 
         setEmployees([]);
@@ -85,27 +90,35 @@ function EmployeeManagement() {
         setIsLoadingFilters(true);
         setFilterError("");
 
-        const [departmentResponse, designationResponse] = await Promise.all([
+        const [
+          departmentResponse,
+          designationResponse,
+        ] = await Promise.all([
           departmentApi.getAll(),
           designationApi.getAll(),
         ]);
 
-        const departmentList = Array.isArray(departmentResponse.data)
-          ? departmentResponse.data
-          : departmentResponse.data?.value || [];
+        const departmentList =
+          Array.isArray(departmentResponse.data)
+            ? departmentResponse.data
+            : departmentResponse.data?.value || [];
 
-        const designationList = Array.isArray(designationResponse.data)
-          ? designationResponse.data
-          : designationResponse.data?.value || [];
+        const designationList =
+          Array.isArray(designationResponse.data)
+            ? designationResponse.data
+            : designationResponse.data?.value || [];
 
         setDepartments(departmentList);
         setDesignations(designationList);
       } catch (error) {
-        console.error("Failed to load department/designation filters:", error);
+        console.error(
+          "Failed to load department/designation filters:",
+          error
+        );
 
         setFilterError(
           error?.response?.data?.message ||
-          "Failed to load departments and designations.",
+            "Failed to load departments and designations."
         );
       } finally {
         setIsLoadingFilters(false);
@@ -116,31 +129,80 @@ function EmployeeManagement() {
   }, []);
 
   // =====================================================
+  // FILTER DESIGNATIONS BY DEPARTMENT
+  // =====================================================
+
+  const filteredDesignations =
+    department === "All Departments"
+      ? designations
+      : (() => {
+          const selectedDepartment = departments.find(
+            (dept) =>
+              String(dept.department_name || "")
+                .trim()
+                .toLowerCase() ===
+              String(department || "")
+                .trim()
+                .toLowerCase()
+          );
+
+          if (!selectedDepartment) {
+            return [];
+          }
+
+          return designations.filter((desig) => {
+            const designationDepartmentId =
+              desig.department_id ??
+              desig.departmentId ??
+              desig.department?.id;
+
+            return (
+              String(designationDepartmentId) ===
+              String(selectedDepartment.id)
+            );
+          });
+        })();
+
+  // =====================================================
   // FILTER EMPLOYEES
   // =====================================================
 
   const filteredEmployees = employees.filter((employee) => {
     const fullName =
-      `${employee.first_name || ""} ${employee.last_name || ""}`.trim();
+      `${employee.first_name || ""} ${
+        employee.last_name || ""
+      }`.trim();
 
     const searchTerm = search.trim().toLowerCase();
 
     const searchMatch =
       fullName.toLowerCase().includes(searchTerm) ||
-      (employee.employee_code || "").toLowerCase().includes(searchTerm) ||
-      (employee.email || "").toLowerCase().includes(searchTerm);
+      (employee.employee_code || "")
+        .toLowerCase()
+        .includes(searchTerm) ||
+      (employee.email || "")
+        .toLowerCase()
+        .includes(searchTerm);
 
-    const employeeDepartment = (employee.department_name || "")
+    const employeeDepartment = (
+      employee.department_name || ""
+    )
       .trim()
       .toLowerCase();
 
-    const employeeDesignation = (employee.designation_name || "")
+    const employeeDesignation = (
+      employee.designation_name || ""
+    )
       .trim()
       .toLowerCase();
 
-    const selectedDepartment = department.trim().toLowerCase();
+    const selectedDepartment = department
+      .trim()
+      .toLowerCase();
 
-    const selectedDesignation = designation.trim().toLowerCase();
+    const selectedDesignation = designation
+      .trim()
+      .toLowerCase();
 
     const departmentMatch =
       department === "All Departments" ||
@@ -150,9 +212,12 @@ function EmployeeManagement() {
       designation === "All Designations" ||
       employeeDesignation === selectedDesignation;
 
-    return searchMatch && departmentMatch && designationMatch;
+    return (
+      searchMatch &&
+      departmentMatch &&
+      designationMatch
+    );
   });
-
 
   // =====================================================
   // UI
@@ -164,6 +229,8 @@ function EmployeeManagement() {
 
       {/* Search / Filter */}
       <div className={styles["filter-card"]}>
+
+        {/* Search */}
         <div className={styles["search-box"]}>
           <Search />
 
@@ -183,18 +250,30 @@ function EmployeeManagement() {
           <select
             value={department}
             onChange={(e) => {
-              setDepartment(e.target.value);
+              const selectedDepartment =
+                e.target.value;
+
+              setDepartment(selectedDepartment);
+
+              // Reset designation when department changes
+              setDesignation("All Designations");
+
               setPage(1);
             }}
             disabled={isLoadingFilters}
           >
             <option value="All Departments">
-              {isLoadingFilters ? "Loading Departments..." : "All Departments"}
+              {isLoadingFilters
+                ? "Loading Departments..."
+                : "All Departments"}
             </option>
 
             {!isLoadingFilters &&
               departments.map((dept) => (
-                <option key={dept.id} value={dept.department_name}>
+                <option
+                  key={dept.id}
+                  value={dept.department_name}
+                >
                   {dept.department_name}
                 </option>
               ))}
@@ -220,8 +299,11 @@ function EmployeeManagement() {
             </option>
 
             {!isLoadingFilters &&
-              designations.map((desig) => (
-                <option key={desig.id} value={desig.designation_name}>
+              filteredDesignations.map((desig) => (
+                <option
+                  key={desig.id}
+                  value={desig.designation_name}
+                >
                   {desig.designation_name}
                 </option>
               ))}
@@ -230,32 +312,40 @@ function EmployeeManagement() {
           <ChevronDown />
         </div>
 
-        <button className={styles["export-button"]}>
+        {/* Export */}
+        <button
+          className={styles["export-button"]}
+        >
           <Download />
           Export
         </button>
 
+        {/* Add Employee */}
         <button
           className={styles["add-button"]}
-          onClick={() => navigate("/hr/employee-registration")}
+          onClick={() =>
+            navigate("/hr/employee-registration")
+          }
         >
           <span>+</span>
           Add Employee
         </button>
       </div>
-           {/* Employee Table */}
+
+      {/* Employee List Title */}
       <div className={styles["employee-cards"]}>
         <h2>Employee List</h2>
+      </div>
+
+      {/* Filter Error */}
+      {filterError && (
+        <div className={styles["no-data"]}>
+          {filterError}
         </div>
-
-
-      {/* Filter error */}
-      {filterError && <div className={styles["no-data"]}>{filterError}</div>}
+      )}
 
       {/* Employee Table */}
       <div className={styles["employee-card"]}>
-        {/* <h2>Employee List</h2> */}
-
         <div className={styles["table-wrapper"]}>
           <table>
             <thead>
@@ -274,17 +364,24 @@ function EmployeeManagement() {
             </thead>
 
             <tbody>
+
               {/* Loading */}
               {isLoading ? (
                 <tr>
-                  <td colSpan="10" className={styles["no-data"]}>
+                  <td
+                    colSpan="10"
+                    className={styles["no-data"]}
+                  >
                     Loading employees...
                   </td>
                 </tr>
               ) : error ? (
                 /* API Error */
                 <tr>
-                  <td colSpan="10" className={styles["no-data"]}>
+                  <td
+                    colSpan="10"
+                    className={styles["no-data"]}
+                  >
                     {error}
                   </td>
                 </tr>
@@ -292,26 +389,45 @@ function EmployeeManagement() {
                 /* Employees */
                 filteredEmployees.map((employee) => (
                   <tr key={employee.id}>
-                    <td>{employee.employee_code}</td>
 
                     <td>
-                      <div className={styles["employee-avatar"]}>
-                        {`${employee.first_name?.[0] || ""}${employee.last_name?.[0] || ""
-                          }`}
+                      {employee.employee_code}
+                    </td>
+
+                    <td>
+                      <div
+                        className={
+                          styles["employee-avatar"]
+                        }
+                      >
+                        {`${
+                          employee.first_name?.[0] ||
+                          ""
+                        }${
+                          employee.last_name?.[0] ||
+                          ""
+                        }`}
                       </div>
                     </td>
 
                     <td>
-                      {employee.first_name} {employee.last_name}
+                      {employee.first_name}{" "}
+                      {employee.last_name}
                     </td>
 
                     <td>
-                      <span className={styles["department-text"]}>
+                      <span
+                        className={
+                          styles["department-text"]
+                        }
+                      >
                         {employee.department_name}
                       </span>
                     </td>
 
-                    <td>{employee.designation_name}</td>
+                    <td>
+                      {employee.designation_name}
+                    </td>
 
                     <td>{employee.email}</td>
 
@@ -319,21 +435,40 @@ function EmployeeManagement() {
 
                     <td>
                       <span
-                        className={[styles["status"], (employee.status?.toLowerCase().replace(/\s+/g, "-") ||
-                          "")].filter(Boolean).join(" ")}
+                        className={[
+                          styles["status"],
+                          (
+                            employee.status
+                              ?.toLowerCase()
+                              .replace(/\s+/g, "-") ||
+                            ""
+                          ),
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
                       >
                         {employee.status || "Unknown"}
                       </span>
                     </td>
 
-                    <td>{employee.joining_date}</td>
+                    <td>
+                      {employee.joining_date}
+                    </td>
 
                     <td>
-                      <div className={styles["action-buttons"]}>
+                      <div
+                        className={
+                          styles["action-buttons"]
+                        }
+                      >
                         <button
                           type="button"
-                          className={styles["view-button"]}
-                          onClick={() => handleView(employee.id)}
+                          className={
+                            styles["view-button"]
+                          }
+                          onClick={() =>
+                            handleView(employee.id)
+                          }
                         >
                           View
                         </button>
@@ -344,41 +479,80 @@ function EmployeeManagement() {
               ) : (
                 /* No Results */
                 <tr>
-                  <td colSpan="10" className={styles["no-data"]}>
+                  <td
+                    colSpan="10"
+                    className={styles["no-data"]}
+                  >
                     No employees found
                   </td>
                 </tr>
               )}
+
             </tbody>
           </table>
         </div>
 
-        {/* Pagination UI */}
+        {/* Pagination */}
         {filteredEmployees.length > 0 && (
-          <div className={styles["pagination-container"]}>
-            <button className={styles["pagination-arrow"]}>
+          <div
+            className={
+              styles["pagination-container"]
+            }
+          >
+            <button
+              className={
+                styles["pagination-arrow"]
+              }
+            >
               <ChevronLeft />
             </button>
 
             {[1, 2, 3, 4, 5].map((number) => (
               <button
                 key={number}
-                className={[styles["page-number"], (page === number ? styles["selected"] : "")].filter(Boolean).join(" ")}
-                onClick={() => setPage(number)}
+                className={[
+                  styles["page-number"],
+                  page === number
+                    ? styles["selected"]
+                    : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                onClick={() =>
+                  setPage(number)
+                }
               >
                 {number}
               </button>
             ))}
 
-            <button className={styles["pagination-arrow"]}>
+            <button
+              className={
+                styles["pagination-arrow"]
+              }
+            >
               <ChevronRight />
             </button>
 
-            <div className={styles["pagination-spacer"]} />
+            <div
+              className={
+                styles["pagination-spacer"]
+              }
+            />
 
-            <button className={styles["previous-button"]}>Previous</button>
+            <button
+              className={
+                styles["previous-button"]
+              }
+            >
+              Previous
+            </button>
 
-            <button className={styles["next-button"]}>Next</button>
+            <button
+              className={styles["next-button"]}
+            >
+              Next
+            </button>
           </div>
         )}
       </div>
