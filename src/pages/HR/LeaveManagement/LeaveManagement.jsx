@@ -1,40 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LeaveManagementCard from "./LeaveManagementChart";
 import LeaveManagementGraph from "./LeaveManagementGraph";
 import LeaveManagementTable from "./LeaveManagementTable";
-
+import { employeeApi } from "../../../services/api/employee.api";
 import styles from "./LeaveManagement.module.css";
-
-const employees = [
-  {
-    id: "EMP-125",
-    name: "Ravi Kumar",
-    balances: {
-      "Casual Leave": 8,
-      "Sick Leave": 10,
-      "Earned Leave": 13,
-    },
-  },
-  {
-    id: "EMP-124",
-    name: "Priya Sharma",
-    balances: {
-      "Casual Leave": 6,
-      "Sick Leave": 8,
-      "Earned Leave": 12,
-    },
-  },
-  {
-    id: "EMP-123",
-    name: "Arjun Reddy",
-    balances: {
-      "Casual Leave": 10,
-      "Sick Leave": 9,
-      "Earned Leave": 15,
-    },
-  },
-];
 
 const leaveTypes = [
   {
@@ -79,6 +49,30 @@ const LeaveManagement = () => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const [employees, setEmployees] = useState([]);
+  const [employeeLoading, setEmployeeLoading] = useState(false);
+  const [employeeError, setEmployeeError] = useState("");
+  useEffect(() => {
+    const loadEmployees = async () => {
+      try {
+        setEmployeeLoading(true);
+        setEmployeeError("");
+
+        const response = await employeeApi.getAll();
+
+        setEmployees(response.data ?? []);
+      } catch (error) {
+        console.error("Failed to load employees:", error);
+        setEmployeeError("Unable to load employees.");
+      } finally {
+        setEmployeeLoading(false);
+      }
+    };
+
+    loadEmployees();
+  }, []);
+  const isEmployeeView = true;
+  const currentEmployee = employees[0] ?? null;
   const selectedEmployee = employees.find(
     (employee) => employee.id === form.employeeId,
   );
@@ -101,7 +95,19 @@ const LeaveManagement = () => {
       : 0;
 
   const openApplyLeave = () => {
-    setForm(initialForm);
+    if (isEmployeeView && !currentEmployee) {
+      return;
+    }
+
+    setForm(
+      isEmployeeView
+        ? {
+            ...initialForm,
+            employeeId: currentEmployee.id,
+          }
+        : initialForm,
+    );
+
     setErrors({});
     setIsApplyOpen(true);
   };
@@ -217,7 +223,6 @@ const LeaveManagement = () => {
       <div className={styles["leave-page-header"]}>
         <div>
           <h1>Leave Management</h1>
-         
         </div>
 
         <div className={styles["leave-page-actions"]}>
@@ -278,20 +283,34 @@ const LeaveManagement = () => {
                 <div className={styles["leave-form-field"]}>
                   <label htmlFor="employeeId">Employee</label>
 
-                  <select
-                    id="employeeId"
-                    name="employeeId"
-                    value={form.employeeId}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select employee</option>
+                  {isEmployeeView ? (
+                    <input
+                      id="employeeId"
+                      name="employeeId"
+                      value={
+                        currentEmployee
+                          ? `${currentEmployee.first_name} ${currentEmployee.last_name} (${currentEmployee.employee_code})`
+                          : "Loading employee..."
+                      }
+                      readOnly
+                      aria-readonly="true"
+                    />
+                  ) : (
+                    <select
+                      id="employeeId"
+                      name="employeeId"
+                      value={form.employeeId}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select employee</option>
 
-                    {employees.map((employee) => (
-                      <option key={employee.id} value={employee.id}>
-                        {employee.name} ({employee.id})
-                      </option>
-                    ))}
-                  </select>
+                      {employees.map((employee) => (
+                        <option key={employee.id} value={employee.id}>
+                          {employee.name} ({employee.id})
+                        </option>
+                      ))}
+                    </select>
+                  )}
 
                   {errors.employeeId && (
                     <span className={styles["leave-form-error"]}>
