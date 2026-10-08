@@ -1,0 +1,53 @@
+@import "./variables.css";
+@import "./reset.css";
+
+.container{
+    width:min(1400px,95%);
+    margin:auto;
+}
+
+.card{
+    background:white;
+    border-radius:16px;
+    box-shadow:var(--shadow);
+}
+
+.btn{
+    background:var(--primary);
+    color:white;
+    border-radius:12px;
+    padding:12px 22px;
+    transition:.3s;
+}
+
+.btn:hover{
+
+    background:var(--primary-dark);
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+
+}
+
+.input{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+
+}
+
+.input:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 8px rgba(156,90,46,.25);
+
+}

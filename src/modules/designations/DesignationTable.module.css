@@ -1,0 +1,425 @@
+/* ==========================
+   DESIGNATION TABLE CONTAINER
+========================== */
+
+.designation-table-container {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #eee5dc;
+  border-radius: 9px;
+  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(80, 45, 20, 0.04);
+}
+
+
+/* ==========================
+   TOOLBAR
+========================== */
+
+.designation-toolbar {
+  min-height: 70px;
+  padding: 14px 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee5dc;
+}
+
+
+/* ==========================
+   SEARCH
+========================== */
+
+.designation-search {
+  width: 285px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 13px;
+  box-sizing: border-box;
+
+  border: 1px solid #e5d8ca;
+  border-radius: 7px;
+
+  color: #8a7565;
+  background: #ffffff;
+}
+
+.designation-search input {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: #333333;
+  font-size: 13px;
+}
+
+.designation-search input::placeholder {
+  color: #8a7565;
+}
+
+
+/* ==========================
+   TOOLBAR RIGHT
+========================== */
+
+.designation-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+/* ==========================
+   STATUS SELECT
+========================== */
+
+.status-select {
+  position: relative;
+  width: 145px;
+  height: 40px;
+}
+
+.status-select select {
+  width: 100%;
+  height: 100%;
+
+  appearance: none;
+
+  padding: 0 35px 0 13px;
+
+  border: 1px solid #e5d8ca;
+  border-radius: 7px;
+
+  background: #ffffff;
+  color: #4a382d;
+
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+
+.status-select svg {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+}
+
+
+/* ==========================
+   FILTER BUTTON
+========================== */
+
+.filter-btn {
+  width: 42px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e5d8ca;
+  border-radius: 7px;
+
+  background: #ffffff;
+  color: #693a20;
+
+  cursor: pointer;
+}
+
+.filter-btn:hover {
+  background: #f8f1e9;
+}
+
+
+/* ==========================
+   EXPORT BUTTON
+========================== */
+
+.export-btn {
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0 16px;
+
+  border: 1px solid #e5d8ca;
+  border-radius: 7px;
+
+  background: #ffffff;
+  color: #693a20;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  background: #f8f1e9;
+}
+
+
+/* ==========================
+   TABLE WRAPPER
+========================== */
+
+.designation-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* ==========================
+   TABLE
+========================== */
+
+.designation-table {
+  width: 100%;
+  min-width: 1050px;
+
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+
+.designation-table th {
+  height: 47px;
+
+  padding: 0 18px;
+
+  background: #fcf7f1;
+  color: #715039;
+
+  text-align: left;
+  white-space: nowrap;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+.designation-table td {
+  height: 48px;
+
+  padding: 0 18px;
+
+  border-top: 1px solid #eee8e1;
+
+  color: #292929;
+
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+
+.designation-table tbody tr:hover {
+  background: #fffaf5;
+}
+
+
+/* ==========================
+   STATUS
+========================== */
+
+.designation-status {
+  min-width: 55px;
+  height: 24px;
+
+  padding: 0 10px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+
+.designation-status.active {
+  background: #e1f1e0;
+  color: #28712b;
+}
+
+
+.designation-status.inactive {
+  background: #fde2df;
+  color: #d83225;
+}
+
+
+/* ==========================
+   ACTION BUTTONS
+========================== */
+
+.designation-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.designation-actions button {
+  width: 34px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #f8f1e9;
+  color: #693a20;
+
+  cursor: pointer;
+}
+
+.designation-actions button:hover {
+  background: #eee1d4;
+}
+
+
+/* ==========================
+   NO DATA
+========================== */
+
+.no-designations {
+  height: 100px !important;
+
+  text-align: center !important;
+
+  color: #8a7565 !important;
+}
+
+
+/* ==========================
+   FOOTER
+========================== */
+
+.designation-table-footer {
+  min-height: 62px;
+
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-top: 1px solid #eee8e1;
+
+  color: #655b54;
+  font-size: 13px;
+
+  box-sizing: border-box;
+}
+
+
+/* ==========================
+   PAGINATION
+========================== */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+
+.pagination button {
+  width: 34px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #f8f1e9;
+  color: #927e6d;
+
+  cursor: pointer;
+}
+
+
+.pagination button:hover {
+  background: #eee1d4;
+}
+
+
+.pagination button.active-page {
+  background: #a8652a;
+  color: #ffffff;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 900px) {
+
+  .designation-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .designation-search {
+    width: 100%;
+  }
+
+  .designation-toolbar-right {
+    width: 100%;
+  }
+
+  .status-select {
+    flex: 1;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .designation-toolbar-right {
+    flex-wrap: wrap;
+  }
+
+  .status-select {
+    min-width: 140px;
+  }
+
+  .designation-table-footer {
+    height: auto;
+    min-height: 62px;
+
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 14px 18px;
+  }
+}

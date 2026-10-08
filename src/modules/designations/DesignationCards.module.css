@@ -1,0 +1,150 @@
+/* ==========================
+   DESIGNATION CARDS
+========================== */
+
+.designation-cards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+  box-sizing: border-box;
+}
+
+
+/* ==========================
+   CARD
+========================== */
+
+.designation-card {
+  min-width: 0;
+  height: 100px;
+  padding: 15px 25px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 1px solid #eee5dc;
+  border-radius: 9px;
+
+  box-shadow: 0 2px 8px rgba(80, 45, 20, 0.04);
+}
+
+
+/* ==========================
+   ICON
+========================== */
+
+.designation-card-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+}
+
+
+/* Orange */
+
+.designation-card-icon.orange {
+  background: #fde8dd;
+  color: #ad571d;
+}
+
+
+/* Green */
+
+.designation-card-icon.green {
+  background: #e5f1e3;
+  color: #39863c;
+}
+
+
+/* Blue */
+
+.designation-card-icon.blue {
+  background: #e4f2fb;
+  color: #188ac4;
+}
+
+
+/* Yellow */
+
+.designation-card-icon.yellow {
+  background: #fff2d7;
+  color: #b36b0d;
+}
+
+
+/* ==========================
+   CARD CONTENT
+========================== */
+
+.designation-card-info {
+  min-width: 0;
+}
+
+.designation-card-info span {
+  display: block;
+  margin-bottom: 6px;
+
+  color: #222222;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.designation-card-info h2 {
+  margin: 0 0 5px;
+
+  color: #3f2113;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.designation-card-info p {
+  margin: 0;
+
+  color: #327532;
+  font-size: 13px;
+}
+
+
+/* ==========================
+   MOST COMMON DESIGNATION
+========================== */
+
+.designation-card-info .common-designation {
+  font-size: 19px;
+  white-space: nowrap;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1100px) {
+  .designation-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .designation-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .designation-card {
+    height: auto;
+    min-height: 118px;
+  }
+}

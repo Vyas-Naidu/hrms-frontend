@@ -1,0 +1,40 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+    "Segoe UI",
+    sans-serif;
+
+    background:#F8F6F2;
+    color:#2D1C12;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    font:inherit;
+}
+
+input,
+select{
+    outline:none;
+    font:inherit;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
