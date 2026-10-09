@@ -20,6 +20,8 @@ import {
 } from "../../../services/auth";
 
 import styles from "./Sidebar.module.css";
+import { useEffect, useState } from "react";
+import { employeeApi } from "../../../services/api/employee.api";
 
 const navigationByRole = {
   ADMIN: [
@@ -150,7 +152,27 @@ function Sidebar({
 
   const user = getCurrentUser();
   const role = getCurrentRole();
+  const [photoUrl, setPhotoUrl] = useState("");
 
+  useEffect(() => {
+    if (role !== "EMPLOYEE") return;
+
+    let objectUrl;
+
+    employeeApi
+      .getMyPhoto()
+      .then(({ data }) => {
+        objectUrl = URL.createObjectURL(data);
+        setPhotoUrl(objectUrl);
+      })
+      .catch(() => {
+        // No photo uploaded: retain the default avatar.
+      });
+
+    return () => {
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [role]);
   const navigationGroups = navigationByRole[role] ?? [];
 
   const fullName = [user?.firstName, user?.lastName]
@@ -170,9 +192,8 @@ function Sidebar({
 
   return (
     <aside
-      className={`${styles.sidebar} ${
-        collapsed ? styles.collapsed : ""
-      } ${mobileOpen ? styles.mobileOpen : ""}`}
+      className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""
+        } ${mobileOpen ? styles.mobileOpen : ""}`}
       aria-label="Main navigation"
     >
       <button
@@ -225,8 +246,7 @@ function Sidebar({
                     collapsed ? item.label : ""
                   }
                   className={({ isActive }) =>
-                    `${styles.navItem} ${
-                      isActive ? styles.active : ""
+                    `${styles.navItem} ${isActive ? styles.active : ""
                     }`
                   }
                 >
@@ -257,19 +277,31 @@ function Sidebar({
         <button
           type="button"
           className={styles.profile}
-          data-tooltip={
-            collapsed ? fullName || "User" : ""
+          onClick={() => {
+            if (role === "EMPLOYEE") {
+              navigate("/my-profile");
+              onMobileClose?.();
+            }
+          }}
+          data-tooltip={collapsed ? fullName || "User" : ""}
+          aria-label={
+            role === "EMPLOYEE" ? "Open my profile" : fullName || "User"
           }
         >
           <span className={styles.avatar}>
-            <FaUser />
+            {photoUrl && role === "EMPLOYEE" ? (
+              <img
+                src={photoUrl}
+                alt=""
+                className={styles.avatarImage}
+              />
+            ) : (
+              <FaUser />
+            )}
           </span>
 
           <span className={styles.profileInfo}>
-            <strong>
-              {fullName || "User"}
-            </strong>
-
+            <strong>{fullName || "User"}</strong>
             <small>{roleLabel}</small>
           </span>
         </button>

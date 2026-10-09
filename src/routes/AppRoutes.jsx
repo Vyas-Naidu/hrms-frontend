@@ -26,6 +26,7 @@ import Email from "../pages/HR/Email";
 import EmployeeOnboarding from "../modules/employees/pages/EmployeeOnboarding";
 import EmployeeManagement from "../modules/employees/pages/EmployeeManagement";
 import EmployeeDetails from "../modules/employees/pages/EmployeeDetails";
+import MyProfile from "../pages/Employee/MyProfile";
 
 // Departments
 import Departments from "../modules/departments/Departments";
@@ -219,15 +220,10 @@ function AppRoutes() {
                 EMPLOYEE
             ================================================= */}
 
-            {/*
-              Employee-specific routes will be added here when
-              employee self-service features are implemented.
-
-              Current employee access:
-              - Dashboard
-              - Notifications
-              - Email
-            */}
+            {/* EMPLOYEE SELF-SERVICE */}
+            <Route element={<ProtectedRoute roles={["EMPLOYEE"]} />}>
+              <Route path="/my-profile" element={<MyProfile />} />
+            </Route>
 
             {/* =================================================
                 FALLBACK
